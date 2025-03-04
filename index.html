@@ -12,19 +12,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
     <style>
       :root {
-        --primary-color: #000000; /* Black as the primary color */
-        --secondary-color: #FFFFFF; /* White as the secondary color */
-        --highlight-color: #CCCCCC; /* Light gray for subtle highlights */
-        --text-color: #FFFFFF; /* White text for dark backgrounds */
-        --button-bg-color: #000000; /* Black buttons */
-        --button-text-color: #FFFFFF; /* White text on buttons */
-        --button-hover-bg-color: #FFFFFF; /* White on hover */
-        --button-hover-text-color: #000000; /* Black text on hover */
-        --background-color: #FFFFFF; /* White body background */
+        --primary-color: #000000;
+        --secondary-color: #FFFFFF;
+        --highlight-color: #CCCCCC;
+        --text-color: #FFFFFF;
+        --button-bg-color: #000000;
+        --button-text-color: #FFFFFF;
+        --button-hover-bg-color: #FFFFFF;
+        --button-hover-text-color: #000000;
+        --background-color: #FFFFFF;
       }
       body {
         background: var(--background-color);
-        color: var(--primary-color); /* Black text on white background */
+        color: var(--primary-color);
         font-family: 'Poppins', sans-serif;
         overflow-x: hidden;
       }
@@ -38,7 +38,7 @@
         overflow: hidden;
         border: 2px solid var(--highlight-color);
         padding: 1rem;
-        background: var(--primary-color); /* Black hero background */
+        background: var(--primary-color);
         animation: fadeIn 1.5s ease-in-out;
       }
       .hero::after {
@@ -80,7 +80,7 @@
         50% { transform: translateY(-10px); }
       }
       .card {
-        background: var(--secondary-color); /* White cards */
+        background: var(--secondary-color);
         border: 2px solid var(--highlight-color);
         border-radius: 10px;
         padding: 1rem;
@@ -119,8 +119,8 @@
         100% { transform: scale(1); }
       }
       footer {
-        background: var(--primary-color); /* Black footer */
-        color: var(--text-color); /* White text */
+        background: var(--primary-color);
+        color: var(--text-color);
         text-align: center;
         padding: 2rem;
         animation: fadeIn 1.5s ease-in-out;
@@ -132,19 +132,19 @@
         position: sticky;
         top: 0;
         z-index: 50;
-        background: var(--primary-color); /* Black header initially */
-        color: var(--text-color); /* White text initially */
+        background: var(--primary-color);
+        color: var(--text-color);
         transition: background 0.3s ease, color 0.3s ease;
         animation: slideDown 1s ease-in-out;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        height: 64px; /* Fixed height */
+        height: 64px;
         padding: 0 1rem;
       }
       .sticky-header.scrolled {
-        background: var(--secondary-color); /* White when scrolled */
-        color: var(--primary-color); /* Black text when scrolled */
+        background: var(--secondary-color);
+        color: var(--primary-color);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
       }
       .sticky-header .logo-text {
@@ -156,7 +156,7 @@
         font-size: 1.25rem;
       }
       .sticky-header .icon {
-        color: inherit; /* Inherit color from header */
+        color: inherit;
       }
       @keyframes slideDown {
         0% { transform: translateY(-100%); }
@@ -188,7 +188,6 @@
     </style>
 </head>
 <body>
-    <!-- Header Section -->
     <header class="sticky-header">
       <div class="flex items-center">
         <a class="text-inherit mr-4 flex items-center" href="/">
@@ -208,7 +207,6 @@
       </div>
     </header>
 
-    <!-- Navigation Section -->
     <nav class="bg-[var(--primary-color)] py-4">
       <ul class="flex flex-wrap justify-center space-x-4">
         <li class="nav-item">
@@ -232,7 +230,6 @@
       </ul>
     </nav>
 
-    <!-- Hero Section -->
     <div class="hero flex flex-col items-center justify-center min-h-screen">
       <h1 class="glow-text fade-in text-5xl md:text-7xl font-bold">TruthWeb</h1>
       <p class="text-xl mt-4 text-center fade-in" style="animation-delay: 0.5s; color: var(--text-color);">
@@ -241,7 +238,6 @@
       <a href="core-features" class="btn mt-6">Discover Features</a>
     </div>
 
-    <!-- Core Features Section -->
     <section id="core-features" class="py-16 px-4">
       <h2 class="text-3xl font-bold text-center mb-8">Core Features</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -284,7 +280,6 @@
       </div>
     </section>
 
-    <!-- Community & Social Features Section -->
     <section class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
       <h2 class="text-3xl font-bold text-center mb-8">Community & Social</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -321,7 +316,6 @@
       </div>
     </section>
 
-    <!-- Developer & Business Features Section -->
     <section class="py-16 px-4">
       <h2 class="text-3xl font-bold text-center mb-8">Developer & Business</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -358,7 +352,6 @@
       </div>
     </section>
 
-    <!-- Security & Trust Features Section -->
     <section class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
       <h2 class="text-3xl font-bold text-center mb-8">Security & Trust</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -389,7 +382,6 @@
       </div>
     </section>
 
-    <!-- TruthWeb News Section -->
     <section id="news" class="py-16 px-4">
       <h2 class="text-3xl font-bold text-center mb-8">TruthWeb News</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -414,7 +406,6 @@
       </div>
     </section>
 
-    <!-- PiTrack Section -->
     <section id="pitrack" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
       <h2 class="text-3xl font-bold text-center mb-8">PiTrack</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -439,7 +430,6 @@
       </div>
     </section>
 
-    <!-- Pi Trade Section -->
     <section id="pitrade" class="py-16 px-4">
       <h2 class="text-3xl font-bold text-center mb-8">Pi Trade</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -464,7 +454,6 @@
       </div>
     </section>
 
-    <!-- Future Planned Features Section -->
     <section class="py-16 px-4">
       <h2 class="text-3xl font-bold text-center mb-8">Coming Soon</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
@@ -495,7 +484,6 @@
       </div>
     </section>
 
-    <!-- Footer Section -->
     <footer class="bg-[var(--primary-color)] py-8">
       <div class="container mx-auto text-center">
         <div class="mb-4">
@@ -510,7 +498,6 @@
       </div>
     </footer>
 
-    <!-- Scripts -->
     <script>
       window.addEventListener('scroll', function() {
         const header = document.querySelector('.sticky-header');
