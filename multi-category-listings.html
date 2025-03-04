@@ -91,4 +91,60 @@
     </div>
 
     <!-- Multi-Category Listings Section -->
-    <section id="multi-category-listings" class="py-16
+    <section id="multi-category-listings" class="py-16 px-4">
+      <h2 class="text-3xl font-bold text-center mb-8">Shop Across Categories</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div class="card">
+          <i class="fas fa-book text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Digital Products</h3>
+          <p class="mb-4">Explore eBooks, software, and online courses available for purchase with Pi.</p>
+          <a href="marketplace.html#digital" class="btn">Browse Digital</a>
+        </div>
+        <div class="card">
+          <i class="fas fa-box-open text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Physical Goods</h3>
+          <p class="mb-4">Buy tangible items like merchandise and handmade products using Pi.</p>
+          <a href="marketplace.html#physical" class="btn">Browse Goods</a>
+        </div>
+        <div class="card">
+          <i class="fas fa-concierge-bell text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Services</h3>
+          <p class="mb-4">Hire Pioneers for freelance services, tutoring, or custom work, payable in Pi.</p>
+          <a href="marketplace.html#services" class="btn">Browse Services</a>
+        </div>
+      </div>
+      <div class="text-center mt-8">
+        <p class="text-lg mb-4">From digital to physical, TruthWeb’s marketplace has it all. Start exploring now!</p>
+        <a href="marketplace.html#categories" class="btn">View All Listings</a>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-[var(--primary-color)] py-8">
+      <div class="container mx-auto text-center">
+        <div class="mb-4">
+          <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://www.facebook.com/reimaginetruthofficial/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://x.com/reimagine_truth" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://t.me/TruthWebOfficial" target="_blank"><i class="fab fa-telegram"></i></a>
+          <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://www.youtube.com/@ReimagineTruth" target="_blank"><i class="fab fa-youtube"></i></a>
+          <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://github.com/username/TruthWeb" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+        <p class="text-[var(--text-color)] mb-4">© 2025 TruthWeb. All rights reserved.</p>
+        <div class="text-[var(--text-color)] text-sm">
+          <a href="about.html" class="mx-2 hover:text-[var(--highlight-color)]">About Us</a> |
+          <a href="terms.html" class="mx-2 hover:text-[var(--highlight-color)]">Terms & Conditions</a> |
+          <a href="privacy.html" class="mx-2 hover:text-[var(--highlight-color)]">Privacy Policy</a> |
+          <a href="contact.html" class="mx-2 hover:text-[var(--highlight-color)]">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+      window.addEventListener('scroll', function() {
+        const header = document.querySelector('.sticky-header');
+        if (window.scrollY > 50) { header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); }
+      });
+    </script>
+</body>
+</html>
