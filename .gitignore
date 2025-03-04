@@ -22,19 +22,36 @@ desktop.ini
 logs/
 log/
 
-# Build and distribution directories
-dist/
-build/
-out/
-
-# Node.js and npm (if you use local dependencies later)
+# Node.js and npm (Frontend)
 node_modules/
 npm-debug.log
 package-lock.json
+/dist/  # For frontend build output (e.g., Webpack, Vite)
+public/build/  # Common build output directory
 
-# Dependency directories (if you use Yarn or pnpm)
-yarn.lock
-.pnpm-lock.yaml
+# Python and Django (Backend)
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+*.sqlite3  # Default Django SQLite database
+db.sqlite3
+migrations/  # Exclude auto-generated migration files (optional, depends on workflow)
+*.egg-info/
+*.egg
+*.whl
+
+# Database (MongoDB/PostgreSQL)
+*.dump  # MongoDB dump files
+mongod.lock
+data/  # Local MongoDB data directory (if running locally)
+pgdata/  # Local PostgreSQL data directory (if running locally)
 
 # Environment variables
 .env
@@ -43,7 +60,19 @@ yarn.lock
 .env.test.local
 .env.production.local
 
-# GitHub Pages artifacts (if applicable)
+# Build and distribution directories
+build/
+out/
+staticfiles/  # Django collected static files
+
+# Testing and coverage
+htmlcov/
+.coverage
+coverage.xml
+*.cover
+.pytest_cache/
+
+# GitHub Pages artifacts (if still using)
 _site/
 
 # Sensitive files
@@ -51,6 +80,6 @@ _site/
 *.pem
 *.cert
 
-# Local testing or development files
+# Local development files
 local/
 test/
