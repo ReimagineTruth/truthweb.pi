@@ -1,0 +1,56 @@
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+desktop.ini
+
+# Editor and IDE files
+*.sublime-*
+.vscode/
+.idea/
+*.code-workspace
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Logs
+*.log
+logs/
+log/
+
+# Build and distribution directories
+dist/
+build/
+out/
+
+# Node.js and npm (if you use local dependencies later)
+node_modules/
+npm-debug.log
+package-lock.json
+
+# Dependency directories (if you use Yarn or pnpm)
+yarn.lock
+.pnpm-lock.yaml
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# GitHub Pages artifacts (if applicable)
+_site/
+
+# Sensitive files
+*.key
+*.pem
+*.cert
+
+# Local testing or development files
+local/
+test/
