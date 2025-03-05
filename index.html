@@ -186,6 +186,23 @@
       .floating-effect:hover {
         transform: translateY(-5px) rotate(5deg);
       }
+      .feed-item {
+        border-bottom: 1px solid var(--highlight-color);
+        padding: 1rem 0;
+      }
+      .feed-item:last-child {
+        border-bottom: none;
+      }
+      .feed-actions button {
+        background: none;
+        border: none;
+        color: var(--primary-color);
+        cursor: pointer;
+        margin-right: 1rem;
+      }
+      .feed-actions button:hover {
+        color: var(--highlight-color);
+      }
     </style>
 </head>
 <body>
@@ -281,6 +298,61 @@
           <h3 class="text-xl font-semibold mb-2">Instant Transactions</h3>
           <p class="mb-4">Track purchases and sales in real-time.</p>
           <a href="instant-transactions.html" class="btn">View Dashboard</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TruthWeb Feed Section -->
+    <section id="feed" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
+      <h2 class="text-3xl font-bold text-center mb-8">TruthWeb Feed</h2>
+      <div class="max-w-2xl mx-auto">
+        <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)] p-6">
+          <div class="feed-item">
+            <div class="flex items-center mb-2">
+              <i class="fas fa-user-circle text-3xl mr-3 text-gray-500"></i>
+              <div>
+                <p class="font-semibold">PioneerA</p>
+                <p class="text-gray-600 text-sm">Mar 5, 2025, 18:45</p>
+              </div>
+            </div>
+            <p class="mb-4">Just sold 500 Pi in a P2P trade! Loving the seamless experience on TruthWeb.</p>
+            <div class="feed-actions flex items-center">
+              <button><i class="far fa-thumbs-up"></i> 3</button>
+              <button><i class="far fa-comment"></i> 2</button>
+              <button><i class="fas fa-share"></i> 1</button>
+            </div>
+          </div>
+          <div class="feed-item">
+            <div class="flex items-center mb-2">
+              <i class="fas fa-ad text-3xl mr-3 text-gray-500"></i>
+              <div>
+                <p class="font-semibold">TruthWeb Ads</p>
+                <p class="text-gray-600 text-sm">Sponsored</p>
+              </div>
+            </div>
+            <p class="mb-2">Get the new Pi Software for only 100 Pi! Boost your productivity today.</p>
+            <img src="https://placehold.co/600x200" alt="Pi Software Ad" class="mb-2 rounded">
+            <a href="marketplace.html" class="btn w-full">Shop Now</a>
+          </div>
+          <div class="feed-item">
+            <div class="flex items-center mb-2">
+              <i class="fas fa-user-circle text-3xl mr-3 text-gray-500"></i>
+              <div>
+                <p class="font-semibold">VendorB</p>
+                <p class="text-gray-600 text-sm">Mar 5, 2025, 14:30</p>
+              </div>
+            </div>
+            <p class="mb-4">New Pi eBook available in the marketplace! Check it out for only 50 Pi.</p>
+            <a href="marketplace.html" class="text-[var(--primary-color)] underline">View Product</a>
+            <div class="feed-actions flex items-center mt-2">
+              <button><i class="far fa-thumbs-up"></i> 5</button>
+              <button><i class="far fa-comment"></i> 3</button>
+              <button><i class="fas fa-share"></i> 2</button>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-6">
+          <a href="truthwebfeed.html" class="btn">See Full Feed</a>
         </div>
       </div>
     </section>
@@ -545,3 +617,4 @@
       });
     </script>
 </body>
+</html>
