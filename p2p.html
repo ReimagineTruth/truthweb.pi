@@ -190,6 +190,12 @@
         color: var(--highlight-color);
         text-decoration: underline;
       }
+      .error {
+        border-color: #ff0000;
+      }
+      .success {
+        border-color: #00ff00;
+      }
     </style>
 </head>
 <body>
@@ -267,23 +273,32 @@
       <!-- Active Offers -->
       <div class="max-w-6xl mx-auto mb-12">
         <h3 class="text-2xl font-semibold mb-6">Active P2P Offers</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div class="card">
-            <h4 class="text-xl font-semibold mb-2">Sell 500 Pi</h4>
+        <!-- Filter Bar -->
+        <div class="flex flex-wrap justify-between items-center mb-8">
+          <input type="text" id="offer-search" placeholder="Search offers..." class="p-2 border border-gray-300 rounded w-full sm:w-1/2 lg:w-1/3">
+          <div class="mt-4 sm:mt-0 space-x-2">
+            <button class="btn" onclick="filterOffers('all')">All</button>
+            <button class="btn" onclick="filterOffers('buy')">Buy</button>
+            <button class="btn" onclick="filterOffers('sell')">Sell</button>
+          </div>
+        </div>
+        <div id="offers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="card offer-sell">
+            <h4 class="text-xl font-semibold mb-2">Sell 500 Pi <i class="fas fa-arrow-up text-green-500 ml-2"></i></h4>
             <p class="text-gray-600 mb-2">Seller: PioneerA</p>
             <p class="text-gray-600 mb-2">Rate: 0.025 USD/Pi</p>
             <p class="text-gray-600 mb-4">Payment: Bank Transfer</p>
             <a href="#" class="btn w-full">Trade Now</a>
           </div>
-          <div class="card">
-            <h4 class="text-xl font-semibold mb-2">Buy 300 Pi</h4>
+          <div class="card offer-buy">
+            <h4 class="text-xl font-semibold mb-2">Buy 300 Pi <i class="fas fa-arrow-down text-red-500 ml-2"></i></h4>
             <p class="text-gray-600 mb-2">Buyer: PioneerB</p>
             <p class="text-gray-600 mb-2">Rate: 0.028 USD/Pi</p>
             <p class="text-gray-600 mb-4">Payment: PayPal</p>
             <a href="#" class="btn w-full">Trade Now</a>
           </div>
-          <div class="card">
-            <h4 class="text-xl font-semibold mb-2">Sell 1,000 Pi</h4>
+          <div class="card offer-sell">
+            <h4 class="text-xl font-semibold mb-2">Sell 1,000 Pi <i class="fas fa-arrow-up text-green-500 ml-2"></i></h4>
             <p class="text-gray-600 mb-2">Seller: PioneerC</p>
             <p class="text-gray-600 mb-2">Rate: 0.026 USD/Pi</p>
             <p class="text-gray-600 mb-4">Payment: Crypto (BTC)</p>
@@ -296,31 +311,47 @@
       <div class="max-w-4xl mx-auto mb-12 text-center">
         <h3 class="text-2xl font-semibold mb-6">Create Your P2P Offer</h3>
         <div class="card p-6 mx-auto max-w-md">
-          <div class="mb-4">
-            <label class="block text-left text-gray-700 mb-2" for="trade-type">Trade Type:</label>
-            <select id="trade-type" class="p-2 border border-gray-300 rounded w-full text-gray-600">
-              <option value="buy">Buy Pi</option>
-              <option value="sell">Sell Pi</option>
-            </select>
+          <form id="create-offer-form">
+            <div class="mb-4">
+              <label class="block text-left text-gray-700 mb-2" for="trade-type">Trade Type:</label>
+              <select id="trade-type" class="p-2 border border-gray-300 rounded w-full text-gray-600">
+                <option value="buy">Buy Pi</option>
+                <option value="sell">Sell Pi</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-left text-gray-700 mb-2" for="amount">Amount (Pi):</label>
+              <input type="number" id="amount" placeholder="Enter amount" min="1" class="p-2 border border-gray-300 rounded w-full text-gray-600" required>
+            </div>
+            <div class="mb-4">
+              <label class="block text-left text-gray-700 mb-2" for="rate">Rate (USD/Pi):</label>
+              <input type="number" id="rate" placeholder="Enter rate" step="0.001" min="0.001" class="p-2 border border-gray-300 rounded w-full text-gray-600" required>
+            </div>
+            <div class="mb-4">
+              <label class="block text-left text-gray-700 mb-2" for="payment">Payment Method:</label>
+              <input type="text" id="payment" placeholder="e.g., PayPal, Bank" class="p-2 border border-gray-300 rounded w-full text-gray-600" required>
+            </div>
+            <button type="submit" class="btn w-full">Post Offer</button>
+          </form>
+          <p id="form-message" class="mt-4 text-sm hidden"></p>
+        </div>
+      </div>
+
+      <!-- Fraud Protection -->
+      <div class="max-w-6xl mx-auto mb-12">
+        <h3 class="text-2xl font-semibold text-center mb-8">Fraud Protection</h3>
+        <div class="card p-6 mx-auto max-w-2xl">
+          <div class="flex items-center mb-4">
+            <i class="fas fa-shield-alt text-3xl mr-4 text-[var(--primary-color)]"></i>
+            <h4 class="text-xl font-semibold">Secure Pi Payments</h4>
           </div>
-          <div class="mb-4">
-            <label class="block text-left text-gray-700 mb-2" for="amount">Amount (Pi):</label>
-            <input type="number" id="amount" placeholder="Enter amount" class="p-2 border border-gray-300 rounded w-full text-gray-600">
-          </div>
-          <div class="mb-4">
-            <label class="block text-left text-gray-700 mb-2" for="rate">Rate (USD/Pi):</label>
-            <input type="number" id="rate" placeholder="Enter rate" step="0.001" class="p-2 border border-gray-300 rounded w-full text-gray-600">
-          </div>
-          <div class="mb-4">
-            <label class="block text-left text-gray-700 mb-2" for="payment">Payment Method:</label>
-            <input type="text" id="payment" placeholder="e.g., PayPal, Bank" class="p-2 border border-gray-300 rounded w-full text-gray-600">
-          </div>
-          <button class="btn w-full">Post Offer</button>
+          <p class="text-gray-600 mb-4">Pi payments are held in escrow until both parties confirm the trade, preventing scams and ensuring your funds are protected.</p>
+          <a href="#" class="btn">Learn More</a>
         </div>
       </div>
 
       <!-- Benefits -->
-      <div class="max-w-4xl mx-auto">
+      <div class="max-w-4xl mx-auto mb-12">
         <h3 class="text-2xl font-semibold text-center mb-8">Why P2P Trading?</h3>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
           <div class="card text-center">
@@ -366,14 +397,71 @@
       </div>
     </footer>
 
-    <!-- Sticky Header Script -->
+    <!-- Scripts -->
     <script>
+      // Sticky Header
       window.addEventListener('scroll', function() {
         const header = document.querySelector('.sticky-header');
         if (window.scrollY > 50) {
           header.classList.add('scrolled');
         } else {
           header.classList.remove('scrolled');
+        }
+      });
+
+      // Filter Offers
+      function filterOffers(type) {
+        const offers = document.querySelectorAll('#offers-grid .card');
+        offers.forEach(offer => {
+          if (type === 'all' || offer.classList.contains(`offer-${type}`)) {
+            offer.style.display = 'block';
+          } else {
+            offer.style.display = 'none';
+          }
+        });
+      }
+
+      // Search Offers
+      document.getElementById('offer-search').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const offers = document.querySelectorAll('#offers-grid .card');
+        offers.forEach(offer => {
+          const text = offer.textContent.toLowerCase();
+          offer.style.display = text.includes(searchTerm) ? 'block' : 'none';
+        });
+      });
+
+      // Form Validation
+      document.getElementById('create-offer-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const amount = document.getElementById('amount');
+        const rate = document.getElementById('rate');
+        const payment = document.getElementById('payment');
+        const message = document.getElementById('form-message');
+        
+        let isValid = true;
+        [amount, rate, payment].forEach(input => {
+          input.classList.remove('error', 'success');
+          if (!input.value.trim()) {
+            input.classList.add('error');
+            isValid = false;
+          } else {
+            input.classList.add('success');
+          }
+        });
+
+        message.classList.remove('hidden');
+        if (isValid) {
+          message.textContent = 'Offer posted successfully! (Demo)';
+          message.style.color = '#00ff00';
+          setTimeout(() => {
+            this.reset();
+            [amount, rate, payment].forEach(input => input.classList.remove('success'));
+            message.classList.add('hidden');
+          }, 2000);
+        } else {
+          message.textContent = 'Please fill all fields.';
+          message.style.color = '#ff0000';
         }
       });
     </script>
