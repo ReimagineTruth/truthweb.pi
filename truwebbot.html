@@ -166,6 +166,118 @@
         color: var(--highlight-color);
         text-decoration: underline;
       }
+      /* Original WALL-E-like TruthWeb Bot Styles */
+      #truthweb-bot {
+        position: absolute;
+        width: 100px;
+        height: 120px;
+        transition: transform 0.5s ease;
+        z-index: 5;
+      }
+      .bot-body {
+        width: 80px;
+        height: 80px;
+        background: #999;
+        border-radius: 10px;
+        position: relative;
+        top: 20px;
+        left: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+      .bot-head {
+        width: 60px;
+        height: 40px;
+        background: #777;
+        border-radius: 5px;
+        position: absolute;
+        top: -20px;
+        left: 10px;
+      }
+      .bot-eyes {
+        display: flex;
+        justify-content: space-around;
+        padding: 10px;
+        transition: all 0.3s ease;
+      }
+      .eye {
+        width: 15px;
+        height: 15px;
+        background: #fff;
+        border-radius: 50%;
+        transition: transform 0.3s ease, height 0.3s ease;
+      }
+      .happy .eye { transform: scale(1.2); }
+      .sad .eye { transform: scale(0.8) translateY(2px); height: 10px; }
+      .excited .eye { transform: scale(1.5); animation: excitedBlink 1s infinite; }
+      .curious .eye { transform: rotate(10deg); }
+      .sleepy .eye { height: 5px; animation: sleepyBlink 2s infinite; }
+      @keyframes excitedBlink {
+        0%, 80% { height: 15px; }
+        90% { height: 5px; }
+        100% { height: 15px; }
+      }
+      @keyframes sleepyBlink {
+        0%, 70% { height: 5px; }
+        80% { height: 2px; }
+        100% { height: 5px; }
+      }
+      .bot-wheels {
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        bottom: -10px;
+        width: 100%;
+      }
+      .wheel {
+        width: 20px;
+        height: 20px;
+        background: #555;
+        border-radius: 50%;
+      }
+      .bot-arm {
+        width: 10px;
+        height: 30px;
+        background: #777;
+        position: absolute;
+        top: 20px;
+        left: -15px;
+        transform-origin: top;
+        transition: transform 0.3s ease; /* Fixed from 'animation' to 'transform' */
+      }
+      .happy .bot-arm { animation: happyWave 1.5s infinite; }
+      .sad .bot-arm { animation: sadWave 2s infinite; }
+      .excited .bot-arm { animation: excitedWave 0.5s infinite; }
+      .curious .bot-arm { animation: curiousWave 2s infinite; }
+      .sleepy .bot-arm { animation: none; transform: rotate(-20deg); }
+      @keyframes happyWave {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(45deg); }
+      }
+      @keyframes sadWave {
+        0%, 100% { transform: rotate(-10deg); }
+        50% { transform: rotate(-20deg); }
+      }
+      @keyframes excitedWave {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(60deg); }
+        75% { transform: rotate(-60deg); }
+      }
+      @keyframes curiousWave {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(20deg); }
+      }
+      .activity-text {
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        white-space: nowrap;
+      }
     </style>
 </head>
 <body>
@@ -212,7 +324,7 @@
     </div>
 
     <!-- Bot Section -->
-    <section id="bot" class="py-16 px-4">
+    <section id="bot" class="py-16 px-4 relative">
       <h2 class="text-3xl font-bold text-center mb-8 fade-in">TruthWeb Bot Assistance</h2>
       <div class="max-w-4xl mx-auto mb-12">
         <p class="text-lg text-center text-gray-600 fade-in">Ask TruthWeb Bot anything about the platform—marketplace tips, trading insights, or general help—all powered by advanced AI in real-time.</p>
@@ -224,6 +336,24 @@
         <div class="mt-4 flex">
           <input type="text" id="user-input" class="flex-grow p-2 border border-gray-300 rounded-l-lg outline-none" placeholder="Type your question here...">
           <button id="send-btn" class="btn rounded-l-none">Send</button>
+        </div>
+      </div>
+
+      <!-- TruthWeb Bot Character -->
+      <div id="truthweb-bot" class="happy">
+        <div class="activity-text" id="activity-text">Waving at you...</div>
+        <div class="bot-arm"></div>
+        <div class="bot-body">
+          <div class="bot-head">
+            <div class="bot-eyes">
+              <div class="eye"></div>
+              <div class="eye"></div>
+            </div>
+          </div>
+          <div class="bot-wheels">
+            <div class="wheel"></div>
+            <div class="wheel"></div>
+          </div>
         </div>
       </div>
 
@@ -267,21 +397,35 @@
       </div>
     </footer>
 
-    <!-- JavaScript for Bot Functionality -->
+    <!-- JavaScript for Bot Functionality and Animation -->
     <script>
       const chatContainer = document.getElementById('chat-container');
       const userInput = document.getElementById('user-input');
       const sendBtn = document.getElementById('send-btn');
+      const bot = document.getElementById('truthweb-bot');
+      const activityText = document.getElementById('activity-text');
+      const footer = document.querySelector('footer');
+
+      // Bot Emotions and Activities
+      const emotions = {
+        happy: { text: "Feeling happy...", activity: "Waving at you..." },
+        sad: { text: "Feeling sad...", activity: "Looking down..." },
+        excited: { text: "So excited!", activity: "Bouncing around..." },
+        curious: { text: "Hmm, curious...", activity: "Reading your chat..." },
+        sleepy: { text: "Getting sleepy...", activity: "Resting a bit..." }
+      };
+
+      let botX = 100;
+      let botY = 200;
+      let stepSize = 2;
+      let movementIntervalId;
 
       // Simulated API response function (replace with actual API call)
       async function getBotResponse(message) {
-        // Placeholder for Grok 3, ChatGPT, or DeepSeek API call
-        // Example: const response = await fetch('https://api.xai.com/grok3', { method: 'POST', body: JSON.stringify({ message }) });
-        // For demo purposes, return a simulated response
         return new Promise(resolve => {
           setTimeout(() => {
             resolve(`TruthWeb Bot: Here's some insight for "${message}": I can assist with marketplace navigation, trading tips, or any TruthWeb feature. What specifically would you like help with?`);
-          }, 1000); // Simulate network delay
+          }, 1000);
         });
       }
 
@@ -291,7 +435,14 @@
         messageDiv.classList.add('chat-message', isUser ? 'user-message' : 'bot-message');
         messageDiv.textContent = content;
         chatContainer.appendChild(messageDiv);
-        chatContainer.scrollTop = chatContainer.scrollHeight; // Auto-scroll to bottom
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+
+        // Bot reacts to chat
+        if (isUser) {
+          changeEmotion('curious');
+        } else {
+          changeEmotion('happy');
+        }
       }
 
       // Handle sending message
@@ -309,10 +460,92 @@
         sendBtn.disabled = false;
       });
 
-      // Allow Enter key to send message
       userInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') sendBtn.click();
       });
+
+      // Bot Movement and Animation
+      function updateBotPosition() {
+        const maxX = window.innerWidth - bot.offsetWidth;
+        const maxY = window.innerHeight - bot.offsetHeight - footer.offsetHeight - 20;
+        botX = Math.max(0, Math.min(botX, maxX));
+        botY = Math.max(100, Math.min(botY, maxY));
+        bot.style.transform = `translate(${botX}px, ${botY}px)`;
+      }
+
+      function randomStep() {
+        const dx = Math.random() * (stepSize * 2) - stepSize;
+        const dy = Math.random() * (stepSize * 2) - stepSize;
+        botX += dx;
+        botY += dy;
+        updateBotPosition();
+        updateActivity(bot.className || 'happy');
+      }
+
+      function setMovementBehavior(emotion) {
+        clearTimeout(movementIntervalId);
+        let movementInterval;
+        switch (emotion) {
+          case 'happy':
+            stepSize = 3;
+            movementInterval = 500;
+            break;
+          case 'sad':
+            stepSize = 1;
+            movementInterval = 1000;
+            break;
+          case 'excited':
+            stepSize = 5;
+            movementInterval = 200;
+            break;
+          case 'curious':
+            stepSize = 2;
+            movementInterval = 700;
+            break;
+          case 'sleepy':
+            stepSize = 0;
+            movementInterval = 5000;
+            break;
+          default:
+            stepSize = 2;
+            movementInterval = 500;
+        }
+        if (stepSize > 0) {
+          movementIntervalId = setTimeout(function move() {
+            randomStep();
+            movementIntervalId = setTimeout(move, movementInterval);
+          }, movementInterval);
+        }
+      }
+
+      function updateActivity(emotion) {
+        activityText.textContent = emotions[emotion].activity;
+      }
+
+      function changeEmotion(emotion) {
+        bot.className = emotion;
+        updateActivity(emotion);
+        setMovementBehavior(emotion);
+      }
+
+      function randomEmotion() {
+        const emotionsArray = Object.keys(emotions);
+        const randomIndex = Math.floor(Math.random() * emotionsArray.length);
+        const emotion = emotionsArray[randomIndex];
+        changeEmotion(emotion);
+      }
+
+      function scheduleEmotionChange() {
+        const delay = 5000 + Math.random() * 5000;
+        setTimeout(() => {
+          randomEmotion();
+          scheduleEmotionChange();
+        }, delay);
+      }
+
+      // Initial setup
+      changeEmotion('happy');
+      scheduleEmotionChange();
 
       // Sticky Header Scroll Effect
       window.addEventListener('scroll', () => {
