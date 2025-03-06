@@ -3,143 +3,257 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Marketplace | TruthWeb</title>
+    <title>Marketplace - TruthWeb</title>
+    <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
     <style>
       :root {
-        --primary-color: #000000; --secondary-color: #FFFFFF; --highlight-color: #CCCCCC; --text-color: #FFFFFF;
-        --button-bg-color: #000000; --button-text-color: #FFFFFF; --button-hover-bg-color: #FFFFFF; --button-hover-text-color: #000000;
+        --primary-color: #000000;
+        --secondary-color: #FFFFFF;
+        --highlight-color: #CCCCCC;
+        --text-color: #FFFFFF;
+        --button-bg-color: #000000;
+        --button-text-color: #FFFFFF;
+        --button-hover-bg-color: #FFFFFF;
+        --button-hover-text-color: #000000;
         --background-color: #FFFFFF;
       }
-      body { background: var(--background-color); color: var(--primary-color); font-family: 'Poppins', sans-serif; overflow-x: hidden; }
-      .hero { height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 2px solid var(--highlight-color); padding: 1rem; background: var(--primary-color); animation: fadeIn 1.5s ease-in-out; }
-      .hero::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent); opacity: 0.5; animation: float 6s infinite ease-in-out, pulseGlow 3s infinite alternate; }
-      @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-      @keyframes pulseGlow { 0% { opacity: 0.5; } 100% { opacity: 0.8; } }
-      @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
-      .glow-text { font-size: 2rem; font-weight: bold; color: var(--text-color); text-shadow: 0 0 10px var(--highlight-color), 0 0 20px var(--highlight-color); animation: glow 2s infinite alternate, bounce 3s infinite ease-in-out; }
-      @keyframes glow { 0% { text-shadow: 0 0 10px var(--highlight-color), 0 0 20px var(--highlight-color); } 100% { text-shadow: 0 0 20px var(--highlight-color), 0 0 30px var(--highlight-color); } }
-      @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-      .card { background: var(--secondary-color); border: 2px solid var(--highlight-color); border-radius: 10px; padding: 1rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; animation: slideIn 1s ease-in-out; }
-      .card:hover { transform: translateY(-10px) rotate(2deg); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); }
-      @keyframes slideIn { 0% { opacity: 0; transform: translateX(-50px); } 100% { opacity: 1; transform: translateX(0); } }
-      .btn { background: var(--button-bg-color); color: var(--button-text-color); padding: 0.75rem 1.5rem; border: 2px solid var(--highlight-color); border-radius: 20px; cursor: pointer; transition: all 0.3s ease; animation: pulse 2s infinite; display: inline-block; text-align: center; text-decoration: none; }
-      .btn:hover { background: var(--button-hover-bg-color); color: var(--button-hover-text-color); transform: scale(1.1) rotate(3deg); }
-      @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-      footer { background: var(--primary-color); color: var(--text-color); text-align: center; padding: 2rem; animation: fadeIn 1.5s ease-in-out; }
-      html { scroll-behavior: smooth; }
-      .sticky-header { position: sticky; top: 0; z-index: 50; background: var(--primary-color); color: var(--text-color); transition: background 0.3s ease, color 0.3s ease; animation: slideDown 1s ease-in-out; display: flex; justify-content: space-between; align-items: center; height: 64px; padding: 0 1rem; }
-      .sticky-header.scrolled { background: var(--secondary-color); color: var(--primary-color); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); }
-      .sticky-header .logo-text { font-size: 1.5rem; font-weight: 700; transition: font-size 0.3s ease; }
-      .sticky-header.scrolled .logo-text { font-size: 1.25rem; }
-      .sticky-header .icon { color: inherit; }
-      @keyframes slideDown { 0% { transform: translateY(-100%); } 100% { transform: translateY(0); } }
-      .nav-item { transition: transform 0.3s ease; animation: fadeInUp 0.5s ease-in-out forwards; }
-      .nav-item:hover { transform: scale(1.1) translateY(-5px); }
-      @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
-      .nav-item:nth-child(1) { animation-delay: 0.1s; }
-      .nav-item:nth-child(2) { animation-delay: 0.2s; }
-      .nav-item:nth-child(3) { animation-delay: 0.3s; }
-      .nav-item:nth-child(4) { animation-delay: 0.4s; }
-      .nav-item:nth-child(5) { animation-delay: 0.5s; }
-      .nav-item:nth-child(6) { animation-delay: 0.6s; }
-      .floating-effect { transition: transform 0.3s ease; }
-      .floating-effect:hover { transform: translateY(-5px) rotate(5deg); }
+      body {
+        background: var(--background-color);
+        color: var(--primary-color);
+        font-family: 'Poppins', sans-serif;
+        overflow-x: hidden;
+      }
+      .search-bar {
+        transition: all 0.3s ease;
+      }
+      .search-bar:focus-within {
+        box-shadow: 0 0 10px var(--highlight-color);
+      }
+      .category-btn {
+        transition: transform 0.3s ease, background-color 0.3s ease;
+      }
+      .category-btn:hover {
+        transform: scale(1.05);
+        background-color: var(--highlight-color);
+      }
+      .product-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+      }
+      .btn {
+        background: var(--button-bg-color);
+        color: var(--button-text-color);
+        padding: 0.75rem 1.5rem;
+        border: 2px solid var(--highlight-color);
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        animation: pulse 2s infinite;
+      }
+      .btn:hover {
+        background: var(--button-hover-bg-color);
+        color: var(--button-hover-text-color);
+        transform: scale(1.1) rotate(3deg);
+      }
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+      .cart-btn {
+        position: relative;
+      }
+      .cart-btn::after {
+        content: attr(data-count);
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: red;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 12px;
+      }
+      .fade-in {
+        opacity: 0;
+        animation: fadeIn 1s ease-in-out forwards;
+      }
+      @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+      .sticky-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: var(--primary-color);
+        color: var(--text-color);
+        transition: background 0.3s ease;
+      }
+      .sticky-header.scrolled {
+        background: var(--secondary-color);
+        color: var(--primary-color);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      }
     </style>
 </head>
 <body>
-    <header class="sticky-header">
+    <!-- Sticky Header -->
+    <header class="sticky-header p-4 flex justify-between items-center shadow-lg">
       <div class="flex items-center">
-        <a class="text-inherit mr-4 flex items-center" href="index.html">
-          <span class="logo-text ml-2">TruthWeb</span>
-        </a>
+        <a href="index.html" class="text-2xl font-bold">TruthWeb</a>
       </div>
-      <div class="flex items-center">
-        <a class="mr-4 icon floating-effect" href="marketplace.html"><i class="fas fa-shopping-cart text-xl sm:text-2xl"></i></a>
-        <a class="mr-4 icon floating-effect" href="profile.html"><i class="fas fa-user text-xl sm:text-2xl"></i></a>
-        <a class="icon floating-effect" href="wallet.html"><i class="fas fa-wallet text-xl sm:text-2xl"></i></a>
+      <div class="flex items-center space-x-4">
+        <a href="#" class="cart-btn icon floating-effect" data-count="0">
+          <i class="fas fa-shopping-cart text-xl"></i>
+        </a>
+        <a href="profile.html" class="icon floating-effect">
+          <i class="fas fa-user text-xl"></i>
+        </a>
+        <a href="wallet.html" class="icon floating-effect">
+          <i class="fas fa-wallet text-xl"></i>
+        </a>
       </div>
     </header>
 
- <nav class="bg-[var(--primary-color)] py-4">
+    <!-- Navigation Bar -->
+    <nav class="bg-[var(--primary-color)] py-4">
       <ul class="flex flex-wrap justify-center space-x-4">
-        <li class="nav-item">
-          <a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="index.html">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="marketplace.html">Marketplace</a>
-        </li>
-        <li class="nav-item">
-          <a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="profile.html">Profile</a>
-        </li>
-        <li class="nav-item">
-          <a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="wallet.html">Wallet</a>
-        </li>
-        <li class="nav-item">
-          <a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="community.html">Community</a>
-        </li>
-        <li class="nav-item">
-          <a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="developers.html">Developers</a>
-        </li>
+        <li><a href="index.html" class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect">Home</a></li>
+        <li><a href="marketplace.html" class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect active">Marketplace</a></li>
+        <li><a href="profile.html" class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect">Profile</a></li>
+        <li><a href="wallet.html" class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect">Wallet</a></li>
+        <li><a href="community.html" class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect">Community</a></li>
+        <li><a href="developers.html" class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect">Developers</a></li>
+        <li><a href="about.html" class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect">About</a></li>
       </ul>
     </nav>
 
-    <div class="hero flex flex-col items-center justify-center">
-      <h1 class="glow-text fade-in text-5xl md:text-7xl font-bold">Marketplace</h1>
-      <p class="text-xl mt-4 text-center fade-in" style="animation-delay: 0.5s; color: var(--text-color);">
-        Buy and Sell with Pi
-      </p>
-    </div>
-
-    <section id="listings" class="py-16 px-4">
-      <h2 class="text-3xl font-bold text-center mb-8">Featured Listings</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        <div class="card">
-          <img src="https://via.placeholder.com/150" alt="E-Book" class="w-full h-32 object-cover mb-4 rounded"/>
-          <h3 class="text-xl font-semibold mb-2">Pi Network Guide (E-Book)</h3>
-          <p class="mb-2">Learn the ins and outs of Pi - 5 Pi</p>
-          <a href="#buy" class="btn">Buy Now</a>
-          <a href="#sell" class="btn mt-2">Sell Your Own</a>
-        </div>
-        <div class="card">
-          <img src="https://via.placeholder.com/150" alt="T-Shirt" class="w-full h-32 object-cover mb-4 rounded"/>
-          <h3 class="text-xl font-semibold mb-2">Pi Pioneer T-Shirt</h3>
-          <p class="mb-2">Official merchandise - 10 Pi</p>
-          <a href="#buy" class="btn">Buy Now</a>
-          <a href="#sell" class="btn mt-2">Sell Your Own</a>
-        </div>
-        <div class="card">
-          <img src="https://via.placeholder.com/150" alt="Service" class="w-full h-32 object-cover mb-4 rounded"/>
-          <h3 class="text-xl font-semibold mb-2">Pi Setup Consulting</h3>
-          <p class="mb-2">Expert help for Pi - 15 Pi</p>
-          <a href="#buy" class="btn">Buy Now</a>
-          <a href="#sell" class="btn mt-2">Sell Your Own</a>
+    <!-- Search Bar Section -->
+    <section class="py-4 px-4 bg-gray-100">
+      <div class="max-w-6xl mx-auto">
+        <div class="search-bar bg-[var(--secondary-color)] rounded-full flex items-center p-2">
+          <input type="text" placeholder="Search TruthWeb Marketplace..." class="w-full bg-transparent text-[var(--primary-color)] outline-none px-2">
+          <i class="fas fa-search text-[var(--primary-color)]"></i>
         </div>
       </div>
     </section>
 
-    <footer class="bg-[var(--primary-color)] py-8">
-  <div class="container mx-auto text-center">
-    <div class="mb-4">
-      <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://www.facebook.com/reimaginetruthofficial/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-      <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://x.com/reimagine_truth" target="_blank"><i class="fab fa-twitter"></i></a>
-      <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://t.me/TruthWebOfficial" target="_blank"><i class="fab fa-telegram"></i></a>
-      <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://www.youtube.com/@ReimagineTruth" target="_blank"><i class="fab fa-youtube"></i></a>
-      <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://github.com/username/TruthWeb" target="_blank"><i class="fab fa-github"></i></a>
-    </div>
-    <p class="text-[var(--text-color)] mb-4">© 2025 TruthWeb. All rights reserved.</p>
-    <div class="text-[var(--text-color)] text-sm">
-      <a href="about.html" class="mx-2 hover:text-[var(--highlight-color)]">About Us</a> |
-      <a href="terms.html" class="mx-2 hover:text-[var(--highlight-color)]">Terms & Conditions</a> |
-      <a href="privacy.html" class="mx-2 hover:text-[var(--highlight-color)]">Privacy Policy</a> |
-      <a href="contact.html" class="mx-2 hover:text-[var(--highlight-color)]">Contact</a>
-    </div>
-  </div>
-</footer>
+    <!-- Categories Section -->
+    <section class="py-8 px-4 bg-gray-100">
+      <h2 class="text-3xl font-bold text-center mb-6 fade-in">Shop by Category</h2>
+      <div class="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        <button class="category-btn bg-[var(--secondary-color)] p-4 rounded-lg text-center">Electronics</button>
+        <button class="category-btn bg-[var(--secondary-color)] p-4 rounded-lg text-center">Clothing</button>
+        <button class="category-btn bg-[var(--secondary-color)] p-4 rounded-lg text-center">NFTs</button>
+        <button class="category-btn bg-[var(--secondary-color)] p-4 rounded-lg text-center">Services</button>
+        <button class="category-btn bg-[var(--secondary-color)] p-4 rounded-lg text-center">Home Goods</button>
+      </div>
+    </section>
 
+    <!-- Product Listings Section -->
+    <section class="py-16 px-4">
+      <h2 class="text-3xl font-bold text-center mb-8 fade-in">TruthWeb Marketplace</h2>
+      <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Product 1 -->
+        <div class="product-card bg-[var(--secondary-color)] border-2 border-[var(--highlight-color)] rounded-lg p-4 fade-in">
+          <img src="https://placehold.co/200x200" alt="Pi Smart Watch" class="w-full h-48 object-cover mb-4 rounded">
+          <h3 class="text-xl font-semibold mb-2">Pi Smart Watch</h3>
+          <p class="text-gray-600 mb-2">Seller: PioneerA</p>
+          <p class="text-lg font-bold mb-4">25 Pi</p>
+          <div class="flex space-x-2">
+            <button class="btn add-to-cart" onclick="addToCart('Pi Smart Watch', 25)">Add to Cart</button>
+            <button class="btn" onclick="buyNow('Pi Smart Watch', 25)">Buy Now</button>
+          </div>
+        </div>
+        <!-- Product 2 -->
+        <div class="product-card bg-[var(--secondary-color)] border-2 border-[var(--highlight-color)] rounded-lg p-4 fade-in">
+          <img src="https://placehold.co/200x200" alt="Pi T-Shirt" class="w-full h-48 object-cover mb-4 rounded">
+          <h3 class="text-xl font-semibold mb-2">Pi T-Shirt</h3>
+          <p class="text-gray-600 mb-2">Seller: PioneerB</p>
+          <p class="text-lg font-bold mb-4">15 Pi</p>
+          <div class="flex space-x-2">
+            <button class="btn add-to-cart" onclick="addToCart('Pi T-Shirt', 15)">Add to Cart</button>
+            <button class="btn" onclick="buyNow('Pi T-Shirt', 15)">Buy Now</button>
+          </div>
+        </div>
+        <!-- Product 3 -->
+        <div class="product-card bg-[var(--secondary-color)] border-2 border-[var(--highlight-color)] rounded-lg p-4 fade-in">
+          <img src="https://placehold.co/200x200" alt="Pi NFT Art" class="w-full h-48 object-cover mb-4 rounded">
+          <h3 class="text-xl font-semibold mb-2">Pi NFT Art</h3>
+          <p class="text-gray-600 mb-2">Seller: PioneerC</p>
+          <p class="text-lg font-bold mb-4">50 Pi</p>
+          <div class="flex space-x-2">
+            <button class="btn add-to-cart" onclick="addToCart('Pi NFT Art', 50)">Add to Cart</button>
+            <button class="btn" onclick="buyNow('Pi NFT Art', 50)">Buy Now</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--primary-color)] py-8 text-[var(--text-color)]">
+      <div class="container mx-auto text-center">
+        <div class="mb-4">
+          <a href="https://www.facebook.com/reimaginetruthofficial/" target="_blank" class="mx-2 floating-effect"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://x.com/reimagine_truth" target="_blank" class="mx-2 floating-effect"><i class="fab fa-twitter"></i></a>
+          <a href="https://t.me/TruthWebOfficial" target="_blank" class="mx-2 floating-effect"><i class="fab fa-telegram"></i></a>
+          <a href="https://www.youtube.com/@ReimagineTruth" target="_blank" class="mx-2 floating-effect"><i class="fab fa-youtube"></i></a>
+          <a href="https://github.com/username/TruthWeb" target="_blank" class="mx-2 floating-effect"><i class="fab fa-github"></i></a>
+        </div>
+        <p class="mb-4">© 2025 TruthWeb. All rights reserved.</p>
+        <div class="text-sm">
+          <a href="about.html" class="mx-2 hover:text-[var(--highlight-color)]">About Us</a> |
+          <a href="terms.html" class="mx-2 hover:text-[var(--highlight-color)]">Terms & Conditions</a> |
+          <a href="privacy.html" class="mx-2 hover:text-[var(--highlight-color)]">Privacy Policy</a> |
+          <a href="contact.html" class="mx-2 hover:text-[var(--highlight-color)]">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript for Functionality and Animations -->
     <script>
+      let cartCount = 0;
+
+      // Add to Cart Function
+      function addToCart(productName, price) {
+        cartCount++;
+        updateCartCount();
+        alert(`${productName} added to cart for ${price} Pi!`);
+        // Animation for cart button
+        const cartBtn = document.querySelector('.cart-btn');
+        cartBtn.classList.add('animate-bounce');
+        setTimeout(() => cartBtn.classList.remove('animate-bounce'), 500);
+      }
+
+      // Buy Now Function
+      function buyNow(productName, price) {
+        alert(`Proceeding to buy ${productName} for ${price} Pi!`);
+        // Simulate instant purchase animation
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(card => {
+          if (card.querySelector('h3').textContent === productName) {
+            card.classList.add('animate-pulse');
+            setTimeout(() => card.classList.remove('animate-pulse'), 1000);
+          }
+        });
+      }
+
+      // Update Cart Count
+      function updateCartCount() {
+        const cartBtn = document.querySelector('.cart-btn');
+        cartBtn.setAttribute('data-count', cartCount);
+      }
+
+      // Sticky Header Scroll Effect
       window.addEventListener('scroll', function() {
         const header = document.querySelector('.sticky-header');
         if (window.scrollY > 50) {
