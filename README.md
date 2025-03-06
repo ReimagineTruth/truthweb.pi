@@ -48,7 +48,7 @@ We welcome contributions from the community! To contribute:
 4. Push to your forked repository and open a pull request.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the PiOS License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
 For inquiries and support, reach out via:
