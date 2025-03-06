@@ -111,27 +111,6 @@
         50% { transform: scale(1.05); }
         100% { transform: scale(1); }
       }
-      .chat-container {
-        max-height: 400px;
-        overflow-y: auto;
-        border: 1px solid var(--highlight-color);
-        padding: 1rem;
-        background: var(--secondary-color);
-        border-radius: 10px;
-      }
-      .chat-message {
-        margin-bottom: 1rem;
-        padding: 0.5rem;
-        border-radius: 5px;
-      }
-      .user-message {
-        background: #e0e0e0;
-        text-align: right;
-      }
-      .bot-message {
-        background: #f0f0f0;
-        text-align: left;
-      }
       footer {
         background: var(--primary-color);
         color: var(--text-color);
@@ -166,14 +145,14 @@
         color: var(--highlight-color);
         text-decoration: underline;
       }
-      /* Original WALL-E-like TruthWeb Bot Styles */
+      /* WALL-E-like TruthWeb Bot Styles */
       #truthweb-bot {
         position: absolute;
         width: 100px;
         height: 120px;
         transition: transform 0.5s ease;
         z-index: 5;
-        cursor: pointer; /* Indicate clickability */
+        cursor: pointer;
       }
       .bot-body {
         width: 80px;
@@ -279,6 +258,23 @@
         font-size: 12px;
         white-space: nowrap;
       }
+      .chat-iframe-container {
+        max-width: 100%;
+        margin: 0 auto;
+        height: 700px;
+      }
+      /* Static styles for TruthWeb Bot Assistance section */
+      #bot > h2, #bot > div:first-of-type > p {
+        animation: none; /* Remove fade-in for title and description */
+      }
+      #bot .chat-iframe-container.card {
+        transition: none; /* Remove hover effects for iframe container */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Static shadow */
+      }
+      #bot .chat-iframe-container.card:hover {
+        transform: none; /* No movement on hover */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Same as static */
+      }
     </style>
 </head>
 <body>
@@ -324,20 +320,21 @@
       <a href="#bot" class="btn mt-8">Chat with TruthWeb Bot</a>
     </div>
 
-    <!-- Bot Section -->
+    <!-- Bot Section (Static for Assistance) -->
     <section id="bot" class="py-16 px-4 relative">
-      <h2 class="text-3xl font-bold text-center mb-8 fade-in">TruthWeb Bot Assistance</h2>
+      <h2 class="text-3xl font-bold text-center mb-8">TruthWeb Bot Assistance</h2>
       <div class="max-w-4xl mx-auto mb-12">
-        <p class="text-lg text-center text-gray-600 fade-in">Ask TruthWeb Bot anything about the platform—marketplace tips, trading insights, or general help—all powered by advanced AI in real-time.</p>
+        <p class="text-lg text-center text-gray-600">Ask TruthWeb Bot anything about the platform—marketplace tips, trading insights, or general help—all powered by advanced AI in real-time.</p>
       </div>
      
-      <!-- Chat Interface -->
-      <div class="max-w-4xl mx-auto card">
-        <div class="chat-container" id="chat-container"></div>
-        <div class="mt-4 flex">
-          <input type="text" id="user-input" class="flex-grow p-2 border border-gray-300 rounded-l-lg outline-none" placeholder="Type your question here...">
-          <button id="send-btn" class="btn rounded-l-none">Send</button>
-        </div>
+      <!-- Chat Interface (Iframe) -->
+      <div class="max-w-4xl mx-auto card chat-iframe-container">
+        <iframe
+          src="https://www.chatbase.co/chatbot-iframe/jX4XPViu5ZOImWnc-SK7n"
+          width="100%"
+          style="height: 100%; min-height: 700px"
+          frameborder="0"
+        ></iframe>
       </div>
 
       <!-- TruthWeb Bot Character -->
@@ -358,9 +355,9 @@
         </div>
       </div>
 
-      <!-- How It Works -->
+      <!-- How It Works (Animated) -->
       <div class="max-w-6xl mx-auto mt-12">
-        <h3 class="text-2xl font-semibold text-center mb-6">How TruthWeb Bot Works</h3>
+        <h3 class="text-2xl font-semibold text-center mb-6 fade-in">How TruthWeb Bot Works</h3>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
           <div class="card text-center">
             <h4 class="text-lg font-semibold mb-2">Ask a Question</h4>
@@ -378,11 +375,10 @@
       </div>
     </section>
     
-     <div class="max-w-4xl mx-auto mb-12">
-        <h3 class="text-2xl font-semibold text-center mb-4">TruthWeb Bot's Life</h3>
-        <p class="text-lg text-center text-gray-600">TruthWeb Bot is our adorable WALL-E-like companion, living its own little life on TruthWeb. Watch it roam and express its emotions!</p>
-      </div>
-
+    <div class="max-w-4xl mx-auto mb-12">
+      <h3 class="text-2xl font-semibold text-center mb-4 fade-in">TruthWeb Bot's Life</h3>
+      <p class="text-lg text-center text-gray-600 fade-in">TruthWeb Bot is our adorable WALL-E-like companion, living its own little life on TruthWeb. Watch it roam and express its emotions!</p>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-[var(--primary-color)] py-8">
@@ -404,11 +400,8 @@
       </div>
     </footer>
 
-    <!-- JavaScript for Bot Functionality and Animation -->
+    <!-- JavaScript for Bot Animation -->
     <script>
-      const chatContainer = document.getElementById('chat-container');
-      const userInput = document.getElementById('user-input');
-      const sendBtn = document.getElementById('send-btn');
       const bot = document.getElementById('truthweb-bot');
       const activityText = document.getElementById('activity-text');
       const footer = document.querySelector('footer');
@@ -418,58 +411,14 @@
         happy: { text: "Feeling happy...", activity: "Waving at you..." },
         sad: { text: "Feeling sad...", activity: "Looking down..." },
         excited: { text: "So excited!", activity: "Bouncing around..." },
-        curious: { text: "Hmm, curious...", activity: "Reading your chat..." },
-        sleepy: { text: "Getting sleepy...", activity: "Resting a bit..." }
+        curious: { text: "Hmm, curious...", activity: "Exploring the page..." },
+        sleepy: { text: "Getting sleepy...", activity: "Resting a bit..." },
       };
 
       let botX = 100;
       let botY = 200;
       let stepSize = 2;
       let movementIntervalId;
-
-      // Simulated API response function (replace with actual API call)
-      async function getBotResponse(message) {
-        return new Promise(resolve => {
-          setTimeout(() => {
-            resolve(`TruthWeb Bot: Here's some insight for "${message}": I can assist with marketplace navigation, trading tips, or any TruthWeb feature. What specifically would you like help with?`);
-          }, 1000);
-        });
-      }
-
-      // Add message to chat
-      function addMessage(content, isUser = false) {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('chat-message', isUser ? 'user-message' : 'bot-message');
-        messageDiv.textContent = content;
-        chatContainer.appendChild(messageDiv);
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-
-        // Bot reacts to chat
-        if (isUser) {
-          changeEmotion('curious');
-        } else if (!content.startsWith('TruthWeb Bot: I’m')) { // Avoid overwriting click response
-          changeEmotion('happy');
-        }
-      }
-
-      // Handle sending message
-      sendBtn.addEventListener('click', async () => {
-        const message = userInput.value.trim();
-        if (!message) return;
-
-        addMessage(`You: ${message}`, true);
-        userInput.value = '';
-        sendBtn.disabled = true;
-
-        const response = await getBotResponse(message);
-        addMessage(response);
-
-        sendBtn.disabled = false;
-      });
-
-      userInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendBtn.click();
-      });
 
       // Bot Movement and Animation
       function updateBotPosition() {
@@ -552,9 +501,8 @@
 
       // Bot Click Response
       bot.addEventListener('click', () => {
-        const currentEmotion = bot.className || 'happy';
-        const response = `TruthWeb Bot: I’m ${emotions[currentEmotion].text.toLowerCase()}! How can I assist you today?`;
-        addMessage(response);
+        changeEmotion('excited');
+        setTimeout(() => randomEmotion(), 2000); // Revert to random after 2 seconds
       });
 
       // Initial setup
