@@ -112,7 +112,7 @@
         <a href="index.html" class="text-2xl font-bold">TruthWeb</a>
       </div>
       <div class="flex items-center space-x-4">
-        <a href="addtocart.html" class="cart-btn icon floating-effect" data-count="0">
+        <a href="#" class="cart-btn icon floating-effect" data-count="0">
           <i class="fas fa-shopping-cart text-xl"></i>
         </a>
         <a href="profile.html" class="icon floating-effect">
@@ -170,7 +170,7 @@
           <p class="text-gray-600 mb-2">Seller: PioneerA</p>
           <p class="text-lg font-bold mb-4">25 Pi</p>
           <div class="flex space-x-2">
-            <button class="btn add-to-cart" onclick="addToCart('Pi Smart Watch', 25)">Add to Cart</button>
+            <button class="btn add-to-cart" onclick="window.location.href='addtocart.html'; window.addToCart('Pi Smart Watch', 25)">Add to Cart</button>
             <button class="btn" onclick="buyNow('Pi Smart Watch', 25)">Buy Now</button>
           </div>
         </div>
@@ -181,7 +181,7 @@
           <p class="text-gray-600 mb-2">Seller: PioneerB</p>
           <p class="text-lg font-bold mb-4">15 Pi</p>
           <div class="flex space-x-2">
-            <button class="btn add-to-cart" onclick="addToCart('Pi T-Shirt', 15)">Add to Cart</button>
+            <button class="btn add-to-cart" onclick="window.location.href='addtocart.html'; window.addToCart('Pi T-Shirt', 15)">Add to Cart</button>
             <button class="btn" onclick="buyNow('Pi T-Shirt', 15)">Buy Now</button>
           </div>
         </div>
@@ -192,7 +192,7 @@
           <p class="text-gray-600 mb-2">Seller: PioneerC</p>
           <p class="text-lg font-bold mb-4">50 Pi</p>
           <div class="flex space-x-2">
-            <button class="btn add-to-cart" onclick="addToCart('Pi NFT Art', 50)">Add to Cart</button>
+            <button class="btn add-to-cart" onclick="window.location.href='addtocart.html'; window.addToCart('Pi NFT Art', 50)">Add to Cart</button>
             <button class="btn" onclick="buyNow('Pi NFT Art', 50)">Buy Now</button>
           </div>
         </div>
@@ -223,21 +223,22 @@
     <script>
       let cartCount = 0;
 
-      // Add to Cart Function
+      // Add to Cart Function (Updated to work with addtocart.html)
       function addToCart(productName, price) {
-        cartCount++;
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingItem = cart.find(item => item.name === productName);
+        if (existingItem) {
+          existingItem.quantity = (existingItem.quantity || 1) + 1;
+        } else {
+          cart.push({ name: productName, price: price, quantity: 1 });
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
         updateCartCount();
-        alert(`${productName} added to cart for ${price} Pi!`);
-        // Animation for cart button
-        const cartBtn = document.querySelector('.cart-btn');
-        cartBtn.classList.add('animate-bounce');
-        setTimeout(() => cartBtn.classList.remove('animate-bounce'), 500);
       }
 
       // Buy Now Function
       function buyNow(productName, price) {
         alert(`Proceeding to buy ${productName} for ${price} Pi!`);
-        // Simulate instant purchase animation
         const productCards = document.querySelectorAll('.product-card');
         productCards.forEach(card => {
           if (card.querySelector('h3').textContent === productName) {
@@ -249,6 +250,8 @@
 
       // Update Cart Count
       function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cartCount = cart.reduce((total, item) => total + (item.quantity || 1), 0);
         const cartBtn = document.querySelector('.cart-btn');
         cartBtn.setAttribute('data-count', cartCount);
       }
@@ -262,6 +265,9 @@
           header.classList.remove('scrolled');
         }
       });
+
+      // Initialize Cart Count on Page Load
+      document.addEventListener('DOMContentLoaded', updateCartCount);
     </script>
 </body>
 </html>
