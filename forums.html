@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Community Forums - TruthWeb</title>
+    <title>TruthWeb Forum - Community Discussions</title>
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome CDN -->
@@ -190,6 +190,17 @@
         color: var(--highlight-color);
         text-decoration: underline;
       }
+      .topic-meta {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 0.5rem;
+      }
+      .pinned {
+        border-left: 4px solid #ffd700;
+      }
+      .closed {
+        opacity: 0.7;
+      }
     </style>
 </head>
 <body>
@@ -217,10 +228,10 @@
     <nav class="bg-[var(--primary-color)] py-4">
       <ul class="flex flex-wrap justify-center space-x-4">
         <li class="nav-item"><a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="news.html">News</a></li>
         <li class="nav-item"><a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="marketplace.html">Marketplace</a></li>
-        <li class="nav-item"><a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="profile.html">Profile</a></li>
-        <li class="nav-item"><a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="wallet.html">Wallet</a></li>
-        <li class="nav-item"><a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect active" href="community.html">Community</a></li>
+        <li class="nav-item"><a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect active" href="forum.html">Forum</a></li>
+        <li class="nav-item"><a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="community.html">Community</a></li>
         <li class="nav-item"><a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="developers.html">Developers</a></li>
         <li class="nav-item"><a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="about.html">About</a></li>
       </ul>
@@ -228,75 +239,54 @@
 
     <!-- Hero Section -->
     <div class="hero flex flex-col items-center justify-center min-h-screen">
-      <h1 class="glow-text fade-in text-5xl md:text-7xl font-bold">Community Forums</h1>
-      <p class="text-xl mt-4 text-center fade-in" style="animation-delay: 0.5s; color: var(--text-color);">
-        Join Discussions with Fellow Pioneers
+      <h1 class="glow-text fade-in text-5xl md:text-7xl font-bold">TruthWeb Forum</h1>
+      <p class="text-xl mt-4 text-center fade-in" style="animation-delay: 0.5s; color: var(--text-color); max-width: 800px;">
+        March 06, 2025 - Join the conversation with Pioneers worldwide. Discuss TruthWeb updates, Pi ecosystem ideas, and more!
       </p>
+      <a href="https://t.me/TruthWebOfficial" target="_blank" class="btn mt-8">Join on Telegram</a>
     </div>
 
-    <!-- Forums Section -->
-    <section id="forums" class="py-16 px-4">
-      <h2 class="text-3xl font-bold text-center mb-8">Explore Forum Categories</h2>
-      <!-- Search and Filters -->
-      <div class="flex flex-wrap justify-between items-center mb-8 max-w-6xl mx-auto">
-        <input type="text" placeholder="Search forum topics" class="p-2 border border-gray-300 rounded w-full sm:w-1/2 lg:w-1/3">
-        <div class="mt-4 sm:mt-0 space-x-2">
-          <button class="btn">All</button>
-          <button class="btn">General</button>
-          <button class="btn">Pi Network</button>
-          <button class="btn">Tech Talk</button>
+    <!-- Forum Topics Section -->
+    <section id="forum-topics" class="py-16 px-4">
+      <h2 class="text-3xl font-bold text-center mb-8">Forum Topics</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <!-- Topic 1 (Pinned) -->
+        <div class="card pinned">
+          <h3 class="text-xl font-semibold mb-2">Welcome to TruthWeb Forum!</h3>
+          <p class="text-gray-600 mb-4">A pinned topic for new members. Share your thoughts and get started!</p>
+          <div class="topic-meta">
+            <span>ID: 1001 | Date: March 01, 2025</span><br>
+            <span>Messages: 25 | Unread: 3 | Pinned: Yes</span>
+          </div>
+          <a href="topic-1001.html" class="btn w-full mt-4">View Topic</a>
+        </div>
+        <!-- Topic 2 (Closed) -->
+        <div class="card closed">
+          <h3 class="text-xl font-semibold mb-2">Pi Transaction Feedback</h3>
+          <p class="text-gray-600 mb-4">Discuss your experience with Pi-powered transactions. [Closed]</p>
+          <div class="topic-meta">
+            <span>ID: 1002 | Date: March 03, 2025</span><br>
+            <span>Messages: 15 | Unread: 0 | Closed: Yes</span>
+          </div>
+          <a href="topic-1002.html" class="btn w-full mt-4">View Topic</a>
+        </div>
+        <!-- Topic 3 -->
+        <div class="card">
+          <h3 class="text-xl font-semibold mb-2">Developer Q&A</h3>
+          <p class="text-gray-600 mb-4">Ask questions about building on TruthWeb’s Pi ecosystem.</p>
+          <div class="topic-meta">
+            <span>ID: 1003 | Date: March 06, 2025</span><br>
+            <span>Messages: 10 | Unread: 2 | Mentions: 1</span>
+          </div>
+          <a href="topic-1003.html" class="btn w-full mt-4">Join Discussion</a>
         </div>
       </div>
-      <!-- Forum Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        <!-- General Discussion -->
-        <div class="card">
-          <img src="https://placehold.co/200x200" alt="General Discussion" class="w-full h-48 object-cover mb-4">
-          <h3 class="text-xl font-semibold mb-2">General Discussion</h3>
-          <p class="text-gray-600 mb-4">Chat about anything with Pioneers worldwide.</p>
-          <p class="text-gray-500 mb-4">Threads: 1,245 | Posts: 5,678</p>
-          <a href="#" class="btn w-full">Join Discussion</a>
-        </div>
-        <!-- Pi Network Updates -->
-        <div class="card">
-          <img src="https://placehold.co/200x200" alt="Pi Network Updates" class="w-full h-48 object-cover mb-4">
-          <h3 class="text-xl font-semibold mb-2">Pi Network Updates</h3>
-          <p class="text-gray-600 mb-4">Latest news and updates about Pi Network.</p>
-          <p class="text-gray-500 mb-4">Threads: 892 | Posts: 3,214</p>
-          <a href="#" class="btn w-full">Join Discussion</a>
-        </div>
-        <!-- Tech Talk -->
-        <div class="card">
-          <img src="https://placehold.co/200x200" alt="Tech Talk" class="w-full h-48 object-cover mb-4">
-          <h3 class="text-xl font-semibold mb-2">Tech Talk</h3>
-          <p class="text-gray-600 mb-4">Discuss blockchain and tech innovations.</p>
-          <p class="text-gray-500 mb-4">Threads: 567 | Posts: 2,345</p>
-          <a href="#" class="btn w-full">Join Discussion</a>
-        </div>
-        <!-- Trading Tips -->
-        <div class="card">
-          <img src="https://placehold.co/200x200" alt="Trading Tips" class="w-full h-48 object-cover mb-4">
-          <h3 class="text-xl font-semibold mb-2">Trading Tips</h3>
-          <p class="text-gray-600 mb-4">Share and learn Pi trading strategies.</p>
-          <p class="text-gray-500 mb-4">Threads: 423 | Posts: 1,890</p>
-          <a href="#" class="btn w-full">Join Discussion</a>
-        </div>
-        <!-- Project Ideas -->
-        <div class="card">
-          <img src="https://placehold.co/200x200" alt="Project Ideas" class="w-full h-48 object-cover mb-4">
-          <h3 class="text-xl font-semibold mb-2">Project Ideas</h3>
-          <p class="text-gray-600 mb-4">Collaborate on new Pi-related projects.</p>
-          <p class="text-gray-500 mb-4">Threads: 310 | Posts: 1,234</p>
-          <a href="#" class="btn w-full">Join Discussion</a>
-        </div>
-        <!-- Help & Support -->
-        <div class="card">
-          <img src="https://placehold.co/200x200" alt="Help & Support" class="w-full h-48 object-cover mb-4">
-          <h3 class="text-xl font-semibold mb-2">Help & Support</h3>
-          <p class="text-gray-600 mb-4">Get assistance from the Pioneer community.</p>
-          <p class="text-gray-500 mb-4">Threads: 678 | Posts: 2,987</p>
-          <a href="#" class="btn w-full">Join Discussion</a>
-        </div>
+
+      <!-- Call to Action -->
+      <div class="text-center mt-12">
+        <h3 class="text-2xl font-semibold mb-4">Start a New Topic</h3>
+        <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">Have an idea or question? Create your own forum topic and connect with the TruthWeb community!</p>
+        <a href="create-topic.html" class="btn">Create Topic</a>
       </div>
     </section>
 
