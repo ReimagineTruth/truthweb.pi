@@ -173,6 +173,7 @@
         height: 120px;
         transition: transform 0.5s ease;
         z-index: 5;
+        cursor: pointer; /* Indicate clickability */
       }
       .bot-body {
         width: 80px;
@@ -242,7 +243,7 @@
         top: 20px;
         left: -15px;
         transform-origin: top;
-        transition: transform 0.3s ease; /* Fixed from 'animation' to 'transform' */
+        transition: transform 0.3s ease;
       }
       .happy .bot-arm { animation: happyWave 1.5s infinite; }
       .sad .bot-arm { animation: sadWave 2s infinite; }
@@ -329,7 +330,7 @@
       <div class="max-w-4xl mx-auto mb-12">
         <p class="text-lg text-center text-gray-600 fade-in">Ask TruthWeb Bot anything about the platform—marketplace tips, trading insights, or general help—all powered by advanced AI in real-time.</p>
       </div>
-
+     
       <!-- Chat Interface -->
       <div class="max-w-4xl mx-auto card">
         <div class="chat-container" id="chat-container"></div>
@@ -376,6 +377,12 @@
         </div>
       </div>
     </section>
+    
+     <div class="max-w-4xl mx-auto mb-12">
+        <h3 class="text-2xl font-semibold text-center mb-4">TruthWeb Bot's Life</h3>
+        <p class="text-lg text-center text-gray-600">TruthWeb Bot is our adorable WALL-E-like companion, living its own little life on TruthWeb. Watch it roam and express its emotions!</p>
+      </div>
+
 
     <!-- Footer -->
     <footer class="bg-[var(--primary-color)] py-8">
@@ -440,7 +447,7 @@
         // Bot reacts to chat
         if (isUser) {
           changeEmotion('curious');
-        } else {
+        } else if (!content.startsWith('TruthWeb Bot: I’m')) { // Avoid overwriting click response
           changeEmotion('happy');
         }
       }
@@ -542,6 +549,13 @@
           scheduleEmotionChange();
         }, delay);
       }
+
+      // Bot Click Response
+      bot.addEventListener('click', () => {
+        const currentEmotion = bot.className || 'happy';
+        const response = `TruthWeb Bot: I’m ${emotions[currentEmotion].text.toLowerCase()}! How can I assist you today?`;
+        addMessage(response);
+      });
 
       // Initial setup
       changeEmotion('happy');
