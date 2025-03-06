@@ -149,6 +149,30 @@
       .nav-item:nth-child(7) { animation-delay: 0.7s; }
       .floating-effect { transition: transform 0.3s ease; }
       .floating-effect:hover { transform: translateY(-5px) rotate(5deg); }
+      .partner-card {
+        background: var(--secondary-color);
+        border: 2px solid var(--highlight-color);
+        border-radius: 10px;
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: slideIn 1s ease-in-out;
+        text-align: center;
+        color: var(--primary-color);
+      }
+      .partner-card:hover {
+        transform: translateY(-10px) rotate(2deg);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+      }
+      .partner-link {
+        color: var(--button-bg-color);
+        font-weight: 600;
+        text-decoration: underline;
+        transition: color 0.3s ease;
+      }
+      .partner-link:hover {
+        color: var(--button-hover-bg-color);
+      }
     </style>
 </head>
 <body>
@@ -186,51 +210,124 @@
       </p>
     </div>
 
-    <!-- Exchange Partners Section -->
-    <section id="exchange-partners" class="py-16 px-4">
-      <h2 class="text-3xl font-bold text-center mb-8">Trusted Partners for Safe Interactions</h2>
+    <!-- Our Exchange Partners Section -->
+    <section id="exchange-partners" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
+      <h2 class="text-3xl font-bold text-center mb-8 fade-in">Our Exchange Partners</h2>
+      <div class="max-w-6xl mx-auto text-center mb-6">
+        <p class="text-lg fade-in">
+          List of KYB-Verified Businesses integrated with Pi. Always refer to this list for safe interactions on Pi Mainnet.
+        </p>
+      </div>
+      <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+        <div class="partner-card">
+          <i class="fas fa-exchange-alt text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">OKX</h3>
+          <a href="https://www.okx.com/join/your-affiliate-id" target="_blank" class="partner-link">Join OKX</a>
+        </div>
+        <div class="partner-card">
+          <i class="fas fa-robot text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Pionex</h3>
+          <a href="https://www.pionex.com/en/sign/ref/your-affiliate-id" target="_blank" class="partner-link">Join Pionex</a>
+        </div>
+        <div class="partner-card">
+          <i class="fas fa-chart-line text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">Bitget</h3>
+          <a href="https://partner.bitget.com/bg/your-affiliate-id" target="_blank" class="partner-link">Join Bitget</a>
+        </div>
+        <div class="partner-card">
+          <i class="fas fa-coins text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">MEXC</h3>
+          <a href="https://www.mexc.com/register?inviteCode=your-affiliate-id" target="_blank" class="partner-link">Join MEXC</a>
+        </div>
+        <div class="partner-card">
+          <i class="fas fa-door-open text-4xl mb-4"></i> <!-- Replaced fa-gate with fa-door-open -->
+          <h3 class="text-xl font-semibold mb-2">Gate.io</h3>
+          <a href="https://www.gate.io/signup/your-affiliate-id" target="_blank" class="partner-link">Join Gate.io</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trusted Transactions Section -->
+    <section id="trusted-transactions" class="py-16 px-4">
+      <h2 class="text-3xl font-bold text-center mb-8">Ensuring Fairness in Every Trade</h2>
       <div class="max-w-6xl mx-auto">
         <!-- Overview -->
         <div class="mb-12 text-center">
           <p class="text-lg mb-6">
-            Below is a list of KYB-verified businesses integrated with Pi Mainnet. Always refer to this list to ensure safe and secure interactions on TruthWeb. These partners have been vetted for reliability and compliance.
+            TruthWeb’s Trusted Transactions system uses a neutral framework to protect both buyers and sellers, ensuring fair exchanges powered by Pi Network. With secure escrow and real-time verification, every trade is safe and reliable.
           </p>
         </div>
 
-        <!-- Partners List -->
+        <!-- How It Works -->
         <div class="mb-12">
-          <h3 class="text-2xl font-semibold mb-6 text-center">Verified Exchange Partners</h3>
+          <h3 class="text-2xl font-semibold mb-6 text-center">How It Works</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+            <div class="card text-center">
+              <i class="fas fa-handshake text-4xl mb-4"></i>
+              <h4 class="text-xl font-semibold mb-2">1. Agreement</h4>
+              <p class="text-gray-600">Buyer and seller agree on terms via TruthWeb.</p>
+            </div>
+            <div class="card text-center">
+              <i class="fas fa-lock text-4xl mb-4"></i>
+              <h4 class="text-xl font-semibold mb-2">2. Escrow Lock</h4>
+              <p class="text-gray-600">Funds are held securely in escrow until conditions are met.</p>
+            </div>
+            <div class="card text-center">
+              <i class="fas fa-check-circle text-4xl mb-4"></i>
+              <h4 class="text-xl font-semibold mb-2">3. Fair Release</h4>
+              <p class="text-gray-600">Funds released to seller upon buyer confirmation.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Benefits -->
+        <div class="mb-12">
+          <h3 class="text-2xl font-semibold mb-6 text-center">Benefits for All</h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <div class="card text-center">
-              <i class="fas fa-store text-4xl mb-4"></i>
-              <h4 class="text-xl font-semibold mb-2">PiShop</h4>
-              <p class="text-gray-600">E-commerce platform accepting Pi for goods.</p>
-              <a href="https://pishop.example.com" class="text-blue-600 hover:underline">Visit Site</a>
+              <h4 class="text-lg font-semibold mb-2">Buyer Protection</h4>
+              <p class="text-gray-600">Funds are only released when you’re satisfied.</p>
             </div>
             <div class="card text-center">
-              <i class="fas fa-exchange-alt text-4xl mb-4"></i>
-              <h4 class="text-xl font-semibold mb-2">PiTrade</h4>
-              <p class="text-gray-600">Service marketplace for Pi-based transactions.</p>
-              <a href="https://pitrade.example.com" class="text-blue-600 hover:underline">Visit Site</a>
+              <h4 class="text-lg font-semibold mb-2">Seller Assurance</h4>
+              <p class="text-gray-600">Get paid instantly once terms are fulfilled.</p>
             </div>
             <div class="card text-center">
-              <i class="fas fa-book text-4xl mb-4"></i>
-              <h4 class="text-xl font-semibold mb-2">PiLearn</h4>
-              <p class="text-gray-600">Educational content provider using Pi.</p>
-              <a href="https://pilearn.example.com" class="text-blue-600 hover:underline">Visit Site</a>
+              <h4 class="text-lg font-semibold mb-2">Neutral System</h4>
+              <p class="text-gray-600">A fair, unbiased process for every transaction.</p>
             </div>
-            <!-- Add more partners as needed -->
+          </div>
+        </div>
+
+        <!-- Example Transaction -->
+        <div class="mb-12">
+          <h3 class="text-2xl font-semibold mb-6 text-center">Trusted in Action</h3>
+          <div class="card p-6 mx-auto max-w-2xl">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <p class="font-semibold">Buyer: PioneerA</p>
+                <p class="text-gray-600">Purchased: Pi eBook (50 Pi)</p>
+              </div>
+              <div class="flex items-center justify-between">
+                <p class="font-semibold">Seller: VendorB</p>
+                <p class="text-gray-600">Funds Locked: Mar 5, 2025, 14:30</p>
+              </div>
+              <div class="flex items-center justify-between">
+                <p class="font-semibold">Confirmed & Released</p>
+                <p class="text-green-600">50 Pi - Mar 5, 2025, 14:36</p>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- Call to Action -->
         <div class="text-center">
-          <h3 class="text-2xl font-semibold mb-4">Engage with Confidence</h3>
+          <h3 class="text-2xl font-semibold mb-4">Trade with Confidence</h3>
           <p class="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
-            Interact safely with our verified partners on Pi Mainnet. Explore their offerings today!
+            Experience secure and fair transactions on TruthWeb. Start trading today!
           </p>
-          <a href="marketplace.html" class="btn mr-4">Visit Marketplace</a>
-          <a href="developers.html" class="btn">Become a Partner</a>
+          <a href="marketplace.html" class="btn mr-4">Start Trading</a>
+          <a href="escrow-system.html" class="btn">Learn About Escrow</a>
         </div>
       </div>
     </section>
