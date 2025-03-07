@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>TruthWeb Ledger Testnet | Transparent Profit Tracking</title>
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <style>
+      :root {
+        --primary-color: #000000;
+        --secondary-color: #FFFFFF;
+        --highlight-color: #CCCCCC;
+        --text-color: #FFFFFF;
+        --button-bg-color: #000000;
+        --button-text-color: #FFFFFF;
+        --button-hover-bg-color: #FFFFFF;
+        --button-hover-text-color: #000000;
+        --background-color: #FFFFFF;
+        --dog-accent: #FF8C00;
+        --rgb-red: #FF0000;
+        --rgb-green: #00FF00;
+        --rgb-blue: #0000FF;
+        --pi-gold: #FFD700;
+      }
+      body {
+        background: var(--background-color);
+        color: var(--primary-color);
+        font-family: 'Poppins', sans-serif;
+        overflow-x: hidden;
+      }
+      .sticky-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: var(--primary-color);
+        color: var(--text-color);
+        transition: background 0.3s ease, color 0.3s ease;
+        animation: slideDown 1s ease-in-out;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 64px;
+        padding: 0 1rem;
+      }
+      .sticky-header.scrolled {
+        background: var(--secondary-color);
+        color: var(--primary-color);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      }
+      .sticky-header .logo-text {
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+      .sticky-header .icon { color: inherit; }
+      @keyframes slideDown {
+        0% { transform: translateY(-100%); }
+        100% { transform: translateY(0); }
+      }
+      .nav-item {
+        transition: transform 0.3s ease;
+        animation: fadeInUp 0.5s ease-in-out forwards;
+      }
+      .nav-item:hover {
+        transform: scale(1.1) translateY(-5px);
+      }
+      @keyframes fadeInUp {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+      .nav-item:nth-child(1) { animation-delay: 0.1s; }
+      .nav-item:nth-child(2) { animation-delay: 0.2s; }
+      .nav-item:nth-child(3) { animation-delay: 0.3s; }
+      .nav-item:nth-child(4) { animation-delay: 0.4s; }
+      .nav-item:nth-child(5) { animation-delay: 0.5s; }
+      .nav-item:nth-child(6) { animation-delay: 0.6s; }
+      .floating-effect:hover {
+        transform: translateY(-5px) rotate(5deg);
+      }
+      .ledger-section {
+        background: var(--primary-color);
+        min-height: 1000px; /* Matches index.html #computer-room */
+        border-top: 4px solid var(--highlight-color);
+        border-bottom: 4px solid var(--highlight-color);
+        padding: 8rem 2rem; /* Matches index.html #computer-room */
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .ledger-section::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(204, 204, 204, 0.2), transparent);
+        opacity: 0.5;
+        z-index: 0;
+      }
+      .ledger-content {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+        width: 100%;
+        text-align: center;
+      }
+      h1 {
+        color: var(--text-color);
+        font-size: 3.5rem; /* Slightly larger than index.html h2 */
+        font-weight: 700;
+        text-shadow: 0 0 10px var(--highlight-color);
+        animation: glow 2s infinite alternate;
+      }
+      @keyframes glow {
+        0% { text-shadow: 0 0 10px var(--highlight-color); }
+        100% { text-shadow: 0 0 20px var(--highlight-color); }
+      }
+      .testnet-notice {
+        color: var(--pi-gold);
+        font-size: 1.2rem;
+        margin: 1rem 0;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 0.5rem;
+        border-radius: 5px;
+      }
+      .ledger-card {
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid var(--highlight-color);
+        border-radius: 15px;
+        padding: 2rem;
+        margin: 1rem auto; /* Centered like index.html cards */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+        max-width: 600px; /* Matches index.html card width */
+      }
+      .ledger-card:hover {
+        transform: translateY(-10px);
+      }
+      .ledger-title {
+        color: var(--pi-gold);
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      .ledger-value {
+        color: var(--text-color);
+        font-size: 2rem;
+        font-weight: 700;
+        text-shadow: 0 0 5px var(--highlight-color);
+      }
+      .transaction-list {
+        max-height: 400px;
+        overflow-y: auto;
+        background: rgba(0, 0, 0, 0.8);
+        border: 2px solid var(--highlight-color);
+        border-radius: 10px;
+        padding: 1rem;
+      }
+      .transaction-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem;
+        border-bottom: 1px solid var(--highlight-color);
+        color: var(--text-color);
+        font-size: 1rem;
+        animation: slideIn 0.5s ease-in-out;
+      }
+      @keyframes slideIn {
+        0% { opacity: 0; transform: translateX(-20px); }
+        100% { opacity: 1; transform: translateX(0); }
+      }
+      .bot-ledger {
+        position: absolute;
+        width: 100px;
+        height: 120px;
+        transition: transform 0.5s ease;
+        z-index: 5;
+        cursor: pointer;
+      }
+      .bot-body {
+        width: 80px;
+        height: 80px;
+        background: #999;
+        border-radius: 10px;
+        position: relative;
+        top: 20px;
+        left: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+      .bot-head {
+        width: 60px;
+        height: 40px;
+        background: #777;
+        border-radius: 5px;
+        position: absolute;
+        top: -20px;
+        left: 10px;
+      }
+      .bot-eyes {
+        display: flex;
+        justify-content: space-around;
+        padding: 10px;
+      }
+      .eye {
+        width: 15px;
+        height: 15px;
+        background: #fff;
+        border-radius: 50%;
+      }
+      .bot-wheels {
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        bottom: -10px;
+        width: 100%;
+      }
+      .wheel {
+        width: 20px;
+        height: 20px;
+        background: #555;
+        border-radius: 50%;
+      }
+      .activity-text {
+        position: absolute;
+        top: -35px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.9);
+        color: var(--pi-gold);
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        white-space: nowrap;
+      }
+      /* Profit Breakdown Chart */
+      .chart-container {
+        width: 100%;
+        max-width: 600px;
+        margin: 1rem auto;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-end;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid var(--highlight-color);
+        border-radius: 10px;
+        padding: 1rem;
+      }
+      .chart-bar {
+        width: 20%;
+        background: var(--pi-gold);
+        border-radius: 5px;
+        transition: height 1s ease;
+        position: relative;
+      }
+      .chart-bar span {
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: var(--text-color);
+        font-size: 0.9rem;
+      }
+      footer {
+        background: var(--primary-color);
+        color: var(--text-color);
+        text-align: center;
+        padding: 4rem 2rem;
+        animation: fadeIn 1.5s ease-in-out;
+        border-top: 4px solid var(--highlight-color);
+        position: relative;
+      }
+      footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, rgba(204, 204, 204, 0.1), transparent);
+        opacity: 0.3;
+        z-index: 0;
+      }
+      footer .container {
+        position: relative;
+        z-index: 1;
+      }
+      @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="sticky-header">
+      <div class="flex items-center">
+        <a class="text-inherit mr-4 flex items-center" href="index.html">
+          <span class="logo-text ml-2">TruthWeb</span>
+        </a>
+      </div>
+      <div class="flex items-center">
+        <a class="mr-4 icon floating-effect" href="marketplace.html">
+          <i class="fas fa-shopping-cart text-xl sm:text-2xl"></i>
+        </a>
+        <a class="mr-4 icon floating-effect" href="profile.html">
+          <i class="fas fa-user text-xl sm:text-2xl"></i>
+        </a>
+        <a class="icon floating-effect" href="wallet.html">
+          <i class="fas fa-wallet text-xl sm:text-2xl"></i>
+        </a>
+      </div>
+    </header>
+
+    <!-- Navigation Section -->
+    <nav class="bg-[var(--primary-color)] py-4">
+      <ul class="flex flex-wrap justify-center space-x-4">
+        <li class="nav-item">
+          <a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="marketplace.html">Marketplace</a>
+        </li>
+        <li class="nav-item">
+          <a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="profile.html">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="wallet.html">Wallet</a>
+        </li>
+        <li class="nav-item">
+          <a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="community.html">Community</a>
+        </li>
+        <li class="nav-item">
+          <a class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect" href="developers.html">Developers</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Ledger Section -->
+    <section class="ledger-section">
+      <div class="ledger-content">
+        <h1>TruthWeb Ledger Testnet - Cash Flow Bonanza!</h1>
+        <p class="testnet-notice">TESTNET MODE: This is a simulation, not an official wallet or balance!</p>
+        <p class="text-[var(--highlight-color)] text-xl mt-4">All funds & profits tracked on the Pi Network Blockchain (Testnet)</p>
+
+        <!-- Platform Earnings -->
+        <div class="ledger-card">
+          <h2 class="ledger-title">Platform Earnings (Real-Time Testnet)</h2>
+          <div class="ledger-value" id="platform-earnings">0.00 PI</div>
+          <p class="text-[var(--highlight-color)]">Escrow Fees: <span id="escrow-fees">0.00 PI</span></p>
+          <p class="text-[var(--highlight-color)]">Buy/Sell Fees: <span id="buy-sell-fees">0.00 PI</span></p>
+        </div>
+
+        <!-- Profit Breakdown Chart -->
+        <div class="ledger-card">
+          <h2 class="ledger-title">Profit Breakdown</h2>
+          <div class="chart-container">
+            <div class="chart-bar" id="escrow-bar"><span>Escrow: 0 PI</span></div>
+            <div class="chart-bar" id="buy-sell-bar"><span>Buy/Sell: 0 PI</span></div>
+            <div class="chart-bar" id="other-bar"><span>Other: 0 PI</span></div>
+          </div>
+        </div>
+
+        <!-- Your Wallet Balance -->
+        <div class="ledger-card">
+          <h2 class="ledger-title">Your Wallet Balance (Testnet)</h2>
+          <div class="ledger-value" id="wallet-balance">0.00 PI</div>
+          <p class="text-[var(--highlight-color)]">Pi Network Testnet Hash: <span id="wallet-hash">Loading...</span></p>
+        </div>
+
+        <!-- Transaction History -->
+        <div class="ledger-card">
+          <h2 class="ledger-title">Transaction History (Testnet)</h2>
+          <div class="transaction-list" id="transaction-list">
+            <!-- Transactions will be dynamically added here -->
+          </div>
+        </div>
+
+        <!-- TruthWeb Bot -->
+        <div id="ledger-bot" class="bot-ledger" style="left: 10%; top: 50%;">
+          <div class="activity-text" id="bot-activity">Counting Testnet PI...</div>
+          <div class="bot-body">
+            <div class="bot-head">
+              <div class="bot-eyes">
+                <div class="eye"></div>
+                <div class="eye"></div>
+              </div>
+            </div>
+            <div class="bot-wheels">
+              <div class="wheel"></div>
+              <div class="wheel"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+      <div class="container mx-auto">
+        <div class="mb-6 flex justify-center space-x-8">
+          <a class="text-[var(--text-color)] floating-effect hover:text-[var(--highlight-color)]" href="https://www.facebook.com/reimaginetruthofficial/" target="_blank"><i class="fab fa-facebook-f text-2xl"></i></a>
+          <a class="text-[var(--text-color)] floating-effect hover:text-[var(--highlight-color)]" href="https://x.com/reimagine_truth" target="_blank"><i class="fab fa-twitter text-2xl"></i></a>
+          <a class="text-[var(--text-color)] floating-effect hover:text-[var(--highlight-color)]" href="https://t.me/TruthWebOfficial" target="_blank"><i class="fab fa-telegram text-2xl"></i></a>
+          <a class="text-[var(--text-color)] floating-effect hover:text-[var(--highlight-color)]" href="https://www.youtube.com/@ReimagineTruth" target="_blank"><i class="fab fa-youtube text-2xl"></i></a>
+          <a class="text-[var(--text-color)] floating-effect hover:text-[var(--highlight-color)]" href="https://github.com/username/TruthWeb" target="_blank"><i class="fab fa-github text-2xl"></i></a>
+        </div>
+        <p class="text-[var(--text-color)] mb-6 text-lg">© 2025 TruthWeb. All rights reserved.</p>
+        <div class="text-[var(--text-color)] text-base flex justify-center space-x-6">
+          <a href="about.html" class="hover:text-[var(--highlight-color)] transition-colors">About Us</a>
+          <a href="terms.html" class="hover:text-[var(--highlight-color)] transition-colors">Terms & Conditions</a>
+          <a href="privacy.html" class="hover:text-[var(--highlight-color)] transition-colors">Privacy Policy</a>
+          <a href="contact.html" class="hover:text-[var(--highlight-color)] transition-colors">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+      // Header scroll effect
+      window.addEventListener('scroll', function() {
+        const header = document.querySelector('.sticky-header');
+        if (window.scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+
+      // Simulated testnet data
+      let platformEarnings = 0;
+      let escrowFees = 0;
+      let buySellFees = 0;
+      let otherFees = 0;
+      let walletBalance = 0;
+      const transactions = [];
+
+      // DOM Elements
+      const platformEarningsEl = document.getElementById('platform-earnings');
+      const escrowFeesEl = document.getElementById('escrow-fees');
+      const buySellFeesEl = document.getElementById('buy-sell-fees');
+      const walletBalanceEl = document.getElementById('wallet-balance');
+      const walletHashEl = document.getElementById('wallet-hash');
+      const transactionListEl = document.getElementById('transaction-list');
+      const escrowBar = document.getElementById('escrow-bar');
+      const buySellBar = document.getElementById('buy-sell-bar');
+      const otherBar = document.getElementById('other-bar');
+      const bot = document.getElementById('ledger-bot');
+      const botActivity = document.getElementById('bot-activity');
+
+      // Simulate real-time testnet updates
+      function updateLedger() {
+        platformEarnings += Math.random() * 0.5;
+        escrowFees += Math.random() * 0.2;
+        buySellFees += Math.random() * 0.3;
+        otherFees += Math.random() * 0.1;
+        walletBalance += Math.random() * 0.1;
+
+        platformEarningsEl.textContent = platformEarnings.toFixed(2) + ' PI';
+        escrowFeesEl.textContent = escrowFees.toFixed(2) + ' PI';
+        buySellFeesEl.textContent = buySellFees.toFixed(2) + ' PI';
+        walletBalanceEl.textContent = walletBalance.toFixed(2) + ' PI';
+        walletHashEl.textContent = '0x' + Math.random().toString(16).substr(2, 8);
+
+        // Update chart
+        const total = escrowFees + buySellFees + otherFees;
+        escrowBar.style.height = `${(escrowFees / total) * 180 || 10}px`;
+        buySellBar.style.height = `${(buySellFees / total) * 180 || 10}px`;
+        otherBar.style.height = `${(otherFees / total) * 180 || 10}px`;
+        escrowBar.querySelector('span').textContent = `Escrow: ${escrowFees.toFixed(2)} PI`;
+        buySellBar.querySelector('span').textContent = `Buy/Sell: ${buySellFees.toFixed(2)} PI`;
+        otherBar.querySelector('span').textContent = `Other: ${otherFees.toFixed(2)} PI`;
+
+        const types = ['Escrow Fee', 'Buy Fee', 'Sell Fee', 'Deposit'];
+        const type = types[Math.floor(Math.random() * types.length)];
+        const amount = (Math.random() * 5).toFixed(2);
+        const txHash = '0x' + Math.random().toString(16).substr(2, 8);
+        const time = new Date().toLocaleTimeString();
+        transactions.unshift({ type, amount, txHash, time });
+
+        transactionListEl.innerHTML = transactions.slice(0, 10).map(tx => `
+          <div class="transaction-item">
+            <span>${tx.type}: ${tx.amount} PI</span>
+            <span>${tx.txHash} - ${tx.time}</span>
+          </div>
+        `).join('');
+      }
+
+      // Bot movement and activity
+      let botX = 0;
+      let botY = 0;
+      const activities = [
+        'Counting Testnet PI...', 'Verifying test hashes...', 'Stacking test profits...', 'Sniffing test fees...'
+      ];
+
+      function moveBot() {
+        const section = document.querySelector('.ledger-section');
+        const maxX = section.offsetWidth - bot.offsetWidth - 20;
+        const maxY = section.offsetHeight - bot.offsetHeight - 20;
+        botX += (Math.random() * 10 - 5);
+        botY += (Math.random() * 10 - 5);
+        botX = Math.max(0, Math.min(botX, maxX));
+        botY = Math.max(0, Math.min(botY, maxY));
+        bot.style.left = `${botX}px`;
+        bot.style.top = `${botY}px`;
+        botActivity.textContent = activities[Math.floor(Math.random() * activities.length)];
+      }
+
+      // Initial update and intervals
+      updateLedger();
+      moveBot();
+      setInterval(updateLedger, 3000);
+      setInterval(moveBot, 2000);
+
+      // Bot click interaction
+      bot.addEventListener('click', () => {
+        botActivity.textContent = 'Woof! Testnet PI!';
+        setTimeout(moveBot, 1000);
+      });
+    </script>
+</body>
+</html>
