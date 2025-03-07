@@ -30,8 +30,9 @@
         padding: 0;
         overflow-x: hidden;
         line-height: 1.6;
+        padding-bottom: 60px; /* Space for footer menu */
       }
-      /* Header */
+      /* Header (X-Style with Hide/Show) */
       .sticky-header {
         position: fixed;
         top: 0;
@@ -39,7 +40,7 @@
         z-index: 1000;
         background: var(--primary-color);
         color: var(--text-color);
-        transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+        transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -47,15 +48,18 @@
         height: 64px;
         animation: slideInHeader 0.5s ease-out forwards;
       }
-      @keyframes slideInHeader {
-        from { transform: translateY(-100%); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
+      .sticky-header.hidden {
+        transform: translateY(-100%); /* Hide header on scroll down */
       }
       .sticky-header.scrolled {
         background: var(--secondary-color);
         color: var(--primary-color);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        transform: scale(0.98); /* Subtle iPhone shrink on scroll */
+        transform: scale(0.98);
+      }
+      @keyframes slideInHeader {
+        from { transform: translateY(-100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
       }
       .sticky-header .logo-text {
         font-size: 1.5rem;
@@ -73,7 +77,7 @@
         margin-left: 0.5rem;
         transition: transform 0.3s ease;
       }
-      .burger-btn:hover { transform: scale(1.1); } /* iPhone-like hover bounce */
+      .burger-btn:hover { transform: scale(1.1); }
       .burger-btn span {
         width: 100%;
         height: 3px;
@@ -94,7 +98,7 @@
         height: calc(100vh - 64px);
         background: var(--primary-color);
         color: var(--text-color);
-        transition: left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1); /* iPhone bounce easing */
+        transition: left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         z-index: 999;
         padding: 1rem;
         animation: fadeInMenu 0.4s ease-out forwards;
@@ -117,7 +121,7 @@
       }
       .mobile-menu .nav-item a:hover {
         color: var(--highlight-color);
-        transform: translateX(10px) scale(1.05); /* iPhone-like nudge */
+        transform: translateX(10px) scale(1.05);
       }
       /* Desktop Navigation */
       .desktop-nav { display: flex; }
@@ -130,7 +134,7 @@
         color: var(--highlight-color);
         transform: scale(1.1);
       }
-      /* Floating Search Bar (iPhone Spotlight Style) */
+      /* Floating Search Bar */
       .search-container {
         position: relative;
         flex-grow: 1;
@@ -147,13 +151,13 @@
         color: var(--primary-color);
         font-size: 1rem;
         outline: none;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* iPhone spring effect */
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       }
       .search-input:focus {
         border-color: var(--primary-color);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        transform: scale(1.02) translateY(-2px); /* Floating lift */
+        transform: scale(1.02) translateY(-2px);
       }
       .search-icon {
         position: absolute;
@@ -194,17 +198,17 @@
       }
       .search-result-item:hover {
         background: var(--highlight-color);
-        transform: scale(1.02); /* Subtle iPhone hover */
+        transform: scale(1.02);
       }
       /* Icons */
       .icon {
         color: var(--text-color);
         font-size: 1.25rem;
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* iPhone spring */
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         margin-left: 0.75rem;
       }
       .icon:hover {
-        transform: scale(1.15) rotate(5deg); /* iPhone-like bounce and tilt */
+        transform: scale(1.15) rotate(5deg);
       }
       /* Main Content */
       main { margin-top: 64px; }
@@ -250,7 +254,7 @@
         0% { text-shadow: 0 0 10px var(--highlight-color); }
         100% { text-shadow: 0 0 20px var(--highlight-color); }
       }
-      /* Enhanced Button (Twitter/X + iPhone Style) */
+      /* Enhanced Button */
       .btn {
         display: inline-flex;
         align-items: center;
@@ -265,7 +269,7 @@
         text-decoration: none;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* iPhone spring */
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         position: relative;
         z-index: 1;
         min-width: 100px;
@@ -275,7 +279,7 @@
       .btn:hover {
         background: var(--button-hover-bg-color);
         color: var(--button-hover-text-color);
-        transform: scale(1.05) translateY(-2px); /* iPhone lift */
+        transform: scale(1.05) translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       }
       .btn:active {
@@ -319,7 +323,7 @@
       }
       .feed-item:hover {
         background: rgba(204, 204, 204, 0.1);
-        transform: scale(1.01); /* Subtle iPhone lift */
+        transform: scale(1.01);
       }
       .feed-item:last-child { border-bottom: none; }
       .feed-header {
@@ -364,7 +368,7 @@
         gap: 0.25rem;
         padding: 0.2rem 0.5rem;
         border-radius: 9999px;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* iPhone spring */
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
       .feed-actions button i {
         font-size: 1rem;
@@ -372,7 +376,7 @@
       .feed-actions button:hover {
         background: var(--highlight-color);
         color: var(--primary-color);
-        transform: scale(1.1); /* iPhone bounce */
+        transform: scale(1.1);
       }
       .feed-banner {
         background: var(--secondary-color);
@@ -389,35 +393,33 @@
         border-radius: 8px;
         margin-bottom: 0.5rem;
       }
-      /* Footer */
-      footer {
+      /* X-Style Footer Menu */
+      .footer-menu {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
         background: var(--primary-color);
         color: var(--text-color);
-        padding: 2rem 1rem;
-        text-align: center;
-        animation: fadeInFooter 0.5s ease-out forwards;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 1000;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+        animation: slideInFooter 0.5s ease-out forwards;
       }
-      @keyframes fadeInFooter {
-        from { opacity: 0; }
-        to { opacity: 1; }
+      @keyframes slideInFooter {
+        from { transform: translateY(100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
       }
-      .footer-links a {
+      .footer-menu a {
         color: var(--text-color);
-        margin: 0 0.5rem;
-        transition: color 0.3s ease, transform 0.3s ease;
-      }
-      .footer-links a:hover {
-        color: var(--highlight-color);
-        transform: scale(1.1);
-      }
-      .social-icons a {
         font-size: 1.5rem;
-        color: var(--text-color);
-        margin: 0 0.75rem;
         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
-      .social-icons a:hover {
-        transform: scale(1.15) rotate(5deg); /* iPhone-like bounce */
+      .footer-menu a:hover {
+        transform: scale(1.2);
       }
       /* Responsive Design */
       @media (max-width: 640px) { /* Mobile */
@@ -443,17 +445,19 @@
         .glow-text { font-size: 2.5rem; }
         .btn { padding: 0.5rem 1.2rem; }
         .card i { font-size: 2.25rem; }
+        .footer-menu { display: none; } /* Hide footer menu on tablet/desktop */
       }
       @media (min-width: 1025px) { /* Desktop */
         .burger-btn { display: none; }
         .desktop-nav { display: flex; }
         .search-container { max-width: 400px; }
         .glow-text { font-size: 3rem; }
+        .footer-menu { display: none; } /* Hide footer menu on desktop */
       }
     </style>
 </head>
 <body>
-    <!-- Enhanced Header with iPhone Animations -->
+    <!-- Header with X-Style Hide/Show -->
     <header class="sticky-header">
         <div class="flex items-center">
             <a href="index.html" class="text-inherit flex items-center">
@@ -683,23 +687,14 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="social-icons mb-4">
-            <a href="/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="/" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="/" target="_blank"><i class="fab fa-telegram"></i></a>
-            <a href="/" target="_blank"><i class="fab fa-youtube"></i></a>
-            <a href="/" target="_blank"><i class="fab fa-github"></i></a>
-        </div>
-        <p class="text-sm mb-2">© 2025 TruthWeb. All rights reserved.</p>
-        <div class="footer-links text-sm">
-            <a href="about.html">About</a> |
-            <a href="terms.html">Terms</a> |
-            <a href="privacy.html">Privacy</a> |
-            <a href="contact.html">Contact</a>
-        </div>
-    </footer>
+    <!-- X-Style Footer Menu (Mobile Only) -->
+    <nav class="footer-menu">
+        <a href="index.html"><i class="fas fa-home"></i></a>
+        <a href="marketplace.html"><i class="fas fa-shopping-cart"></i></a>
+        <a href="profile.html"><i class="fas fa-user"></i></a>
+        <a href="wallet.html"><i class="fas fa-wallet"></i></a>
+        <a href="community.html"><i class="fas fa-users"></i></a>
+    </nav>
 
     <script>
       // Device Detection and Dynamic Adjustments
@@ -733,10 +728,19 @@
       window.addEventListener('load', adjustLayout);
       window.addEventListener('resize', adjustLayout);
 
-      // Header Scroll Effect
+      // Header Scroll Hide/Show Effect (X-Style)
+      let lastScroll = 0;
       window.addEventListener('scroll', () => {
         const header = document.querySelector('.sticky-header');
-        header.classList.toggle('scrolled', window.scrollY > 50);
+        const currentScroll = window.scrollY;
+
+        if (currentScroll > lastScroll && currentScroll > 50) {
+          header.classList.add('hidden'); // Hide on scroll down
+        } else if (currentScroll < lastScroll) {
+          header.classList.remove('hidden'); // Show on scroll up
+          header.classList.toggle('scrolled', currentScroll > 50);
+        }
+        lastScroll = currentScroll;
       });
 
       // Burger Menu Toggle
@@ -755,7 +759,7 @@
         });
       });
 
-      // Search Functionality with iPhone Animation
+      // Search Functionality
       const searchInput = document.querySelector('.search-input');
       const searchResults = document.querySelector('.search-results');
       const searchableContent = [];
