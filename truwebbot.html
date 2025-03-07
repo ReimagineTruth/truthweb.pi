@@ -119,6 +119,8 @@
         text-align: center;
         padding: 3rem 2rem;
         margin-top: 6rem;
+        position: relative;
+        z-index: 10;
       }
       .sticky-header {
         position: sticky;
@@ -291,6 +293,7 @@
         min-height: 700px;
         border-top: 3px solid var(--highlight-color);
         border-bottom: 3px solid var(--highlight-color);
+        position: relative;
       }
       .section-title {
         font-size: 2.5rem;
@@ -351,7 +354,6 @@
         top: 290px;
         border-radius: 3px;
       }
-      
     </style>
 </head>
 <body>
@@ -445,10 +447,6 @@
         </div>
         <div class="desk"></div>
         <div class="keyboard"></div>
-        <div class="charger"></div>
-        <div class="bed"></div>
-       
-        <div class="cat"></div>
         <div id="truthweb-bot" class="happy" style="left: 50%; top: 320px; transform: translateX(-50%);">
           <div class="activity-text" id="activity-text">Writing code...</div>
           <div class="bot-arm"></div>
@@ -488,12 +486,10 @@
       </div>
     </footer>
 
-    <!-- JavaScript for Bot Animation and Digital Clock -->
+    <!-- JavaScript for Bot Animation -->
     <script>
       const bot = document.getElementById('truthweb-bot');
       const activityText = document.getElementById('activity-text');
-      const clockTime = document.getElementById('clock-time');
-      const clockDate = document.getElementById('clock-date');
 
       const emotions = {
         happy: { text: "Feeling happy...", activity: "Writing code..." },
@@ -511,10 +507,14 @@
       // Bot Movement and Animation
       function updateBotPosition() {
         const room = document.getElementById('computer-room');
+        const footer = document.querySelector('footer');
+        const roomRect = room.getBoundingClientRect();
+        const footerRect = footer.getBoundingClientRect();
         const maxX = room.offsetWidth - bot.offsetWidth - 20;
-        const maxY = room.offsetHeight - bot.offsetHeight - 20;
+        // Limit botY to stay above the footer (relative to the room's top)
+        const maxY = room.offsetHeight - bot.offsetHeight - (footer.offsetHeight + 50); // 50px buffer
         botX = Math.max(-150, Math.min(botX, maxX - 150));
-        botY = Math.max(0, Math.min(botY, maxY - 320));
+        botY = Math.max(0, Math.min(botY, maxY - 320)); // Adjusted for initial top: 320px
         bot.style.transform = `translateX(calc(-50% + ${botX}px)) translateY(${botY}px)`;
       }
 
@@ -583,17 +583,6 @@
         const header = document.querySelector('.sticky-header');
         header.classList.toggle('scrolled', window.scrollY > 50);
       });
-
-      // Digital Clock
-      function updateClock() {
-        const now = new Date();
-        const time = now.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        const date = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-        clockTime.textContent = time;
-        clockDate.textContent = date;
-      }
-      updateClock();
-      setInterval(updateClock, 1000);
     </script>
 </body>
 </html>
