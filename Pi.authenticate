@@ -1,0 +1,3 @@
+const scopes = ['payments', 'username']; // Array of scopes
+function onIncompletePaymentFound(payment) { /* Handle incomplete payments */ }
+Pi.authenticate(scopes, onIncompletePaymentFound).then(auth => { /* Success */ }).catch(error => { /* Failure */ });
