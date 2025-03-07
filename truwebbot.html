@@ -351,110 +351,7 @@
         top: 290px;
         border-radius: 3px;
       }
-      .charger {
-        width: 50px;
-        height: 25px;
-        background: #444;
-        position: absolute;
-        left: 15%;
-        top: 400px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      }
-      .charger::after {
-        content: '';
-        width: 12px;
-        height: 12px;
-        background: #0f0;
-        position: absolute;
-        top: 6px;
-        right: 6px;
-        border-radius: 50%;
-        animation: chargeBlink 2s infinite;
-      }
-      @keyframes chargeBlink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-      }
-      .bed {
-        width: 120px;
-        height: 60px;
-        background: #666;
-        position: absolute;
-        right: 15%;
-        top: 420px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-      }
-      .digital-clock {
-        width: 180px; /* Increased width to fit time and date */
-        height: 100px; /* Increased height for better proportion */
-        background: #000;
-        position: absolute;
-        right: 10%;
-        top: 80px;
-        border: 2px solid #555;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        color: #0f0;
-        font-family: 'Courier New', Courier, monospace;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 10px;
-        overflow: hidden; /* Prevent text overflow */
-      }
-      .digital-clock .time {
-        font-size: 20px; /* Slightly increased for readability */
-        font-weight: 600;
-        white-space: nowrap; /* Ensure time stays on one line */
-      }
-      .digital-clock .date {
-        font-size: 16px; /* Slightly increased for balance */
-        margin-top: 8px; /* Adjusted spacing */
-        white-space: nowrap; /* Ensure date stays on one line */
-      }
-      .lights {
-        width: 25px;
-        height: 25px;
-        background: #ffeb3b;
-        position: absolute;
-        left: 10%;
-        top: 50px;
-        border-radius: 50%;
-        box-shadow: 0 0 20px #ffeb3b;
-        animation: lightFlicker 3s infinite;
-      }
-      @keyframes lightFlicker {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.7; }
-      }
-      .cat {
-        width: 60px;
-        height: 50px;
-        background: #888;
-        position: absolute;
-        right: 20%;
-        top: 480px;
-        border-radius: 15px 15px 0 0;
-        animation: catMove 5s infinite ease-in-out;
-      }
-      .cat::before, .cat::after {
-        content: '';
-        width: 12px;
-        height: 12px;
-        background: #fff;
-        position: absolute;
-        top: 10px;
-        border-radius: 50%;
-      }
-      .cat::before { left: 15px; }
-      .cat::after { right: 15px; }
-      @keyframes catMove {
-        0%, 100% { transform: translateX(0); }
-        50% { transform: translateX(25px); }
-      }
+      
     </style>
 </head>
 <body>
@@ -531,7 +428,7 @@
     <!-- Computer Room Section -->
     <section id="computer-room">
       <h2 class="section-title text-center">TruthWeb Bot's Computer Room</h2>
-      <p class="section-desc text-center">Watch TruthWeb Bot hard at work, creating code and relaxing with its cat in its cozy computer room.</p>
+      <p class="section-desc text-center">Watch TruthWeb Bot hard at work, coding tirelessly to support TruthWeb’s development in its cozy computer room.</p>
       <div class="relative max-w-4xl mx-auto">
         <div class="computer-screen">
           <div class="code-lines">
@@ -550,11 +447,7 @@
         <div class="keyboard"></div>
         <div class="charger"></div>
         <div class="bed"></div>
-        <div class="digital-clock">
-          <div class="time" id="clock-time"></div>
-          <div class="date" id="clock-date"></div>
-        </div>
-        <div class="lights"></div>
+       
         <div class="cat"></div>
         <div id="truthweb-bot" class="happy" style="left: 50%; top: 320px; transform: translateX(-50%);">
           <div class="activity-text" id="activity-text">Writing code...</div>
