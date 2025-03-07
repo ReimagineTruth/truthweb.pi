@@ -393,7 +393,7 @@
         border-radius: 8px;
         margin-bottom: 0.5rem;
       }
-      /* X-Style Footer Menu */
+      /* X-Style Footer Menu with Hide/Show */
       .footer-menu {
         position: fixed;
         bottom: 0;
@@ -407,7 +407,11 @@
         align-items: center;
         z-index: 1000;
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease; /* Smooth hide/show transition */
         animation: slideInFooter 0.5s ease-out forwards;
+      }
+      .footer-menu.hidden {
+        transform: translateY(100%); /* Hide footer on scroll down */
       }
       @keyframes slideInFooter {
         from { transform: translateY(100%); opacity: 0; }
@@ -687,7 +691,7 @@
         </section>
     </main>
 
-    <!-- X-Style Footer Menu (Mobile Only) -->
+    <!-- X-Style Footer Menu with Hide/Show -->
     <nav class="footer-menu">
         <a href="index.html"><i class="fas fa-home"></i></a>
         <a href="marketplace.html"><i class="fas fa-shopping-cart"></i></a>
@@ -728,16 +732,19 @@
       window.addEventListener('load', adjustLayout);
       window.addEventListener('resize', adjustLayout);
 
-      // Header Scroll Hide/Show Effect (X-Style)
+      // Header and Footer Scroll Hide/Show Effect (X-Style)
       let lastScroll = 0;
       window.addEventListener('scroll', () => {
         const header = document.querySelector('.sticky-header');
+        const footer = document.querySelector('.footer-menu');
         const currentScroll = window.scrollY;
 
         if (currentScroll > lastScroll && currentScroll > 50) {
-          header.classList.add('hidden'); // Hide on scroll down
+          header.classList.add('hidden'); // Hide header on scroll down
+          footer.classList.add('hidden'); // Hide footer on scroll down
         } else if (currentScroll < lastScroll) {
-          header.classList.remove('hidden'); // Show on scroll up
+          header.classList.remove('hidden'); // Show header on scroll up
+          footer.classList.remove('hidden'); // Show footer on scroll up
           header.classList.toggle('scrolled', currentScroll > 50);
         }
         lastScroll = currentScroll;
