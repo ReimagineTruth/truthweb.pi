@@ -6,7 +6,7 @@
     <title>Add to Cart - TruthWeb</title>
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome CDN (Updated to v6.5.1 for consistency with marketplace.html) -->
+    <!-- Font Awesome CDN (v6.5.1) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
     <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
@@ -86,9 +86,6 @@
         color: var(--highlight-color);
         text-decoration: underline;
       }
-      .progress-bar {
-        transition: width 3s ease-in-out;
-      }
     </style>
 </head>
 <body>
@@ -129,36 +126,9 @@
       <h2 class="text-3xl font-bold text-center mb-8 fade-in">Your Cart</h2>
       <div class="max-w-4xl mx-auto">
         <div id="cart-items" class="space-y-6"></div>
-        <div class="text-center mt-8">
+        <div id="cart-total" class="mt-8 text-center border-t-2 border-[var(--highlight-color)] pt-4"></div>
+        <div class="text-center mt-4">
           <button id="proceed-btn" class="btn" onclick="proceedToCheckout()" disabled>Proceed to Checkout</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Processing Section (Hidden Initially) -->
-    <section id="processing" class="py-16 px-4 hidden">
-      <h2 class="text-3xl font-bold text-center mb-8 fade-in">Processing Your Order</h2>
-      <div class="max-w-4xl mx-auto">
-        <div class="card p-6">
-          <p id="processing-status" class="text-lg font-bold text-yellow-600 mb-4">Processing...</p>
-          <div class="w-full bg-gray-200 rounded-full h-4">
-            <div id="progress-bar" class="bg-[var(--primary-color)] h-4 rounded-full progress-bar" style="width: 0%;"></div>
-          </div>
-          <p class="text-gray-600 mt-4">Time Remaining: <span id="processing-time">3s</span></p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Order Details Section (Hidden Initially) -->
-    <section id="order-details" class="py-16 px-4 hidden">
-      <h2 class="text-3xl font-bold text-center mb-8 fade-in">Order Confirmation</h2>
-      <div class="max-w-4xl mx-auto">
-        <div class="card p-6">
-          <p class="text-lg font-semibold mb-2">Order Successfully Placed!</p>
-          <div id="order-summary" class="mb-4"></div>
-          <p class="text-gray-600">Order Date: March 09, 2025</p>
-          <p class="text-gray-600">Status: <span class="text-green-600">Completed</span></p>
-          <a href="marketplace.html" class="btn mt-4">Back to Marketplace</a>
         </div>
       </div>
     </section>
@@ -183,11 +153,13 @@
       </div>
     </footer>
 
-    <!-- JavaScript for Cart, Processing, and Order -->
+    <!-- JavaScript for Cart and Checkout -->
     <script>
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
       const cartItemsDiv = document.getElementById('cart-items');
+      const cartTotalDiv = document.getElementById('cart-total');
       const proceedBtn = document.getElementById('proceed-btn');
+      const ESCROW_FEE_RATE = 0.05; // 5% escrow fee
 
       // Product varieties (example data)
       const productVarieties = {
@@ -196,11 +168,20 @@
         'Pi NFT Art': ['Edition 1', 'Edition 2', 'Edition 3']
       };
 
-      // Render Cart Items
+      // Calculate Total
+      function calculateTotal() {
+        const subtotal = cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
+        const escrowFee = subtotal * ESCROW_FEE_RATE;
+        const total = subtotal + escrowFee;
+        return { subtotal, escrowFee, total };
+      }
+
+      // Render Cart Items and Total
       function renderCart() {
         cartItemsDiv.innerHTML = '';
         if (cart.length === 0) {
           cartItemsDiv.innerHTML = '<p class="text-center text-gray-600">Your cart is empty.</p>';
+          cartTotalDiv.innerHTML = '';
           proceedBtn.disabled = true;
         } else {
           cart.forEach((item, index) => {
@@ -227,6 +208,12 @@
             `;
             cartItemsDiv.appendChild(itemDiv);
           });
+          const { subtotal, escrowFee, total } = calculateTotal();
+          cartTotalDiv.innerHTML = `
+            <p class="text-lg">Subtotal: <strong>${subtotal.toFixed(2)} Pi</strong></p>
+            <p class="text-lg">Platform Escrow Fee (5%): <strong>${escrowFee.toFixed(2)} Pi</strong></p>
+            <p class="text-xl font-bold">Total: <strong>${total.toFixed(2)} Pi</strong></p>
+          `;
           proceedBtn.disabled = false;
         }
       }
@@ -235,20 +222,20 @@
       function updateQuantity(index, value) {
         cart[index].quantity = parseInt(value);
         localStorage.setItem('cart', JSON.stringify(cart));
-        renderCart(); // Re-render to reflect updated quantity
+        renderCart();
       }
 
       // Update Variety
       function updateVariety(index, value) {
         cart[index].variety = value;
         localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
       }
 
-      // Proceed to Checkout (Updated to link to payment.html)
+      // Proceed to Checkout
       function proceedToCheckout() {
-        // Save the cart to localStorage (already done in update functions)
-        // Redirect to payment.html with a flag indicating cart checkout
-        window.location.href = 'payment.html?cart=true';
+        const { total } = calculateTotal();
+        window.location.href = `payment.html?cart=true&total=${total.toFixed(2)}`;
       }
 
       // Sticky Header Scroll Effect
