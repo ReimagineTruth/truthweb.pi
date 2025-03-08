@@ -30,7 +30,7 @@
         padding: 0;
         overflow-x: hidden;
         line-height: 1.6;
-        padding-bottom: 60px; /* Space for footer menu */
+        padding-bottom: 60px; /* Space for footer menu on mobile */
       }
       /* Header (X-Style with Hide/Show) */
       .sticky-header {
@@ -49,7 +49,7 @@
         animation: slideInHeader 0.5s ease-out forwards;
       }
       .sticky-header.hidden {
-        transform: translateY(-100%); /* Hide header on scroll down */
+        transform: translateY(-100%);
       }
       .sticky-header.scrolled {
         background: var(--secondary-color);
@@ -67,7 +67,6 @@
         transition: font-size 0.3s ease;
       }
       .sticky-header.scrolled .logo-text { font-size: 1.25rem; }
-      /* Burger Menu */
       .burger-btn {
         cursor: pointer;
         flex-direction: column;
@@ -108,10 +107,7 @@
         from { opacity: 0; }
         to { opacity: 1; }
       }
-      .mobile-menu ul {
-        list-style: none;
-        padding: 0;
-      }
+      .mobile-menu ul { list-style: none; padding: 0; }
       .mobile-menu .nav-item a {
         display: block;
         padding: 0.75rem;
@@ -123,7 +119,6 @@
         color: var(--highlight-color);
         transform: translateX(10px) scale(1.05);
       }
-      /* Desktop Navigation */
       .desktop-nav { display: flex; }
       .desktop-nav .nav-item a {
         color: var(--text-color);
@@ -134,7 +129,6 @@
         color: var(--highlight-color);
         transform: scale(1.1);
       }
-      /* Floating Search Bar */
       .search-container {
         position: relative;
         flex-grow: 1;
@@ -200,7 +194,6 @@
         background: var(--highlight-color);
         transform: scale(1.02);
       }
-      /* Icons */
       .icon {
         color: var(--text-color);
         font-size: 1.25rem;
@@ -210,7 +203,6 @@
       .icon:hover {
         transform: scale(1.15) rotate(5deg);
       }
-      /* Main Content */
       main { margin-top: 64px; }
       .hero {
         min-height: 100vh;
@@ -254,7 +246,6 @@
         0% { text-shadow: 0 0 10px var(--highlight-color); }
         100% { text-shadow: 0 0 20px var(--highlight-color); }
       }
-      /* Enhanced Button */
       .btn {
         display: inline-flex;
         align-items: center;
@@ -311,7 +302,6 @@
         transition: transform 0.3s ease;
       }
       .card:hover i { transform: scale(1.1); }
-      /* Twitter/X-Inspired Feed Styles */
       .feed-container {
         max-width: 600px;
         margin: 0 auto;
@@ -393,7 +383,7 @@
         border-radius: 8px;
         margin-bottom: 0.5rem;
       }
-      /* X-Style Footer Menu with Hide/Show */
+      /* Footer Menu (Fixed, Mobile-Only) */
       .footer-menu {
         position: fixed;
         bottom: 0;
@@ -407,11 +397,11 @@
         align-items: center;
         z-index: 1000;
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-        transition: transform 0.3s ease; /* Smooth hide/show transition */
+        transition: transform 0.3s ease;
         animation: slideInFooter 0.5s ease-out forwards;
       }
       .footer-menu.hidden {
-        transform: translateY(100%); /* Hide footer on scroll down */
+        transform: translateY(100%);
       }
       @keyframes slideInFooter {
         from { transform: translateY(100%); opacity: 0; }
@@ -424,6 +414,34 @@
       }
       .footer-menu a:hover {
         transform: scale(1.2);
+      }
+      /* Footer Navigation (Traditional Footer, All Devices) */
+      footer {
+        background: var(--primary-color);
+        color: var(--text-color);
+        text-align: center;
+        padding: 2rem 1rem;
+        position: relative;
+        z-index: 10; /* Ensure it sits above content but below footer-menu */
+      }
+      footer .social-icons a, footer .footer-links a {
+        color: var(--text-color);
+        transition: color 0.3s ease, transform 0.3s ease;
+      }
+      footer .social-icons a:hover, footer .footer-links a:hover {
+        color: var(--highlight-color);
+        transform: scale(1.1);
+      }
+      footer .social-icons {
+        margin-bottom: 1rem;
+      }
+      footer .social-icons a {
+        font-size: 1.25rem;
+        margin: 0 0.5rem;
+      }
+      footer .footer-links a {
+        margin: 0 0.5rem;
+        text-decoration: none;
       }
       /* Responsive Design */
       @media (max-width: 640px) { /* Mobile */
@@ -441,6 +459,12 @@
         .feed-container { max-width: 100%; padding: 0 0.5rem; }
         .feed-item img { max-width: 100%; }
         .feed-actions { max-width: 100%; }
+        footer {
+          padding-bottom: 80px; /* Extra padding to account for footer-menu */
+        }
+        footer .social-icons a, footer .footer-links a {
+          font-size: 0.9rem; /* Slightly smaller text on mobile */
+        }
       }
       @media (min-width: 641px) and (max-width: 1024px) { /* Tablet */
         .burger-btn { display: none; }
@@ -449,14 +473,20 @@
         .glow-text { font-size: 2.5rem; }
         .btn { padding: 0.5rem 1.2rem; }
         .card i { font-size: 2.25rem; }
-        .footer-menu { display: none; } /* Hide footer menu on tablet/desktop */
+        .footer-menu { display: none; }
+        footer .social-icons a, footer .footer-links a {
+          font-size: 1rem;
+        }
       }
       @media (min-width: 1025px) { /* Desktop */
         .burger-btn { display: none; }
         .desktop-nav { display: flex; }
         .search-container { max-width: 400px; }
         .glow-text { font-size: 3rem; }
-        .footer-menu { display: none; } /* Hide footer menu on desktop */
+        .footer-menu { display: none; }
+        footer .social-icons a, footer .footer-links a {
+          font-size: 1rem;
+        }
       }
     </style>
 </head>
@@ -469,7 +499,7 @@
             </a>
         </div>
         <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search TruthWeb...">
+            <input type="text" class="search-input" placeholder="Search TruthWeb..." aria-label="Search TruthWeb">
             <i class="fas fa-search search-icon"></i>
             <div class="search-results"></div>
         </div>
@@ -691,8 +721,8 @@
         </section>
     </main>
 
-    <!-- X-Style Footer Menu with Hide/Show -->
-    <nav class="footer-menu">
+    <!-- Footer Menu (Fixed, Mobile-Only) -->
+    <nav class="footer-menu" role="navigation" aria-label="Mobile Footer Navigation">
         <a href="index.html"><i class="fas fa-home"></i></a>
         <a href="marketplace.html"><i class="fas fa-shopping-cart"></i></a>
         <a href="profile.html"><i class="fas fa-user"></i></a>
@@ -700,6 +730,25 @@
         <a href="community.html"><i class="fas fa-users"></i></a>
     </nav>
 
+    <!-- Footer Navigation (Traditional Footer, All Devices) -->
+    <footer role="contentinfo">
+        <div class="social-icons mb-4">
+            <a href="https://www.facebook.com/reimaginetruthofficial/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://x.com/reimagine_truth" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://t.me/TruthWebOfficial" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+            <a href="https://www.youtube.com/@ReimagineTruth" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://github.com/username/TruthWeb" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+        <p class="text-sm mb-2">© 2025 TruthWeb. All rights reserved.</p>
+        <div class="footer-links text-sm">
+            <a href="about.html">About</a> |
+            <a href="terms.html">Terms</a> |
+            <a href="privacy.html">Privacy</a> |
+            <a href="contact.html">Contact</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
     <script>
       // Device Detection and Dynamic Adjustments
       function adjustLayout() {
@@ -736,15 +785,15 @@
       let lastScroll = 0;
       window.addEventListener('scroll', () => {
         const header = document.querySelector('.sticky-header');
-        const footer = document.querySelector('.footer-menu');
+        const footerMenu = document.querySelector('.footer-menu');
         const currentScroll = window.scrollY;
 
         if (currentScroll > lastScroll && currentScroll > 50) {
-          header.classList.add('hidden'); // Hide header on scroll down
-          footer.classList.add('hidden'); // Hide footer on scroll down
+          header.classList.add('hidden');
+          footerMenu.classList.add('hidden');
         } else if (currentScroll < lastScroll) {
-          header.classList.remove('hidden'); // Show header on scroll up
-          footer.classList.remove('hidden'); // Show footer on scroll up
+          header.classList.remove('hidden');
+          footerMenu.classList.remove('hidden');
           header.classList.toggle('scrolled', currentScroll > 50);
         }
         lastScroll = currentScroll;
