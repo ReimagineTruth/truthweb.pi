@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" name="viewport"/>
-    <title>TruthWeb - Payment Checkout</title>
+    <title>Payment - TruthWeb</title>
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome CDN (v6.5.1 for latest icons) -->
+    <!-- Font Awesome CDN (v6.5.1) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
     <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
@@ -30,7 +30,7 @@
         padding: 0;
         overflow-x: hidden;
         line-height: 1.6;
-        padding-bottom: 60px; /* Space for footer menu on mobile */
+        padding-bottom: 60px; /* Space for footer menu */
       }
       /* Header (X-Style with Hide/Show) */
       .sticky-header {
@@ -129,6 +129,10 @@
         color: var(--highlight-color);
         transform: scale(1.1);
       }
+      .desktop-nav .nav-item a.active {
+        font-weight: 700;
+        border-bottom: 2px solid var(--highlight-color);
+      }
       .search-container {
         position: relative;
         flex-grow: 1;
@@ -203,9 +207,20 @@
       .icon:hover {
         transform: scale(1.15) rotate(5deg);
       }
+      .cart-btn::after {
+        content: attr(data-count);
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: red;
+        color: white;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 12px;
+      }
       main { margin-top: 64px; }
       .hero {
-        min-height: 100vh;
+        min-height: 60vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -217,6 +232,7 @@
         position: relative;
         overflow: hidden;
         animation: fadeInHero 1s ease-out forwards;
+        border: 2px solid var(--highlight-color);
       }
       @keyframes fadeInHero {
         from { opacity: 0; transform: scale(0.95); }
@@ -278,110 +294,32 @@
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
       }
       section { padding: 2rem 1rem; }
-      .card {
+      .category-btn {
         background: var(--secondary-color);
         border: 1px solid var(--highlight-color);
         border-radius: 10px;
-        padding: 1.5rem;
-        text-align: center;
+        padding: 1rem;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+      }
+      .category-btn:hover {
+        transform: scale(1.05);
+        background-color: var(--highlight-color);
+      }
+      .product-card {
+        background: var(--secondary-color);
+        border: 2px solid var(--highlight-color);
+        border-radius: 10px;
+        padding: 1rem;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         animation: slideInCard 0.5s ease-out forwards;
       }
-      .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
       }
       @keyframes slideInCard {
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
-      }
-      .card i {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-        color: var(--primary-color);
-        transition: transform 0.3s ease;
-      }
-      .card:hover i { transform: scale(1.1); }
-      .feed-container {
-        max-width: 600px;
-        margin: 0 auto;
-      }
-      .feed-item {
-        padding: 1rem;
-        border-bottom: 1px solid var(--highlight-color);
-        transition: background 0.2s ease, transform 0.3s ease;
-      }
-      .feed-item:hover {
-        background: rgba(204, 204, 204, 0.1);
-        transform: scale(1.01);
-      }
-      .feed-item:last-child { border-bottom: none; }
-      .feed-header {
-        display: flex;
-        align-items: center;
-        margin-bottom: 0.5rem;
-      }
-      .feed-avatar {
-        font-size: 2rem;
-        margin-right: 0.75rem;
-        color: var(--primary-color);
-        transition: transform 0.3s ease;
-      }
-      .feed-item:hover .feed-avatar { transform: scale(1.1); }
-      .feed-user {
-        font-weight: 600;
-        font-size: 1rem;
-      }
-      .feed-time {
-        font-size: 0.85rem;
-        color: var(--highlight-color);
-        margin-left: 0.5rem;
-      }
-      .feed-content {
-        font-size: 1rem;
-        margin-bottom: 0.75rem;
-        line-height: 1.4;
-      }
-      .feed-actions {
-        display: flex;
-        justify-content: space-between;
-        max-width: 300px;
-      }
-      .feed-actions button {
-        background: none;
-        border: none;
-        color: var(--primary-color);
-        font-size: 0.85rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-        padding: 0.2rem 0.5rem;
-        border-radius: 9999px;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
-      .feed-actions button i {
-        font-size: 1rem;
-      }
-      .feed-actions button:hover {
-        background: var(--highlight-color);
-        color: var(--primary-color);
-        transform: scale(1.1);
-      }
-      .feed-banner {
-        background: var(--secondary-color);
-        border: 1px solid var(--highlight-color);
-        border-radius: 10px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        text-align: center;
-        animation: slideInCard 0.5s ease-out forwards;
-      }
-      .feed-banner img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        margin-bottom: 0.5rem;
       }
       /* Footer Menu (Fixed, Mobile-Only) */
       .footer-menu {
@@ -422,7 +360,7 @@
         text-align: center;
         padding: 2rem 1rem;
         position: relative;
-        z-index: 10; /* Ensure it sits above content but below footer-menu */
+        z-index: 10;
       }
       footer .social-icons a, footer .footer-links a {
         color: var(--text-color);
@@ -444,7 +382,7 @@
         text-decoration: none;
       }
       /* Responsive Design */
-      @media (max-width: 640px) { /* Mobile */
+      @media (max-width: 640px) {
         .burger-btn { display: flex; }
         .desktop-nav { display: none; }
         .search-container { max-width: 120px; margin: 0 0.5rem; }
@@ -453,159 +391,54 @@
         .icon { font-size: 1.1rem; margin-left: 0.5rem; }
         .glow-text { font-size: 1.75rem; }
         .btn { padding: 0.4rem 1rem; font-size: 0.85rem; min-width: 80px; }
-        .card i { font-size: 2rem; }
-        .card h3 { font-size: 1.25rem; }
         .section-title { font-size: 1.5rem; }
-        .feed-container { max-width: 100%; padding: 0 0.5rem; }
-        .feed-item img { max-width: 100%; }
-        .feed-actions { max-width: 100%; }
-        footer {
-          padding-bottom: 80px; /* Extra padding to account for footer-menu */
-        }
-        footer .social-icons a, footer .footer-links a {
-          font-size: 0.9rem; /* Slightly smaller text on mobile */
-        }
+        footer { padding-bottom: 80px; }
+        footer .social-icons a, footer .footer-links a { font-size: 0.9rem; }
       }
-      @media (min-width: 641px) and (max-width: 1024px) { /* Tablet */
+      @media (min-width: 641px) and (max-width: 1024px) {
         .burger-btn { display: none; }
         .desktop-nav { display: flex; }
         .search-container { max-width: 300px; }
         .glow-text { font-size: 2.5rem; }
         .btn { padding: 0.5rem 1.2rem; }
-        .card i { font-size: 2.25rem; }
         .footer-menu { display: none; }
-        footer .social-icons a, footer .footer-links a {
-          font-size: 1rem;
-        }
+        footer .social-icons a, footer .footer-links a { font-size: 1rem; }
       }
-      @media (min-width: 1025px) { /* Desktop */
+      @media (min-width: 1025px) {
         .burger-btn { display: none; }
         .desktop-nav { display: flex; }
         .search-container { max-width: 400px; }
         .glow-text { font-size: 3rem; }
         .footer-menu { display: none; }
-        footer .social-icons a, footer .footer-links a {
-          font-size: 1rem;
-        }
+        footer .social-icons a, footer .footer-links a { font-size: 1rem; }
       }
-
-      /* Payment-specific styles from payment.html */
-      .checkout-container {
-        text-align: center;
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 20px;
-        font-family: 'Poppins', sans-serif;
-      }
-
-      .section {
-        margin: 20px 0;
-      }
-
-      .instructions {
-        color: #666;
-        margin: 10px 0;
-      }
-
+      /* Additional Styles for Payment Page */
+      .checkout-container { max-width: 4xl; margin: 0 auto; }
+      .section { margin-bottom: 2rem; }
+      .instructions { margin-bottom: 1rem; }
       .wallet-input {
-        width: 90%;
-        text-align: center;
-        padding: 8px;
-        margin-bottom: 10px;
-        font-family: monospace;
+        width: 100%;
+        padding: 0.5rem;
         border: 1px solid var(--highlight-color);
-        border-radius: 4px;
+        border-radius: 5px;
+        background: var(--secondary-color);
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
       }
-
       .copy-button {
-        padding: 8px 16px;
-        cursor: pointer;
         background: var(--button-bg-color);
         color: var(--button-text-color);
+        padding: 0.5rem 1rem;
         border: 1px solid var(--highlight-color);
-        border-radius: 9999px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        text-decoration: none;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        position: relative;
-        z-index: 1;
-        min-width: 100px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
       }
-
       .copy-button:hover {
         background: var(--button-hover-bg-color);
         color: var(--button-hover-text-color);
-        transform: scale(1.05) translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       }
-
-      .copy-button:active {
-        transform: scale(0.98);
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-      }
-
-      img {
-        max-width: 100%;
-        height: auto;
-      }
-
-      h2, h3 {
-        color: var(--primary-color);
-      }
-
-      .qr-option {
-        max-width: 250px;
-        margin: 0 auto;
-      }
-
-      .iframe-container {
-        position: relative;
-        width: 100%;
-        padding-bottom: 20px;
-      }
-
-      .iframe-container iframe {
-        width: 100%;
-        max-width: 640px;
-        height: 1702px;
-        border: none;
-      }
-
-      @media (max-width: 640px) {
-        .iframe-container iframe {
-          height: 1800px;
-        }
-      }
-
-      /* QR Code Embed Styles */
-      .qr-embed-container {
-        position: relative;
-        width: 100%;
-        height: 0;
-        padding-top: 100%; /* Maintains 1:1 aspect ratio */
-        padding-bottom: 0;
-        box-shadow: 0 2px 8px 0 rgba(63, 69, 81, 0.16);
-        margin-top: 1.6em;
-        margin-bottom: 0.9em;
-        overflow: hidden;
-        border-radius: 8px;
-        will-change: transform;
-      }
-
-      .qr-embed-iframe {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        border: none;
-        padding: 0;
-        margin: 0;
-      }
+      .iframe-container { overflow: hidden; }
     </style>
 </head>
 <body>
@@ -617,7 +450,7 @@
             </a>
         </div>
         <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search TruthWeb..." aria-label="Search TruthWeb">
+            <input type="text" class="search-input" placeholder="Search TruthWeb..." aria-label="Search">
             <i class="fas fa-search search-icon"></i>
             <div class="search-results"></div>
         </div>
@@ -628,14 +461,14 @@
                     <li class="nav-item"><a href="marketplace.html">Marketplace</a></li>
                     <li class="nav-item"><a href="profile.html">Profile</a></li>
                     <li class="nav-item"><a href="wallet.html">Wallet</a></li>
-                    <li class="nav-item"><a href="payment.html">Payment</a></li>
+                    <li class="nav-item"><a href="payment.html" class="active">Payment</a></li>
                     <li class="nav-item"><a href="ledger-testnet.html">Ledger Testnet</a></li>
                     <li class="nav-item"><a href="community.html">Community</a></li>
                     <li class="nav-item"><a href="developers.html">Developers</a></li>
                     <li class="nav-item"><a href="about.html">About</a></li>
                 </ul>
             </nav>
-            <a href="marketplace.html" class="icon"><i class="fas fa-shopping-cart"></i></a>
+            <a href="marketplace.html" class="icon cart-btn" data-count="0"><i class="fas fa-shopping-cart"></i></a>
             <a href="profile.html" class="icon"><i class="fas fa-user"></i></a>
             <a href="wallet.html" class="icon"><i class="fas fa-wallet"></i></a>
             <div class="burger-btn">
@@ -653,7 +486,7 @@
             <li class="nav-item"><a href="marketplace.html">Marketplace</a></li>
             <li class="nav-item"><a href="profile.html">Profile</a></li>
             <li class="nav-item"><a href="wallet.html">Wallet</a></li>
-            <li class="nav-item"><a href="payment.html">Payment</a></li>
+            <li class="nav-item"><a href="payment.html" class="active">Payment</a></li>
             <li class="nav-item"><a href="ledger-testnet.html">Ledger Testnet</a></li>
             <li class="nav-item"><a href="community.html">Community</a></li>
             <li class="nav-item"><a href="developers.html">Developers</a></li>
@@ -661,19 +494,19 @@
         </ul>
     </nav>
 
-    <!-- Main Content (Payment-specific, styled to match index.html) -->
+    <!-- Main Content -->
     <main>
       <section class="hero">
         <h1 class="glow-text">Payment Checkout</h1>
         <p class="text-xl mt-4 md:text-2xl">Pay with Pi Network</p>
         <p class="text-sm mt-2 opacity-75">[This is a simulation, not official]</p>
+        <div id="product-details" class="mt-4 text-lg"></div>
       </section>
 
       <section id="payment" class="py-16 px-4">
-        <div class="checkout-container">
-          <!-- QR Code Section -->
+        <div class="checkout-container max-w-4xl mx-auto">
           <div class="section">
-            <p class="instructions">Scan the QR code below or copy the wallet address to send your Pi payment.</p>
+            <p class="instructions" id="payment-instructions">Scan the QR code below or copy the wallet address to send your Pi payment.</p>
             <div class="qr-option">
               <div class="qr-embed-container">
                 <iframe loading="lazy" class="qr-embed-iframe"
@@ -684,7 +517,6 @@
             </div>
           </div>
 
-          <!-- Wallet Address Section -->
           <div class="section">
             <p><strong>Wallet Address:</strong></p>
             <div>
@@ -702,7 +534,6 @@
             </div>
           </div>
 
-          <!-- Payment Confirmation Section -->
           <div class="section">
             <h3>Payment Confirmation</h3>
             <p class="instructions">After sending your Pi payment, upload your proof using the form below.</p>
@@ -716,20 +547,11 @@
             </div>
           </div>
 
-          <!-- New Shipping Address Section -->
           <div class="section">
             <h3>Shipping Address</h3>
             <p class="instructions">After confirming your payment, please fill up your address below to process the order.</p>
             <div class="iframe-container">
-              <!-- Placeholder for address form (e.g., another Google Form iframe or custom form) -->
               <p class="text-sm text-gray-500">[Insert address form here - replace with actual form or link]</p>
-              <!-- Example: Replace with an iframe or custom form -->
-              <!-- <iframe src="https://docs.google.com/forms/d/e/[YOUR_FORM_ID]/viewform?embedded=true" 
-                      width="640" 
-                      height="800" 
-                      frameborder="0" 
-                      marginheight="0" 
-                      marginwidth="0">Loading…</iframe> -->
             </div>
           </div>
         </div>
@@ -745,7 +567,7 @@
         <a href="community.html"><i class="fas fa-users"></i></a>
     </nav>
 
-    <!-- Footer Navigation (Traditional Footer, All Devices) -->
+    <!-- Footer Navigation -->
     <footer role="contentinfo">
         <div class="social-icons mb-4">
             <a href="https://www.facebook.com/reimaginetruthofficial/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -765,6 +587,8 @@
 
     <!-- Scripts -->
     <script>
+      const ESCROW_FEE_RATE = 0.05; // 5% escrow fee
+
       // Device Detection and Dynamic Adjustments
       function adjustLayout() {
         const width = window.innerWidth;
@@ -775,13 +599,11 @@
         const burgerBtn = document.querySelector('.burger-btn');
         const desktopNav = document.querySelector('.desktop-nav');
         const searchContainer = document.querySelector('.search-container');
-        const cards = document.querySelectorAll('.card');
 
         if (isMobile) {
           burgerBtn.style.display = 'flex';
           desktopNav.style.display = 'none';
           searchContainer.style.maxWidth = '120px';
-          cards.forEach(card => card.style.marginBottom = '1rem');
         } else if (isTablet) {
           burgerBtn.style.display = 'none';
           desktopNav.style.display = 'flex';
@@ -796,7 +618,7 @@
       window.addEventListener('load', adjustLayout);
       window.addEventListener('resize', adjustLayout);
 
-      // Header and Footer Scroll Hide/Show Effect (X-Style)
+      // Header and Footer Scroll Hide/Show Effect
       let lastScroll = 0;
       window.addEventListener('scroll', () => {
         const header = document.querySelector('.sticky-header');
@@ -882,7 +704,7 @@
         }
       });
 
-      // Payment-specific JavaScript from payment.html
+      // Copy Wallet Address
       async function copyWallet() {
         const copyText = document.getElementById("walletAddress");
         const button = event.target;
@@ -899,6 +721,52 @@
           alert('Failed to copy wallet address. Please copy it manually.');
         }
       }
+
+      // Display Product or Cart Details with Escrow Fee
+      document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const product = urlParams.get('product');
+        const price = urlParams.get('price');
+        const isCart = urlParams.get('cart') === 'true';
+        const totalFromCart = urlParams.get('total');
+        const productDetails = document.getElementById('product-details');
+        const paymentInstructions = document.getElementById('payment-instructions');
+
+        if (isCart) {
+          const cart = JSON.parse(localStorage.getItem('cart')) || [];
+          if (cart.length > 0) {
+            const subtotal = cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
+            const escrowFee = subtotal * ESCROW_FEE_RATE;
+            const total = totalFromCart ? parseFloat(totalFromCart) : subtotal + escrowFee;
+            productDetails.innerHTML = `
+              Your cart (${cart.length} items):<br>
+              ${cart.map(item => `${item.name} - ${item.price} Pi (Qty: ${item.quantity || 1}${item.variety ? ', Variety: ' + item.variety : ''})`).join('<br>')}<br>
+              <p>Subtotal: <strong>${subtotal.toFixed(2)} Pi</strong></p>
+              <p>Platform Escrow Fee (5%): <strong>${escrowFee.toFixed(2)} Pi</strong></p>
+              <p class="text-xl font-bold">Total: <strong>${total.toFixed(2)} Pi</strong></p>
+            `;
+            paymentInstructions.textContent = `Scan the QR code below or copy the wallet address to send ${total.toFixed(2)} Pi for your order.`;
+            localStorage.removeItem('cart'); // Clear cart after payment page is reached
+          } else {
+            productDetails.innerHTML = 'Your cart is empty.';
+            paymentInstructions.textContent = 'No payment required.';
+          }
+        } else if (product && price) {
+          const priceNum = parseFloat(price);
+          const escrowFee = priceNum * ESCROW_FEE_RATE;
+          const total = priceNum + escrowFee;
+          productDetails.innerHTML = `
+            You are purchasing: <strong>${decodeURIComponent(product)}</strong><br>
+            <p>Price: <strong>${priceNum.toFixed(2)} Pi</strong></p>
+            <p>Platform Escrow Fee (5%): <strong>${escrowFee.toFixed(2)} Pi</strong></p>
+            <p class="text-xl font-bold">Total: <strong>${total.toFixed(2)} Pi</strong></p>
+          `;
+          paymentInstructions.textContent = `Scan the QR code below or copy the wallet address to send ${total.toFixed(2)} Pi for your purchase.`;
+        } else {
+          productDetails.innerHTML = 'No product or cart selected. Please return to the Marketplace.';
+          paymentInstructions.textContent = 'No payment required.';
+        }
+      });
     </script>
 </body>
 </html>
