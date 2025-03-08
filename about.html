@@ -303,6 +303,7 @@
         transition: transform 0.3s ease;
       }
       .card:hover i { transform: scale(1.1); }
+      /* Footer Menu (Fixed, Mobile-Only) */
       .footer-menu {
         position: fixed;
         bottom: 0;
@@ -334,6 +335,35 @@
       .footer-menu a:hover {
         transform: scale(1.2);
       }
+      /* Footer Navigation (Traditional Footer, All Devices) */
+      footer {
+        background: var(--primary-color);
+        color: var(--text-color);
+        text-align: center;
+        padding: 2rem 1rem;
+        position: relative;
+        z-index: 10;
+      }
+      footer .social-icons a, footer .footer-links a {
+        color: var(--text-color);
+        transition: color 0.3s ease, transform 0.3s ease;
+      }
+      footer .social-icons a:hover, footer .footer-links a:hover {
+        color: var(--highlight-color);
+        transform: scale(1.1);
+      }
+      footer .social-icons {
+        margin-bottom: 1rem;
+      }
+      footer .social-icons a {
+        font-size: 1.25rem;
+        margin: 0 0.5rem;
+      }
+      footer .footer-links a {
+        margin: 0 0.5rem;
+        text-decoration: none;
+      }
+      /* Responsive Design */
       @media (max-width: 640px) {
         .burger-btn { display: flex; }
         .desktop-nav { display: none; }
@@ -346,6 +376,12 @@
         .card i { font-size: 2rem; }
         .card h3 { font-size: 1.25rem; }
         .section-title { font-size: 1.5rem; }
+        footer {
+          padding-bottom: 80px; /* Extra padding for footer-menu */
+        }
+        footer .social-icons a, footer .footer-links a {
+          font-size: 0.9rem;
+        }
       }
       @media (min-width: 641px) and (max-width: 1024px) {
         .burger-btn { display: none; }
@@ -355,6 +391,9 @@
         .btn { padding: 0.5rem 1.2rem; }
         .card i { font-size: 2.25rem; }
         .footer-menu { display: none; }
+        footer .social-icons a, footer .footer-links a {
+          font-size: 1rem;
+        }
       }
       @media (min-width: 1025px) {
         .burger-btn { display: none; }
@@ -362,6 +401,9 @@
         .search-container { max-width: 400px; }
         .glow-text { font-size: 3rem; }
         .footer-menu { display: none; }
+        footer .social-icons a, footer .footer-links a {
+          font-size: 1rem;
+        }
       }
     </style>
 </head>
@@ -374,7 +416,7 @@
             </a>
         </div>
         <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search TruthWeb...">
+            <input type="text" class="search-input" placeholder="Search TruthWeb..." aria-label="Search TruthWeb">
             <i class="fas fa-search search-icon"></i>
             <div class="search-results"></div>
         </div>
@@ -475,8 +517,8 @@
         </section>
     </main>
 
-    <!-- X-Style Footer Menu with Hide/Show -->
-    <nav class="footer-menu">
+    <!-- Footer Menu (Fixed, Mobile-Only) -->
+    <nav class="footer-menu" role="navigation" aria-label="Mobile Footer Navigation">
         <a href="index.html"><i class="fas fa-home"></i></a>
         <a href="marketplace.html"><i class="fas fa-shopping-cart"></i></a>
         <a href="profile.html"><i class="fas fa-user"></i></a>
@@ -484,6 +526,25 @@
         <a href="community.html"><i class="fas fa-users"></i></a>
     </nav>
 
+    <!-- Footer Navigation (Traditional Footer, All Devices) -->
+    <footer role="contentinfo">
+        <div class="social-icons mb-4">
+            <a href="https://www.facebook.com/reimaginetruthofficial/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://x.com/reimagine_truth" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://t.me/TruthWebOfficial" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+            <a href="https://www.youtube.com/@ReimagineTruth" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://github.com/username/TruthWeb" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        </div>
+        <p class="text-sm mb-2">© 2025 TruthWeb. All rights reserved.</p>
+        <div class="footer-links text-sm">
+            <a href="about.html">About</a> |
+            <a href="terms.html">Terms</a> |
+            <a href="privacy.html">Privacy</a> |
+            <a href="contact.html">Contact</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
     <script>
       // Device Detection and Dynamic Adjustments
       function adjustLayout() {
@@ -520,15 +581,15 @@
       let lastScroll = 0;
       window.addEventListener('scroll', () => {
         const header = document.querySelector('.sticky-header');
-        const footer = document.querySelector('.footer-menu');
+        const footerMenu = document.querySelector('.footer-menu');
         const currentScroll = window.scrollY;
 
         if (currentScroll > lastScroll && currentScroll > 50) {
           header.classList.add('hidden');
-          footer.classList.add('hidden');
+          footerMenu.classList.add('hidden');
         } else if (currentScroll < lastScroll) {
           header.classList.remove('hidden');
-          footer.classList.remove('hidden');
+          footerMenu.classList.remove('hidden');
           header.classList.toggle('scrolled', currentScroll > 50);
         }
         lastScroll = currentScroll;
