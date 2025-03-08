@@ -434,6 +434,7 @@
                     <li class="nav-item"><a href="marketplace.html" class="active">Marketplace</a></li>
                     <li class="nav-item"><a href="profile.html">Profile</a></li>
                     <li class="nav-item"><a href="wallet.html">Wallet</a></li>
+                    <li class="nav-item"><a href="payment.html">Payment</a></li>
                     <li class="nav-item"><a href="ledger-testnet.html">Ledger Testnet</a></li>
                     <li class="nav-item"><a href="community.html">Community</a></li>
                     <li class="nav-item"><a href="developers.html">Developers</a></li>
@@ -458,6 +459,7 @@
             <li class="nav-item"><a href="marketplace.html" class="active">Marketplace</a></li>
             <li class="nav-item"><a href="profile.html">Profile</a></li>
             <li class="nav-item"><a href="wallet.html">Wallet</a></li>
+            <li class="nav-item"><a href="payment.html">Payment</a></li>
             <li class="nav-item"><a href="ledger-testnet.html">Ledger Testnet</a></li>
             <li class="nav-item"><a href="community.html">Community</a></li>
             <li class="nav-item"><a href="developers.html">Developers</a></li>
@@ -684,12 +686,16 @@
         }
         localStorage.setItem('cart', JSON.stringify(cart));
         updateCartCount();
-        window.location.href = 'addtocart.html'; // Redirect preserved from original
+        window.location.href = 'addtocart.html'; // Redirect to cart page
       }
 
-      // Buy Now Function
+      // Buy Now Function (Updated to link to payment.html)
       function buyNow(productName, price) {
-        alert(`Proceeding to buy ${productName} for ${price} Pi!`);
+        // Encode product name to handle spaces and special characters
+        const encodedProductName = encodeURIComponent(productName);
+        // Redirect to payment.html with product details as URL parameters
+        window.location.href = `payment.html?product=${encodedProductName}&price=${price}`;
+        // Optional: Add animation for feedback
         const productCards = document.querySelectorAll('.product-card');
         productCards.forEach(card => {
           if (card.querySelector('h3').textContent === productName) {
