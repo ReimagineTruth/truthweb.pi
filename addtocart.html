@@ -6,8 +6,8 @@
     <title>Add to Cart - TruthWeb</title>
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome CDN -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <!-- Font Awesome CDN (Updated to v6.5.1 for consistency with marketplace.html) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
     <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
     <style>
@@ -117,6 +117,7 @@
         <li><a href="marketplace.html" class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect active">Marketplace</a></li>
         <li><a href="profile.html" class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect">Profile</a></li>
         <li><a href="wallet.html" class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect">Wallet</a></li>
+        <li><a href="payment.html" class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect">Payment</a></li>
         <li><a href="community.html" class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect">Community</a></li>
         <li><a href="developers.html" class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect">Developers</a></li>
         <li><a href="about.html" class="text-[var(--text-color)] hover:text-[var(--highlight-color)] floating-effect">About</a></li>
@@ -129,7 +130,7 @@
       <div class="max-w-4xl mx-auto">
         <div id="cart-items" class="space-y-6"></div>
         <div class="text-center mt-8">
-          <button id="proceed-btn" class="btn" onclick="proceedToProcessing()" disabled>Proceed to Checkout</button>
+          <button id="proceed-btn" class="btn" onclick="proceedToCheckout()" disabled>Proceed to Checkout</button>
         </div>
       </div>
     </section>
@@ -155,7 +156,7 @@
         <div class="card p-6">
           <p class="text-lg font-semibold mb-2">Order Successfully Placed!</p>
           <div id="order-summary" class="mb-4"></div>
-          <p class="text-gray-600">Order Date: March 06, 2025</p>
+          <p class="text-gray-600">Order Date: March 09, 2025</p>
           <p class="text-gray-600">Status: <span class="text-green-600">Completed</span></p>
           <a href="marketplace.html" class="btn mt-4">Back to Marketplace</a>
         </div>
@@ -234,6 +235,7 @@
       function updateQuantity(index, value) {
         cart[index].quantity = parseInt(value);
         localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart(); // Re-render to reflect updated quantity
       }
 
       // Update Variety
@@ -242,34 +244,11 @@
         localStorage.setItem('cart', JSON.stringify(cart));
       }
 
-      // Proceed to Processing
-      function proceedToProcessing() {
-        document.getElementById('cart').classList.add('hidden');
-        document.getElementById('processing').classList.remove('hidden');
-        
-        let seconds = 3;
-        const progressBar = document.getElementById('progress-bar');
-        const processingTime = document.getElementById('processing-time');
-        const timer = setInterval(() => {
-          seconds--;
-          processingTime.textContent = `${seconds}s`;
-          progressBar.style.width = `${((3 - seconds) / 3) * 100}%`;
-          if (seconds <= 0) {
-            clearInterval(timer);
-            showOrderDetails();
-          }
-        }, 1000);
-      }
-
-      // Show Order Details
-      function showOrderDetails() {
-        document.getElementById('processing').classList.add('hidden');
-        document.getElementById('order-details').classList.remove('hidden');
-        const orderSummary = document.getElementById('order-summary');
-        orderSummary.innerHTML = cart.map(item => `
-          <p>${item.name} - ${item.quantity} x ${item.price} Pi = ${item.quantity * item.price} Pi (Variety: ${item.variety || 'Default'})</p>
-        `).join('');
-        localStorage.removeItem('cart'); // Clear cart after order
+      // Proceed to Checkout (Updated to link to payment.html)
+      function proceedToCheckout() {
+        // Save the cart to localStorage (already done in update functions)
+        // Redirect to payment.html with a flag indicating cart checkout
+        window.location.href = 'payment.html?cart=true';
       }
 
       // Sticky Header Scroll Effect
