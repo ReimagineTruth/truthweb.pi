@@ -294,33 +294,6 @@
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
       }
       section { padding: 2rem 1rem; }
-      .category-btn {
-        background: var(--secondary-color);
-        border: 1px solid var(--highlight-color);
-        border-radius: 10px;
-        padding: 1rem;
-        transition: transform 0.3s ease, background-color 0.3s ease;
-      }
-      .category-btn:hover {
-        transform: scale(1.05);
-        background-color: var(--highlight-color);
-      }
-      .product-card {
-        background: var(--secondary-color);
-        border: 2px solid var(--highlight-color);
-        border-radius: 10px;
-        padding: 1rem;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        animation: slideInCard 0.5s ease-out forwards;
-      }
-      .product-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-      }
-      @keyframes slideInCard {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
       /* Footer Menu (Fixed, Mobile-Only) */
       .footer-menu {
         position: fixed;
@@ -391,7 +364,6 @@
         .icon { font-size: 1.1rem; margin-left: 0.5rem; }
         .glow-text { font-size: 1.75rem; }
         .btn { padding: 0.4rem 1rem; font-size: 0.85rem; min-width: 80px; }
-        .section-title { font-size: 1.5rem; }
         footer { padding-bottom: 80px; }
         footer .social-icons a, footer .footer-links a { font-size: 0.9rem; }
       }
@@ -439,6 +411,71 @@
         color: var(--button-hover-text-color);
       }
       .iframe-container { overflow: hidden; }
+      .qr-option {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      .qr-image {
+        max-width: 300px;
+        width: 100%;
+        height: auto;
+        border: 2px solid var(--highlight-color);
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+      }
+      .qr-image:hover {
+        transform: scale(1.05);
+      }
+      /* Popup Styles */
+      .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--secondary-color);
+        color: var(--primary-color);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        z-index: 2000;
+        text-align: center;
+        max-width: 90%;
+        width: 400px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+      }
+      .popup.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .popup h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+      .popup p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+      }
+      .overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
     </style>
 </head>
 <body>
@@ -508,12 +545,7 @@
           <div class="section">
             <p class="instructions" id="payment-instructions">Scan the QR code below or copy the wallet address to send your Pi payment.</p>
             <div class="qr-option">
-              <div class="qr-embed-container">
-                <iframe loading="lazy" class="qr-embed-iframe"
-                  src="https://www.canva.com/design/DAGhJ8e0j2k/Sd3LfEmT6EMiky5iO6Fbtw/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-                </iframe>
-              </div>
-              <a href="https://www.canva.com/design/DAGhJ8e0j2k/Sd3LfEmT6EMiky5iO6Fbtw/view?utm_content=DAGhJ8e0j2k&utm_campaign=designshare&utm_medium=embeds&utm_source=link" target="_blank" rel="noopener" class="text-sm text-gray-500 mt-2 inline-block">View QR Code on Canva</a>
+              <img src="https://bafybeibkihpajdkfgi3dmby5feeqnh63k235ttaezackrumghcvmofszm4.ipfs.dweb.link?filename=Untitled%20design%20(56).png" alt="QR Code for Payment" class="qr-image">
             </div>
           </div>
 
@@ -538,7 +570,7 @@
             <h3>Payment Confirmation</h3>
             <p class="instructions">After sending your Pi payment, upload your proof using the form below.</p>
             <div class="iframe-container">
-              <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfluKnMgE_LaDX0DSRl9OsHr3xYy5CJQ1x-PH4x8FozUNgyVg/viewform?embedded=true" 
+              <iframe src="https://forms.fillout.com/t/6xSHkkzhbyus" 
                       width="640" 
                       height="1702" 
                       frameborder="0" 
@@ -546,26 +578,8 @@
                       marginwidth="0">Loading…</iframe>
             </div>
           </div>
+</main>
 
-          <div class="section">
-            <h3>Shipping Address</h3>
-            <p class="instructions">After confirming your payment, please fill up your address below to process the order.</p>
-            <div class="iframe-container">
-              <p class="text-sm text-gray-500">[Insert address form here - replace with actual form or link]</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- Footer Menu (Fixed, Mobile-Only) -->
-    <nav class="footer-menu" role="navigation" aria-label="Mobile Footer Navigation">
-        <a href="index.html"><i class="fas fa-home"></i></a>
-        <a href="marketplace.html"><i class="fas fa-shopping-cart"></i></a>
-        <a href="profile.html"><i class="fas fa-user"></i></a>
-        <a href="wallet.html"><i class="fas fa-wallet"></i></a>
-        <a href="community.html"><i class="fas fa-users"></i></a>
-    </nav>
 
     <!-- Footer Navigation -->
     <footer role="contentinfo">
@@ -767,6 +781,25 @@
           paymentInstructions.textContent = 'No payment required.';
         }
       });
+
+      // Popup Functions
+      function showPopup(popupId) {
+        const popup = document.getElementById(popupId);
+        const overlay = document.getElementById('popup-overlay');
+        popup.classList.add('active');
+        overlay.classList.add('active');
+      }
+
+      function closePopup(popupId) {
+        const popup = document.getElementById(popupId);
+        const overlay = document.getElementById('popup-overlay');
+        popup.classList.remove('active');
+        overlay.classList.remove('active');
+      }
+
+      function finishOrder() {
+        showPopup('order-popup');
+      }
     </script>
 </body>
 </html>
