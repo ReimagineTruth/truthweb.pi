@@ -21,10 +21,6 @@
         --button-hover-bg-color: #FFFFFF;
         --button-hover-text-color: #000000;
         --background-color: #FFFFFF;
-        --dog-accent: #FF8C00;
-        --rgb-red: #FF0000;
-        --rgb-green: #00FF00;
-        --rgb-blue: #0000FF;
         --pi-gold: #FFD700;
       }
       body {
@@ -216,7 +212,7 @@
       .ledger-section {
         background: var(--primary-color);
         min-height: 100vh;
-        padding: 4rem 2rem;
+        padding: 4rem 1rem;
         position: relative;
         overflow: hidden;
         border-top: 4px solid var(--highlight-color);
@@ -237,6 +233,9 @@
         z-index: 1;
         max-width: 1200px;
         margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
       h1 {
         color: var(--text-color);
@@ -245,6 +244,7 @@
         text-align: center;
         text-shadow: 0 0 10px var(--highlight-color);
         animation: glow 2s infinite alternate;
+        margin-bottom: 1.5rem;
       }
       @keyframes glow {
         0% { text-shadow: 0 0 10px var(--highlight-color); }
@@ -256,8 +256,9 @@
         text-align: center;
         margin: 1rem 0;
         background: rgba(0, 0, 0, 0.8);
-        padding: 0.5rem;
+        padding: 0.5rem 1rem;
         border-radius: 5px;
+        max-width: 90%;
       }
       .ledger-card {
         background: rgba(255, 255, 255, 0.1);
@@ -268,6 +269,8 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         animation: slideInCard 0.5s ease-out forwards;
+        width: 100%;
+        max-width: 800px;
       }
       .ledger-card:hover {
         transform: translateY(-5px);
@@ -311,9 +314,10 @@
         to { opacity: 1; transform: translateX(0); }
       }
       .bot-ledger {
-        position: absolute;
+        position: relative;
         width: 100px;
         height: 120px;
+        margin: 2rem 0; /* Increased margin for more space */
         transition: transform 0.5s ease;
         z-index: 5;
         cursor: pointer;
@@ -363,15 +367,16 @@
       }
       .activity-text {
         position: absolute;
-        top: -35px;
+        top: -45px; /* Adjusted for more space */
         left: 50%;
         transform: translateX(-50%);
         background: rgba(0, 0, 0, 0.9);
         color: var(--pi-gold);
-        padding: 6px 12px;
+        padding: 8px 16px; /* Increased padding for better readability */
         border-radius: 6px;
         font-size: 14px;
         white-space: nowrap;
+        line-height: 1.2; /* Ensures text isn’t squished */
       }
       .chart-container {
         width: 100%;
@@ -400,6 +405,24 @@
         transform: translateX(-50%);
         color: var(--text-color);
         font-size: 0.9rem;
+      }
+      /* Responsive Video Embed */
+      .video-container {
+        position: relative;
+        width: 100%;
+        max-width: 800px;
+        margin: 2rem auto;
+        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+        height: 0;
+        overflow: hidden;
+      }
+      .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
       }
       /* Footer Menu (Fixed, Mobile-Only) */
       .footer-menu {
@@ -462,11 +485,6 @@
         margin: 0 0.5rem;
         text-decoration: none;
       }
-      .video-container {
-        margin: 2rem auto;
-        max-width: 600px;
-        text-align: center;
-      }
       /* Responsive Design */
       @media (max-width: 640px) {
         .burger-btn { display: flex; }
@@ -475,11 +493,13 @@
         .sticky-header { padding: 0 0.5rem; }
         .logo-text { font-size: 1.25rem; }
         .icon { font-size: 1.1rem; margin-left: 0.5rem; }
-        h1 { font-size: 1.75rem; }
+        h1 { font-size: 1.75rem; margin-bottom: 1rem; }
         .ledger-title { font-size: 1.25rem; }
         .ledger-value { font-size: 1.5rem; }
         .chart-container { height: 150px; }
         .transaction-list { max-height: 300px; }
+        .bot-ledger { transform: scale(0.8); margin: 1.5rem 0; }
+        .activity-text { font-size: 12px; padding: 6px 12px; top: -40px; }
         footer { padding-bottom: 80px; }
         footer .social-icons a, footer .footer-links a { font-size: 0.9rem; }
       }
@@ -563,6 +583,22 @@
         <section class="ledger-section">
             <div class="ledger-content">
                 <h1>TruthWeb Ledger Testnet - Pi Flow Bonanza!</h1>
+                <!-- TruthWeb Bot Positioned Top Center -->
+                <div id="ledger-bot" class="bot-ledger">
+                    <div class="activity-text" id="bot-activity">Analyzing hash transactions...</div>
+                    <div class="bot-body">
+                        <div class="bot-head">
+                            <div class="bot-eyes">
+                                <div class="eye"></div>
+                                <div class="eye"></div>
+                            </div>
+                        </div>
+                        <div class="bot-wheels">
+                            <div class="wheel"></div>
+                            <div class="wheel"></div>
+                        </div>
+                    </div>
+                </div>
                 <p class="testnet-notice">TESTNET MODE: This is a simulation, not an official wallet or balance!</p>
                 <p class="text-center text-[var(--highlight-color)] text-xl mt-4">All funds & profits tracked on the Pi Network Blockchain (Testnet)</p>
 
@@ -601,24 +637,7 @@
 
                 <!-- Embedded YouTube Video -->
                 <div class="video-container">
-                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/hX0qouTlZdM?si=IESIPRJibB71q7hu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                </div>
-
-                <!-- TruthWeb Bot -->
-                <div id="ledger-bot" class="bot-ledger" style="left: 10%; top: 50%;">
-                    <div class="activity-text" id="bot-activity">Counting Testnet PI...</div>
-                    <div class="bot-body">
-                        <div class="bot-head">
-                            <div class="bot-eyes">
-                                <div class="eye"></div>
-                                <div class="eye"></div>
-                            </div>
-                        </div>
-                        <div class="bot-wheels">
-                            <div class="wheel"></div>
-                            <div class="wheel"></div>
-                        </div>
-                    </div>
+                    <iframe src="https://www.youtube.com/embed/hX0qouTlZdM?si=IESIPRJibB71q7hu" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
             </div>
         </section>
@@ -803,7 +822,6 @@
         walletBalanceEl.textContent = walletBalance.toFixed(2) + ' PI';
         walletHashEl.textContent = '0x' + Math.random().toString(16).substr(2, 8);
 
-        // Update Chart
         const total = escrowFees + buySellFees + otherFees || 1; // Avoid division by zero
         escrowBar.style.height = `${(escrowFees / total) * 180 || 10}px`;
         buySellBar.style.height = `${(buySellFees / total) * 180 || 10}px`;
@@ -828,22 +846,14 @@
       }
 
       // Bot Movement and Activity
-      let botX = 10;
-      let botY = 50;
       const activities = [
-        'Counting Testnet PI...', 'Verifying test hashes...', 'Stacking test profits...', 'Sniffing test fees...'
+        'Analyzing hash transactions...', 'Verifying test hashes...', 'Processing test PI...', 'Scanning blockchain testnet...'
       ];
 
       function moveBot() {
-        const section = document.querySelector('.ledger-section');
-        const maxX = section.offsetWidth - bot.offsetWidth - 20;
-        const maxY = section.offsetHeight - bot.offsetHeight - 20;
-        botX += (Math.random() * 10 - 5);
-        botY += (Math.random() * 10 - 5);
-        botX = Math.max(0, Math.min(botX, maxX));
-        botY = Math.max(0, Math.min(botY, maxY));
-        bot.style.left = `${botX}px`;
-        bot.style.top = `${botY}px`;
+        const wiggleX = (Math.random() * 10 - 5);
+        const wiggleY = (Math.random() * 10 - 5);
+        bot.style.transform = `translate(${wiggleX}px, ${wiggleY}px)`;
         botActivity.textContent = activities[Math.floor(Math.random() * activities.length)];
       }
 
@@ -855,7 +865,7 @@
 
       // Bot Click Interaction
       bot.addEventListener('click', () => {
-        botActivity.textContent = 'Woof! Testnet PI!';
+        botActivity.textContent = 'Woof! Hash analyzed!';
         setTimeout(moveBot, 1000);
       });
     </script>
