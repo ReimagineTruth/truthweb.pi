@@ -410,7 +410,6 @@
         background: var(--button-hover-bg-color);
         color: var(--button-hover-text-color);
       }
-      .iframe-container { overflow: hidden; }
       .qr-option {
         display: flex;
         justify-content: center;
@@ -427,6 +426,21 @@
       }
       .qr-image:hover {
         transform: scale(1.05);
+      }
+      /* Responsive Iframe Container */
+      .iframe-container {
+        position: relative;
+        width: 100%;
+        max-width: 640px;
+        margin: 0 auto;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .iframe-container iframe {
+        width: 100%;
+        border: none;
+        display: block;
       }
       /* Popup Styles */
       .popup {
@@ -475,6 +489,17 @@
       .overlay.active {
         opacity: 1;
         visibility: visible;
+      }
+      /* Responsive Iframe Height Adjustments */
+      @media (max-width: 640px) {
+        .iframe-container iframe {
+          height: 100vh; /* Full viewport height on mobile */
+        }
+      }
+      @media (min-width: 641px) {
+        .iframe-container iframe {
+          height: 800px; /* Fixed height for larger screens, adjust as needed */
+        }
       }
     </style>
 </head>
@@ -571,15 +596,32 @@
             <p class="instructions">After sending your Pi payment, upload your proof using the form below.</p>
             <div class="iframe-container">
               <iframe src="https://forms.fillout.com/t/6xSHkkzhbyus" 
-                      width="640" 
-                      height="1702" 
                       frameborder="0" 
                       marginheight="0" 
                       marginwidth="0">Loading…</iframe>
             </div>
           </div>
-</main>
 
+          
+      </section>
+    </main>
+
+    <!-- Popup Overlays -->
+    <div class="overlay" id="popup-overlay"></div>
+    <div class="popup" id="order-popup">
+      <h3>Your Order is Complete</h3>
+      <p></p>
+      <button class="btn" onclick="closePopup('order-popup')"></button>
+    </div>
+
+    <!-- Footer Menu (Fixed, Mobile-Only) -->
+    <nav class="footer-menu" role="navigation" aria-label="Mobile Footer Navigation">
+        <a href="index.html"><i class="fas fa-home"></i></a>
+        <a href="marketplace.html"><i class="fas fa-shopping-cart"></i></a>
+        <a href="profile.html"><i class="fas fa-user"></i></a>
+        <a href="wallet.html"><i class="fas fa-wallet"></i></a>
+        <a href="community.html"><i class="fas fa-users"></i></a>
+    </nav>
 
     <!-- Footer Navigation -->
     <footer role="contentinfo">
