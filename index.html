@@ -22,6 +22,9 @@
         --button-hover-text-color: #000000;
         --background-color: #FFFFFF;
       }
+      html {
+        scroll-behavior: smooth; /* Utility: Smooth scrolling */
+      }
       body {
         background: var(--background-color);
         color: var(--primary-color);
@@ -120,6 +123,10 @@
         transform: translateX(10px) scale(1.05);
       }
       .desktop-nav { display: flex; }
+      .desktop-nav .nav-item {
+        transition: transform 0.3s ease; /* Utility: Transition for nav items */
+        animation: fadeInUp 0.5s ease-in-out forwards; /* Utility: Staggered fade-in */
+      }
       .desktop-nav .nav-item a {
         color: var(--text-color);
         padding: 0.5rem 1rem;
@@ -128,6 +135,18 @@
       .desktop-nav .nav-item a:hover {
         color: var(--highlight-color);
         transform: scale(1.1);
+      }
+      /* Utility: Staggered animation delays for nav items */
+      .desktop-nav .nav-item:nth-child(1) { animation-delay: 0.1s; }
+      .desktop-nav .nav-item:nth-child(2) { animation-delay: 0.2s; }
+      .desktop-nav .nav-item:nth-child(3) { animation-delay: 0.3s; }
+      .desktop-nav .nav-item:nth-child(4) { animation-delay: 0.4s; }
+      .desktop-nav .nav-item:nth-child(5) { animation-delay: 0.5s; }
+      .desktop-nav .nav-item:nth-child(6) { animation-delay: 0.6s; }
+      .desktop-nav .nav-item:nth-child(7) { animation-delay: 0.7s; }
+      .desktop-nav .nav-item:nth-child(8) { animation-delay: 0.8s; }
+      .desktop-nav .nav-item:hover {
+        transform: scale(1.1) translateY(-5px); /* Utility: Hover effect for nav items */
       }
       .search-container {
         position: relative;
@@ -203,6 +222,13 @@
       .icon:hover {
         transform: scale(1.15) rotate(5deg);
       }
+      /* Utility: Floating effect for icons */
+      .floating-effect {
+        transition: transform 0.3s ease;
+      }
+      .floating-effect:hover {
+        transform: translateY(-5px) rotate(5deg);
+      }
       main { margin-top: 64px; }
       .hero {
         min-height: 100vh;
@@ -230,21 +256,31 @@
         width: 100%;
         height: 100%;
         background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
-        animation: pulseGlow 3s infinite alternate;
+        animation: pulseGlow 3s infinite alternate, float 6s infinite ease-in-out; /* Utility: Added float */
       }
       @keyframes pulseGlow {
         0% { opacity: 0.5; }
         100% { opacity: 0.8; }
       }
+      /* Utility: Float animation */
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+      }
       .glow-text {
         font-size: 3rem;
         font-weight: 700;
         text-shadow: 0 0 10px var(--highlight-color);
-        animation: glow 2s infinite alternate;
+        animation: glow 2s infinite alternate, bounce 3s infinite ease-in-out; /* Utility: Added bounce */
       }
       @keyframes glow {
         0% { text-shadow: 0 0 10px var(--highlight-color); }
         100% { text-shadow: 0 0 20px var(--highlight-color); }
+      }
+      /* Utility: Bounce animation */
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
       }
       .btn {
         display: inline-flex;
@@ -266,6 +302,7 @@
         min-width: 100px;
         margin-top: 1rem;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        animation: pulse 2s infinite; /* Utility: Added pulse */
       }
       .btn:hover {
         background: var(--button-hover-bg-color);
@@ -276,6 +313,12 @@
       .btn:active {
         transform: scale(0.98);
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      }
+      /* Utility: Pulse animation */
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
       }
       section { padding: 2rem 1rem; }
       .card {
@@ -288,12 +331,17 @@
         animation: slideInCard 0.5s ease-out forwards;
       }
       .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-10px) rotate(2deg); /* Utility: Enhanced hover effect */
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Utility: Stronger shadow */
       }
       @keyframes slideInCard {
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
+      }
+      /* Utility: Alternative slide-in animation */
+      @keyframes slideIn {
+        0% { opacity: 0; transform: translateX(-50px); }
+        100% { opacity: 1; transform: translateX(0); }
       }
       .card i {
         font-size: 2.5rem;
@@ -308,14 +356,14 @@
       }
       .feed-item {
         padding: 1rem;
-        border-bottom: 1px solid var(--highlight-color);
+        border-bottom: 1px solid var(--highlight-color); /* Utility: Feed item border */
         transition: background 0.2s ease, transform 0.3s ease;
       }
       .feed-item:hover {
         background: rgba(204, 204, 204, 0.1);
         transform: scale(1.01);
       }
-      .feed-item:last-child { border-bottom: none; }
+      .feed-item:last-child { border-bottom: none; } /* Utility: Remove last border */
       .feed-header {
         display: flex;
         align-items: center;
@@ -422,7 +470,18 @@
         text-align: center;
         padding: 2rem 1rem;
         position: relative;
-        z-index: 10; /* Ensure it sits above content but below footer-menu */
+        z-index: 10;
+        animation: fadeIn 1.5s ease-in-out; /* Utility: Fade-in for footer */
+      }
+      /* Utility: Fade-in animation */
+      @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+      }
+      /* Utility: Fade-in-up animation */
+      @keyframes fadeInUp {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
       }
       footer .social-icons a, footer .footer-links a {
         color: var(--text-color);
@@ -516,9 +575,9 @@
                     <li class="nav-item"><a href="about.html">About</a></li>
                 </ul>
             </nav>
-            <a href="marketplace.html" class="icon"><i class="fas fa-shopping-cart"></i></a>
-            <a href="profile.html" class="icon"><i class="fas fa-user"></i></a>
-            <a href="wallet.html" class="icon"><i class="fas fa-wallet"></i></a>
+            <a href="marketplace.html" class="icon floating-effect"><i class="fas fa-shopping-cart"></i></a>
+            <a href="profile.html" class="icon floating-effect"><i class="fas fa-user"></i></a>
+            <a href="wallet.html" class="icon floating-effect"><i class="fas fa-wallet"></i></a>
             <div class="burger-btn">
                 <span></span>
                 <span></span>
@@ -654,6 +713,8 @@
                 <div class="card"><i class="fas fa-code"></i><h3 class="text-xl font-semibold mb-2">Open-Source API</h3><p>Build Pi integrations.</p><a href="api-docs.html" class="btn">Docs</a></div>
                 <div class="card"><i class="fas fa-chart-line"></i><h3 class="text-xl font-semibold mb-2">Vendor Dashboard</h3><p>Seller analytics.</p><a href="vendor.html" class="btn">View</a></div>
                 <div class="card"><i class="fas fa-box-open"></i><h3 class="text-xl font-semibold mb-2">Automated Orders</h3><p>Instant delivery.</p><a href="automated.html" class="btn">List</a></div>
+                <div class="card"><i class="fas fa-ad"></i><h3 class="text-xl font-semibold mb-2">Ad & Promotion</h3><p>Boost listing visibility.</p><a href="ad-promotion.html" class="btn">Promote</a></div>
+                <div class="card"><i class="fas fa-money-bill-wave"></i><h3 class="text-xl font-semibold mb-2">Multi-Currency</h3><p>Convert Pi to fiat for clarity.</p><a href="multi-currency.html" class="btn">Convert</a></div>
             </div>
         </section>
 
@@ -672,6 +733,30 @@
                 <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-id-badge"></i><h3 class="text-xl font-semibold mb-2">KYC Verification</h3><p>Secure access.</p><a href="kycverification.html" class="btn">Verify</a></div>
                 <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-lock"></i><h3 class="text-xl font-semibold mb-2">Encryption</h3><p>Protect your data.</p><a href="endtoendencryption.html" class="btn">Learn</a></div>
                 <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-mobile-alt"></i><h3 class="text-xl font-semibold mb-2">2FA</h3><p>Extra security.</p><a href="2fa.html" class="btn">Enable</a></div>
+            </div>
+        </section>
+
+        <section id="fraud-detection" class="py-16 px-4">
+            <h2 class="section-title text-3xl font-bold text-center mb-8">Fraud Detection</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="card">
+                    <i class="fas fa-robot"></i>
+                    <h3 class="text-xl font-semibold mb-2">AI-Powered Monitoring</h3>
+                    <p>Real-time fraud detection with AI.</p>
+                    <a href="fraud-detection.html" class="btn">Learn More</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3 class="text-xl font-semibold mb-2">Transaction Safety</h3>
+                    <p>Protecting your Pi trades.</p>
+                    <a href="fraud-detection.html#safety" class="btn">Details</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3 class="text-xl font-semibold mb-2">Anomaly Detection</h3>
+                    <p>Spot suspicious activity instantly.</p>
+                    <a href="fraud-detection.html#anomaly" class="btn">Explore</a>
+                </div>
             </div>
         </section>
 
@@ -699,6 +784,30 @@
                 <div class="card"><i class="fas fa-handshake"></i><h3 class="text-xl font-semibold mb-2">P2P Trading</h3><p>Trade Pi directly.</p><a href="pitrade.html#p2p" class="btn">Trade</a></div>
                 <div class="card"><i class="fas fa-chart-line"></i><h3 class="text-xl font-semibold mb-2">Market Trends</h3><p>View Pi value trends.</p><a href="pitrade.html#trends" class="btn">Trends</a></div>
                 <div class="card"><i class="fas fa-exchange-alt"></i><h3 class="text-xl font-semibold mb-2">Trade Dashboard</h3><p>Manage trades.</p><a href="pitrade.html#dashboard" class="btn">Open</a></div>
+            </div>
+        </section>
+
+        <section id="referral-program" class="py-16 px-4">
+            <h2 class="section-title text-3xl font-bold text-center mb-8">Referral Program</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="card">
+                    <i class="fas fa-user-friends"></i>
+                    <h3 class="text-xl font-semibold mb-2">Invite Friends</h3>
+                    <p>Earn Pi by referring friends.</p>
+                    <a href="referral-program.html" class="btn">Join Now</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-gift"></i>
+                    <h3 class="text-xl font-semibold mb-2">Earn Rewards</h3>
+                    <p>Get bonuses for each referral.</p>
+                    <a href="referral-program.html#rewards" class="btn">See Rewards</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-share-alt"></i>
+                    <h3 class="text-xl font-semibold mb-2">Share Easily</h3>
+                    <p>Use your unique link to invite.</p>
+                    <a href="referral-program.html#share" class="btn">Get Link</a>
+                </div>
             </div>
         </section>
 
@@ -733,11 +842,11 @@
     <!-- Footer Navigation (Traditional Footer, All Devices) -->
     <footer role="contentinfo">
         <div class="social-icons mb-4">
-            <a href="https://www.facebook.com/reimaginetruthofficial/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://x.com/reimagine_truth" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="https://t.me/TruthWebOfficial" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
-            <a href="https://www.youtube.com/@ReimagineTruth" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-            <a href="https://github.com/username/TruthWeb" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.facebook.com/reimaginetruthofficial/" target="_blank" aria-label="Facebook" class="floating-effect"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://x.com/reimagine_truth" target="_blank" aria-label="Twitter" class="floating-effect"><i class="fab fa-twitter"></i></a>
+            <a href="https://t.me/TruthWebOfficial" target="_blank" aria-label="Telegram" class="floating-effect"><i class="fab fa-telegram"></i></a>
+            <a href="https://www.youtube.com/@ReimagineTruth" target="_blank" aria-label="YouTube" class="floating-effect"><i class="fab fa-youtube"></i></a>
+            <a href="https://github.com/username/TruthWeb" target="_blank" aria-label="GitHub" class="floating-effect"><i class="fab fa-github"></i></a>
         </div>
         <p class="text-sm mb-2">© 2025 TruthWeb. All rights reserved.</p>
         <div class="footer-links text-sm">
