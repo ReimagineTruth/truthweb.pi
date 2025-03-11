@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" name="viewport"/>
-    <title>TruthWeb - Pi Network Hub</title>
+    <title>TruthWeb - The Ultimate Pi Network Hub</title>
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome CDN (v6.5.1 for latest icons) -->
@@ -21,10 +21,9 @@
         --button-hover-bg-color: #FFFFFF;
         --button-hover-text-color: #000000;
         --background-color: #FFFFFF;
+        --accent-color: #FFD700;
       }
-      html {
-        scroll-behavior: smooth; /* Utility: Smooth scrolling */
-      }
+      html { scroll-behavior: smooth; }
       body {
         background: var(--background-color);
         color: var(--primary-color);
@@ -33,9 +32,8 @@
         padding: 0;
         overflow-x: hidden;
         line-height: 1.6;
-        padding-bottom: 60px; /* Space for footer menu on mobile */
+        padding-bottom: 60px;
       }
-      /* Header (X-Style with Hide/Show) */
       .sticky-header {
         position: fixed;
         top: 0;
@@ -51,9 +49,7 @@
         height: 64px;
         animation: slideInHeader 0.5s ease-out forwards;
       }
-      .sticky-header.hidden {
-        transform: translateY(-100%);
-      }
+      .sticky-header.hidden { transform: translateY(-100%); }
       .sticky-header.scrolled {
         background: var(--secondary-color);
         color: var(--primary-color);
@@ -124,8 +120,8 @@
       }
       .desktop-nav { display: flex; }
       .desktop-nav .nav-item {
-        transition: transform 0.3s ease; /* Utility: Transition for nav items */
-        animation: fadeInUp 0.5s ease-in-out forwards; /* Utility: Staggered fade-in */
+        transition: transform 0.3s ease;
+        animation: fadeInUp 0.5s ease-in-out forwards;
       }
       .desktop-nav .nav-item a {
         color: var(--text-color);
@@ -136,7 +132,6 @@
         color: var(--highlight-color);
         transform: scale(1.1);
       }
-      /* Utility: Staggered animation delays for nav items */
       .desktop-nav .nav-item:nth-child(1) { animation-delay: 0.1s; }
       .desktop-nav .nav-item:nth-child(2) { animation-delay: 0.2s; }
       .desktop-nav .nav-item:nth-child(3) { animation-delay: 0.3s; }
@@ -146,7 +141,7 @@
       .desktop-nav .nav-item:nth-child(7) { animation-delay: 0.7s; }
       .desktop-nav .nav-item:nth-child(8) { animation-delay: 0.8s; }
       .desktop-nav .nav-item:hover {
-        transform: scale(1.1) translateY(-5px); /* Utility: Hover effect for nav items */
+        transform: scale(1.1) translateY(-5px);
       }
       .search-container {
         position: relative;
@@ -222,7 +217,6 @@
       .icon:hover {
         transform: scale(1.15) rotate(5deg);
       }
-      /* Utility: Floating effect for icons */
       .floating-effect {
         transition: transform 0.3s ease;
       }
@@ -256,13 +250,12 @@
         width: 100%;
         height: 100%;
         background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
-        animation: pulseGlow 3s infinite alternate, float 6s infinite ease-in-out; /* Utility: Added float */
+        animation: pulseGlow 3s infinite alternate, float 6s infinite ease-in-out;
       }
       @keyframes pulseGlow {
         0% { opacity: 0.5; }
         100% { opacity: 0.8; }
       }
-      /* Utility: Float animation */
       @keyframes float {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-20px); }
@@ -271,13 +264,12 @@
         font-size: 3rem;
         font-weight: 700;
         text-shadow: 0 0 10px var(--highlight-color);
-        animation: glow 2s infinite alternate, bounce 3s infinite ease-in-out; /* Utility: Added bounce */
+        animation: glow 2s infinite alternate, bounce 3s infinite ease-in-out;
       }
       @keyframes glow {
         0% { text-shadow: 0 0 10px var(--highlight-color); }
         100% { text-shadow: 0 0 20px var(--highlight-color); }
       }
-      /* Utility: Bounce animation */
       @keyframes bounce {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-10px); }
@@ -302,7 +294,7 @@
         min-width: 100px;
         margin-top: 1rem;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        animation: pulse 2s infinite; /* Utility: Added pulse */
+        animation: pulse 2s infinite;
       }
       .btn:hover {
         background: var(--button-hover-bg-color);
@@ -314,7 +306,15 @@
         transform: scale(0.98);
         box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
       }
-      /* Utility: Pulse animation */
+      .btn.accent {
+        background: var(--accent-color);
+        color: var(--primary-color);
+        border: none;
+      }
+      .btn.accent:hover {
+        background: #FFA500;
+        color: var(--primary-color);
+      }
       @keyframes pulse {
         0% { transform: scale(1); }
         50% { transform: scale(1.05); }
@@ -326,22 +326,16 @@
         border: 1px solid var(--highlight-color);
         border-radius: 10px;
         padding: 1.5rem;
-        text-align: center;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         animation: slideInCard 0.5s ease-out forwards;
       }
       .card:hover {
-        transform: translateY(-10px) rotate(2deg); /* Utility: Enhanced hover effect */
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Utility: Stronger shadow */
+        transform: translateY(-10px) rotate(2deg);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
       }
       @keyframes slideInCard {
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
-      }
-      /* Utility: Alternative slide-in animation */
-      @keyframes slideIn {
-        0% { opacity: 0; transform: translateX(-50px); }
-        100% { opacity: 1; transform: translateX(0); }
       }
       .card i {
         font-size: 2.5rem;
@@ -356,14 +350,14 @@
       }
       .feed-item {
         padding: 1rem;
-        border-bottom: 1px solid var(--highlight-color); /* Utility: Feed item border */
+        border-bottom: 1px solid var(--highlight-color);
         transition: background 0.2s ease, transform 0.3s ease;
       }
       .feed-item:hover {
         background: rgba(204, 204, 204, 0.1);
         transform: scale(1.01);
       }
-      .feed-item:last-child { border-bottom: none; } /* Utility: Remove last border */
+      .feed-item:last-child { border-bottom: none; }
       .feed-header {
         display: flex;
         align-items: center;
@@ -408,9 +402,7 @@
         border-radius: 9999px;
         transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
-      .feed-actions button i {
-        font-size: 1rem;
-      }
+      .feed-actions button i { font-size: 1rem; }
       .feed-actions button:hover {
         background: var(--highlight-color);
         color: var(--primary-color);
@@ -431,7 +423,6 @@
         border-radius: 8px;
         margin-bottom: 0.5rem;
       }
-      /* Footer Menu (Fixed, Mobile-Only) */
       .footer-menu {
         position: fixed;
         bottom: 0;
@@ -448,9 +439,7 @@
         transition: transform 0.3s ease;
         animation: slideInFooter 0.5s ease-out forwards;
       }
-      .footer-menu.hidden {
-        transform: translateY(100%);
-      }
+      .footer-menu.hidden { transform: translateY(100%); }
       @keyframes slideInFooter {
         from { transform: translateY(100%); opacity: 0; }
         to { transform: translateY(0); opacity: 1; }
@@ -460,10 +449,7 @@
         font-size: 1.5rem;
         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
-      .footer-menu a:hover {
-        transform: scale(1.2);
-      }
-      /* Footer Navigation (Traditional Footer, All Devices) */
+      .footer-menu a:hover { transform: scale(1.2); }
       footer {
         background: var(--primary-color);
         color: var(--text-color);
@@ -471,14 +457,12 @@
         padding: 2rem 1rem;
         position: relative;
         z-index: 10;
-        animation: fadeIn 1.5s ease-in-out; /* Utility: Fade-in for footer */
+        animation: fadeIn 1.5s ease-in-out;
       }
-      /* Utility: Fade-in animation */
       @keyframes fadeIn {
         0% { opacity: 0; }
         100% { opacity: 1; }
       }
-      /* Utility: Fade-in-up animation */
       @keyframes fadeInUp {
         0% { opacity: 0; transform: translateY(20px); }
         100% { opacity: 1; transform: translateY(0); }
@@ -491,9 +475,7 @@
         color: var(--highlight-color);
         transform: scale(1.1);
       }
-      footer .social-icons {
-        margin-bottom: 1rem;
-      }
+      footer .social-icons { margin-bottom: 1rem; }
       footer .social-icons a {
         font-size: 1.25rem;
         margin: 0 0.5rem;
@@ -502,8 +484,32 @@
         margin: 0 0.5rem;
         text-decoration: none;
       }
-      /* Responsive Design */
-      @media (max-width: 640px) { /* Mobile */
+      .download-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+      .download-btn img {
+        height: 40px;
+        transition: transform 0.3s ease;
+      }
+      .download-btn:hover img { transform: scale(1.1); }
+      #user-stats { position: relative; z-index: 10; }
+      .stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+      }
+      .stat-item:hover { transform: scale(1.05); }
+      .stat-item i {
+        color: var(--text-color);
+        transition: transform 0.3s ease;
+      }
+      .stat-item:hover i { transform: scale(1.1); }
+      @media (max-width: 640px) {
         .burger-btn { display: flex; }
         .desktop-nav { display: none; }
         .search-container { max-width: 120px; margin: 0 0.5rem; }
@@ -518,14 +524,14 @@
         .feed-container { max-width: 100%; padding: 0 0.5rem; }
         .feed-item img { max-width: 100%; }
         .feed-actions { max-width: 100%; }
-        footer {
-          padding-bottom: 80px; /* Extra padding to account for footer-menu */
-        }
-        footer .social-icons a, footer .footer-links a {
-          font-size: 0.9rem; /* Slightly smaller text on mobile */
-        }
+        footer { padding-bottom: 80px; }
+        footer .social-icons a, footer .footer-links a { font-size: 0.9rem; }
+        .download-buttons { flex-direction: column; gap: 0.5rem; }
+        #user-stats .text-4xl { font-size: 1.75rem; }
+        #user-stats .text-2xl { font-size: 1.25rem; }
+        #user-stats .fa-3x { font-size: 2rem; }
       }
-      @media (min-width: 641px) and (max-width: 1024px) { /* Tablet */
+      @media (min-width: 641px) and (max-width: 1024px) {
         .burger-btn { display: none; }
         .desktop-nav { display: flex; }
         .search-container { max-width: 300px; }
@@ -533,24 +539,19 @@
         .btn { padding: 0.5rem 1.2rem; }
         .card i { font-size: 2.25rem; }
         .footer-menu { display: none; }
-        footer .social-icons a, footer .footer-links a {
-          font-size: 1rem;
-        }
+        footer .social-icons a, footer .footer-links a { font-size: 1rem; }
       }
-      @media (min-width: 1025px) { /* Desktop */
+      @media (min-width: 1025px) {
         .burger-btn { display: none; }
         .desktop-nav { display: flex; }
         .search-container { max-width: 400px; }
         .glow-text { font-size: 3rem; }
         .footer-menu { display: none; }
-        footer .social-icons a, footer .footer-links a {
-          font-size: 1rem;
-        }
+        footer .social-icons a, footer .footer-links a { font-size: 1rem; }
       }
     </style>
 </head>
 <body>
-    <!-- Header with X-Style Hide/Show -->
     <header class="sticky-header">
         <div class="flex items-center">
             <a href="index.html" class="text-inherit flex items-center">
@@ -586,7 +587,6 @@
         </div>
     </header>
 
-    <!-- Mobile Menu -->
     <nav class="mobile-menu">
         <ul>
             <li class="nav-item"><a href="index.html">Home</a></li>
@@ -600,19 +600,55 @@
         </ul>
     </nav>
 
-    <!-- Main Content -->
     <main>
         <section class="hero">
             <h1 class="glow-text">TruthWeb</h1>
-            <p class="text-xl mt-4 md:text-2xl">Your Decentralized Pi Network Hub</p>
+            <p class="text-xl mt-4 md:text-2xl">The Ultimate Decentralized Pi Network Hub</p>
+            <p class="text-lg mt-2">Join over 5 million Pioneers worldwide in the leading platform for Pi Network</p>
             <p class="text-sm mt-2 opacity-75">[This is a simulation, not official]</p>
-            <a href="#core-features" class="btn">Testnet Mode</a>
+            <div class="download-buttons">
+                <a href="https://play.google.com/store" target="_blank" class="download-btn">
+                    <img data-src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+                </a>
+                <a href="https://www.apple.com/app-store/" target="_blank" class="download-btn">
+                    <img data-src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+                </a>
+            </div>
+            <p class="text-sm mt-4">Over 5 million downloads worldwide!</p>
+        </section>
+
+        <section id="user-stats" class="py-16 px-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white">
+            <div class="max-w-6xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-6">Join Millions of Pioneers Worldwide</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="stat-item">
+                        <i class="fas fa-users fa-3x mb-4"></i>
+                        <h3 class="text-2xl font-semibold">5M+</h3>
+                        <p>Active Pioneers</p>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-globe fa-3x mb-4"></i>
+                        <h3 class="text-2xl font-semibold">200+</h3>
+                        <p>Countries Reached</p>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-download fa-3x mb-4"></i>
+                        <h3 class="text-2xl font-semibold">10M+</h3>
+                        <p>App Downloads</p>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-handshake fa-3x mb-4"></i>
+                        <h3 class="text-2xl font-semibold">250K+</h3>
+                        <p>Daily Transactions</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="hub" class="py-16 px-4">
-            <h2 class="section-title text-3xl font-bold text-center mb-8">TruthWeb: Your Decentralized Pi Network Hub</h2>
+            <h2 class="section-title text-3xl font-bold text-center mb-8">TruthWeb: Your Global Pi Network Hub</h2>
             <div class="max-w-4xl mx-auto text-center">
-                <p class="text-lg mb-6 md:text-xl">TruthWeb is the ultimate decentralized hub for Pi Network Pioneers. Built on trust, transparency, and community, TruthWeb connects you to a vibrant marketplace, secure wallet management, and a thriving Pi community—all powered by The First Digital Currency.</p>
+                <p class="text-lg mb-6 md:text-xl">TruthWeb is the premier decentralized hub for Pi Network Pioneers, connecting over 5 million users across 180+ countries. Built on trust, transparency, and innovation, TruthWeb offers a vibrant marketplace, secure wallet management, and a thriving global community—all powered by Pi, the First Digital Currency you can mine on your phone.</p>
                 <a href="about.html" class="btn">Learn More</a>
             </div>
         </section>
@@ -620,19 +656,30 @@
         <section id="core-features" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Core Features</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <div class="card"><i class="fas fa-shopping-cart"></i><h3 class="text-xl font-semibold mb-2">Pi-Powered Marketplace</h3><p>Buy and sell with Pi.</p><a href="pi-powered-marketplace.html" class="btn">Explore</a></div>
-                <div class="card"><i class="fas fa-exchange-alt"></i><h3 class="text-xl font-semibold mb-2">Decentralized Transactions</h3><p>Secure P2P trading.</p><a href="decentralized-transactions.html" class="btn">Start</a></div>
-                <div class="card"><i class="fas fa-user-check"></i><h3 class="text-xl font-semibold mb-2">User Profiles & Wallet</h3><p>Manage your Pi wallet.</p><a href="user-profiles-wallet.html" class="btn">Set Up</a></div>
-                <div class="card"><i class="fas fa-list"></i><h3 class="text-xl font-semibold mb-2">Multi-Category Listings</h3><p>Browse diverse listings.</p><a href="multi-category-listings.html" class="btn">Browse</a></div>
-                <div class="card"><i class="fas fa-shield-alt"></i><h3 class="text-xl font-semibold mb-2">Escrow System</h3><p>Secure payments.</p><a href="escrow-system.html" class="btn">Learn</a></div>
-                <div class="card"><i class="fas fa-clock"></i><h3 class="text-xl font-semibold mb-2">Instant Transactions</h3><p>Real-time tracking.</p><a href="instant-transactions.html" class="btn">View</a></div>
+                <div class="card"><i class="fas fa-shopping-cart"></i><h3 class="text-xl font-semibold mb-2">Pi-Powered Marketplace</h3><p>Buy and sell with Pi in a secure, decentralized environment.</p><a href="pi-powered-marketplace.html" class="btn">Explore</a></div>
+                <div class="card"><i class="fas fa-exchange-alt"></i><h3 class="text-xl font-semibold mb-2">Decentralized Transactions</h3><p>Secure peer-to-peer trading with zero intermediaries.</p><a href="decentralized-transactions.html" class="btn">Start</a></div>
+                <div class="card"><i class="fas fa-user-check"></i><h3 class="text-xl font-semibold mb-2">User Profiles & Wallet</h3><p>Manage your Pi wallet and profile seamlessly.</p><a href="user-profiles-wallet.html" class="btn">Set Up</a></div>
+                <div class="card"><i class="fas fa-list"></i><h3 class="text-xl font-semibold mb-2">Multi-Category Listings</h3><p>Browse diverse listings from digital goods to services.</p><a href="multi-category-listings.html" class="btn">Browse</a></div>
+                <div class="card"><i class="fas fa-shield-alt"></i><h3 class="text-xl font-semibold mb-2">Escrow System</h3><p>Secure payments with our trusted escrow system.</p><a href="escrow-system.html" class="btn">Learn</a></div>
+                <div class="card"><i class="fas fa-clock"></i><h3 class="text-xl font-semibold mb-2">Instant Transactions</h3><p>Real-time transaction tracking and notifications.</p><a href="instant-transactions.html" class="btn">View</a></div>
+                <div class="card"><i class="fas fa-share-alt"></i><h3 class="text-xl font-semibold mb-2">Referral Program</h3><p>Earn Pi by inviting friends</p><a href="referral-program.html" class="btn">Join Now</a></div>
+                <div class="card"><i class="fas fa-brain"></i><h3 class="text-xl font-semibold mb-2">AI Price Predictor</h3><p>Market trend analysis</p><a href="ai-predictor.html" class="btn">Try Now</a></div>
+            </div>
+        </section>
+
+        <section id="new-features" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
+            <h2 class="section-title text-3xl font-bold text-center mb-8">New Features</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-globe"></i><h3 class="text-xl font-semibold mb-2">Global Marketplace Expansion</h3><p>Access international markets with localized currency support.</p><a href="global-expansion.html" class="btn">Explore</a></div>
+                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-robot"></i><h3 class="text-xl font-semibold mb-2">AI-Powered Insights</h3><p>Get personalized trading and investment recommendations.</p><a href="ai-insights.html" class="btn">Try Now</a></div>
+                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-mobile-alt"></i><h3 class="text-xl font-semibold mb-2">Mobile App Enhancements</h3><p>Enjoy a revamped UI, push notifications, and offline mode.</p><a href="mobile-enhancements.html" class="btn">Learn More</a></div>
             </div>
         </section>
 
         <section id="ai-bot" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
             <h2 class="section-title text-3xl font-bold text-center mb-8">TruthWeb AI Bot</h2>
             <div class="max-w-4xl mx-auto text-center">
-                <p class="text-lg mb-6 md:text-xl">Need help? Our AI Bot assists with marketplace and trading queries.</p>
+                <p class="text-lg mb-6 md:text-xl">Our advanced AI Bot is here to assist you 24/7 with marketplace navigation, trading queries, and more—ensuring a seamless user experience.</p>
                 <a href="truwebbot.html" class="btn">Chat Now</a>
             </div>
         </section>
@@ -642,7 +689,7 @@
           <div class="feed-container">
             <div class="feed-banner">
               <p class="font-semibold mb-2">Demo: TruthWeb Updates</p>
-              <img src="https://placehold.co/600x150" alt="TruthWeb Demo Banner">
+              <img data-src="https://placehold.co/600x150" alt="TruthWeb Demo Banner">
               <p class="text-sm mt-2">Stay tuned for exciting updates on TruthWeb!</p>
             </div>
             <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]">
@@ -671,7 +718,7 @@
                   </div>
                 </div>
                 <p class="feed-content">Get the new Pi Software for only 100 Pi! Boost your productivity today.</p>
-                <img src="https://placehold.co/600x200" alt="Pi Software Ad" class="mb-2 rounded">
+                <img data-src="https://placehold.co/600x200" alt="Pi Software Ad" class="mb-2 rounded">
                 <a href="marketplace.html" class="btn w-full">Shop Now</a>
               </div>
               <div class="feed-item">
@@ -701,23 +748,55 @@
         <section id="community" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Community & Social</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-check-circle"></i><h3 class="text-xl font-semibold mb-2">Pioneer Verification</h3><p>Trusted transactions.</p><a href="pioneerverification.html" class="btn">Verify</a></div>
-                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-star"></i><h3 class="text-xl font-semibold mb-2">Reviews & Ratings</h3><p>Build trust.</p><a href="reviewsratings.html" class="btn">Review</a></div>
-                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-comments"></i><h3 class="text-xl font-semibold mb-2">Messaging & Chat</h3><p>Direct communication.</p><a href="messagingchat.html" class="btn">Chat</a></div>
+                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-check-circle"></i><h3 class="text-xl font-semibold mb-2">Pioneer Verification</h3><p>Ensure trusted transactions with verified users.</p><a href="pioneerverification.html" class="btn">Verify</a></div>
+                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-star"></i><h3 class="text-xl font-semibold mb-2">Reviews & Ratings</h3><p>Build trust with user reviews and ratings.</p><a href="reviewsratings.html" class="btn">Review</a></div>
+                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-comments"></i><h3 class="text-xl font-semibold mb-2">Messaging & Chat</h3><p>Direct, secure communication with other Pioneers.</p><a href="messagingchat.html" class="btn">Chat</a></div>
             </div>
         </section>
 
         <section id="developers" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Developer & Business</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <div class="card"><i class="fas fa-code"></i><h3 class="text-xl font-semibold mb-2">Open-Source API</h3><p>Build Pi integrations.</p><a href="api-docs.html" class="btn">Docs</a></div>
-                <div class="card"><i class="fas fa-chart-line"></i><h3 class="text-xl font-semibold mb-2">Vendor Dashboard</h3><p>Seller analytics.</p><a href="dashboardmonitoring.html" class="btn">View</a></div>
-                <div class="card"><i class="fas fa-box-open"></i><h3 class="text-xl font-semibold mb-2">Automated Orders</h3><p>Instant delivery.</p><a href="automated.html" class="btn">List</a></div>
-                <div class="card"><i class="fas fa-ad"></i><h3 class="text-xl font-semibold mb-2">Ad & Promotion</h3><p>Boost listing visibility.</p><a href="promote.html" class="btn">Promote</a></div>
-                <div class="card"><i class="fas fa-money-bill-wave"></i><h3 class="text-xl font-semibold mb-2">Multi-Currency</h3><p>Convert Pi to fiat for clarity.</p><a href="multicurrency.html" class="btn">Convert</a></div>
+                <div class="card">
+                    <i class="fas fa-code"></i>
+                    <h3 class="text-xl font-semibold mb-2">Open-Source API</h3>
+                    <p>Build powerful Pi integrations with our API.</p>
+                    <a href="api-docs.html" class="btn">Docs</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3 class="text-xl font-semibold mb-2">Vendor Dashboard</h3>
+                    <p>Access advanced seller analytics and insights.</p>
+                    <a href="dashboardmonitoring.html" class="btn">View</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-box-open"></i>
+                    <h3 class="text-xl font-semibold mb-2">Automated Orders</h3>
+                    <p>Enable instant delivery for digital goods.</p>
+                    <a href="automated.html" class="btn">List</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-ad"></i>
+                    <h3 class="text-xl font-semibold mb-2">Ad & Promotion</h3>
+                    <p>Boost your listing visibility with targeted ads.</p>
+                    <a href="promote.html" class="btn">Promote</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3 class="text-xl font-semibold mb-2">Multi-Currency</h3>
+                    <p>Convert Pi to fiat for transparent pricing.</p>
+                    <a href="multicurrency.html" class="btn">Convert</a>
+                </div>
+                <div class="card">
+                    <i class="fas fa-code-branch"></i>
+                    <h3 class="text-xl font-semibold mb-2">API Playground</h3>
+                    <p>Test API endpoints in real-time</p>
+                    <a href="api-playground.html" class="btn">Explore</a>
+                </div>
             </div>
         </section>
 
+    
         <section id="testimonials" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">What Our Users Say</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -730,13 +809,13 @@
         <section id="security" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Security & Trust</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-id-badge"></i><h3 class="text-xl font-semibold mb-2">KYC Verification</h3><p>Secure access.</p><a href="kycverification.html" class="btn">Verify</a></div>
-                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-lock"></i><h3 class="text-xl font-semibold mb-2">Encryption</h3><p>Protect your data.</p><a href="endtoendencryption.html" class="btn">Learn</a></div>
-                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-mobile-alt"></i><h3 class="text-xl font-semibold mb-2">2FA</h3><p>Extra security.</p><a href="2fa.html" class="btn">Enable</a></div>
+                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-id-badge"></i><h3 class="text-xl font-semibold mb-2">KYC Verification</h3><p>Secure your account with KYC verification.</p><a href="kycverification.html" class="btn">Verify</a></div>
+                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-lock"></i><h3 class="text-xl font-semibold mb-2">End-to-End Encryption</h3><p>Protect your data with advanced encryption.</p><a href="endtoendencryption.html" class="btn">Learn</a></div>
+                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-mobile-alt"></i><h3 class="text-xl font-semibold mb-2">Two-Factor Authentication</h3><p>Add an extra layer of security with 2FA.</p><a href="twofactor.html" class="btn">Enable</a></div>
             </div>
         </section>
-
-        <section id="fraud-detection" class="py-16 px-4">
+    
+            <section id="fraud-detection" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Fraud Detection</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                 <div class="card">
@@ -759,8 +838,8 @@
                 </div>
             </div>
         </section>
-
-        <section id="news" class="py-16 px-4">
+        
+       <section id="news" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">TruthWeb News</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                 <div class="card"><i class="fas fa-newspaper"></i><h3 class="text-xl font-semibold mb-2">v1.0 Launched!</h3><p>Pi-powered platform live.</p><a href="news.html#launch" class="btn">Read</a></div>
@@ -768,8 +847,8 @@
                 <div class="card"><i class="fas fa-users"></i><h3 class="text-xl font-semibold mb-2">Community Update</h3><p>New forum features.</p><a href="community.html#update" class="btn">Read</a></div>
             </div>
         </section>
-
-        <section id="pitrack" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
+ 
+             <section id="pitrack" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
             <h2 class="section-title text-3xl font-bold text-center mb-8">PiTrack</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                 <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-chart-bar"></i><h3 class="text-xl font-semibold mb-2">Track Your Pi</h3><p>Monitor wallet activity.</p><a href="pitrack.html#wallet" class="btn">View</a></div>
@@ -828,44 +907,36 @@
                 <div class="card"><i class="fas fa-coins"></i><h3 class="text-xl font-semibold mb-2">Pi Staking</h3><p>Earn rewards.</p><a href="future.html#staking" class="btn">Update</a></div>
             </div>
         </section>
-    </main>
-
-    <!-- Footer Menu (Fixed, Mobile-Only) -->
-    <nav class="footer-menu" role="navigation" aria-label="Mobile Footer Navigation">
+    </main>   
+   
+  <div class="footer-menu">
         <a href="index.html"><i class="fas fa-home"></i></a>
         <a href="marketplace.html"><i class="fas fa-shopping-cart"></i></a>
         <a href="profile.html"><i class="fas fa-user"></i></a>
         <a href="wallet.html"><i class="fas fa-wallet"></i></a>
-        <a href="community.html"><i class="fas fa-users"></i></a>
-    </nav>
+    </div>
 
-    <!-- Footer Navigation (Traditional Footer, All Devices) -->
-    <footer role="contentinfo">
-        <div class="social-icons mb-4">
-            <a href="https://www.facebook.com/reimaginetruthofficial/" target="_blank" aria-label="Facebook" class="floating-effect"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://x.com/reimagine_truth" target="_blank" aria-label="Twitter" class="floating-effect"><i class="fab fa-twitter"></i></a>
-            <a href="https://t.me/TruthWebOfficial" target="_blank" aria-label="Telegram" class="floating-effect"><i class="fab fa-telegram"></i></a>
-            <a href="https://www.youtube.com/@ReimagineTruth" target="_blank" aria-label="YouTube" class="floating-effect"><i class="fab fa-youtube"></i></a>
-            <a href="https://github.com/username/TruthWeb" target="_blank" aria-label="GitHub" class="floating-effect"><i class="fab fa-github"></i></a>
+    <footer>
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
         </div>
-        <p class="text-sm mb-2">© 2025 TruthWeb. All rights reserved.</p>
-        <div class="footer-links text-sm">
-            <a href="about.html">About</a> |
-            <a href="terms.html">Terms</a> |
-            <a href="privacy.html">Privacy</a> |
+        <div class="footer-links">
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
             <a href="contact.html">Contact</a>
         </div>
+        <p class="mt-4">© 2025 TruthWeb. All rights reserved.</p>
     </footer>
 
-    <!-- Scripts -->
     <script>
-      // Device Detection and Dynamic Adjustments
       function adjustLayout() {
         const width = window.innerWidth;
         const isMobile = width <= 640;
         const isTablet = width > 640 && width <= 1024;
         const isDesktop = width > 1024;
-
         const burgerBtn = document.querySelector('.burger-btn');
         const desktopNav = document.querySelector('.desktop-nav');
         const searchContainer = document.querySelector('.search-container');
@@ -890,7 +961,6 @@
       window.addEventListener('load', adjustLayout);
       window.addEventListener('resize', adjustLayout);
 
-      // Header and Footer Scroll Hide/Show Effect (X-Style)
       let lastScroll = 0;
       window.addEventListener('scroll', () => {
         const header = document.querySelector('.sticky-header');
@@ -908,7 +978,6 @@
         lastScroll = currentScroll;
       });
 
-      // Burger Menu Toggle
       const burgerBtn = document.querySelector('.burger-btn');
       const mobileMenu = document.querySelector('.mobile-menu');
       burgerBtn.addEventListener('click', () => {
@@ -916,7 +985,6 @@
         mobileMenu.classList.toggle('open');
       });
 
-      // Close Menu on Link Click
       document.querySelectorAll('.mobile-menu a').forEach(link => {
         link.addEventListener('click', () => {
           burgerBtn.classList.remove('open');
@@ -924,7 +992,6 @@
         });
       });
 
-      // Search Functionality
       const searchInput = document.querySelector('.search-input');
       const searchResults = document.querySelector('.search-results');
       const searchableContent = [];
@@ -974,6 +1041,22 @@
         if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
           searchResults.classList.remove('active');
         }
+      });
+
+      // Lazy load images
+      document.addEventListener('DOMContentLoaded', () => {
+        const lazyImages = document.querySelectorAll('img[data-src]');
+        const imageObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.src = img.dataset.src;
+              imageObserver.unobserve(img);
+            }
+          });
+        });
+
+        lazyImages.forEach(img => imageObserver.observe(img));
       });
     </script>
 </body>
