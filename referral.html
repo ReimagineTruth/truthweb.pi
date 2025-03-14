@@ -6,8 +6,8 @@
     <title>Referral Program - TruthWeb</title>
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome CDN -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <!-- Font Awesome CDN (Updated to v6.5.1 for latest icons) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
     <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
     <style>
@@ -226,22 +226,24 @@
       </ul>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section (Updated to reflect TruthWeb Points) -->
     <div class="hero flex flex-col items-center justify-center min-h-screen">
       <h1 class="glow-text fade-in text-5xl md:text-7xl font-bold">Referral Program</h1>
       <p class="text-xl mt-4 text-center fade-in" style="animation-delay: 0.5s; color: var(--text-color);">
-        Invite Friends and Earn Rewards
+        Invite Friends and Earn TruthWeb Points
       </p>
     </div>
 
-    <!-- Referral Program Section -->
+    <!-- Referral Program Section (Updated to reflect TruthWeb Points) -->
     <section id="referral" class="py-16 px-4">
       <h2 class="text-3xl font-bold text-center mb-8">How It Works</h2>
       <div class="max-w-4xl mx-auto mb-12">
-        <p class="text-lg text-center text-gray-600">Share your unique referral link with friends and earn Pi when they join TruthWeb and make their first purchase!</p>
+        <p class="text-lg text-center text-gray-600">
+          Share your unique referral link with friends and earn TruthWeb Points when they join TruthWeb and make their first purchase!
+        </p>
       </div>
 
-      <!-- Referral Steps -->
+      <!-- Referral Steps (Updated to reflect TruthWeb Points) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-12">
         <!-- Step 1 -->
         <div class="card">
@@ -255,11 +257,11 @@
           <h3 class="text-xl font-semibold mb-2">2. Friends Join</h3>
           <p class="text-gray-600 mb-4">Your friends sign up using your referral link.</p>
         </div>
-        <!-- Step 3 -->
+        <!-- Step 3 (Updated to reflect TruthWeb Points) -->
         <div class="card">
           <img src="https://placehold.co/200x200" alt="Earn Rewards" class="w-full h-48 object-cover mb-4">
           <h3 class="text-xl font-semibold mb-2">3. Earn Rewards</h3>
-          <p class="text-gray-600 mb-4">Earn 10 Pi when they make their first purchase.</p>
+          <p class="text-gray-600 mb-4">Earn 10 TruthWeb Points when they make their first purchase.</p>
         </div>
       </div>
 
@@ -267,14 +269,14 @@
       <div class="max-w-4xl mx-auto text-center">
         <h3 class="text-2xl font-semibold mb-4">Your Referral Link</h3>
         <div class="flex justify-center items-center mb-6">
-          <input type="text" value="https://truthweb.com/ref/yourcode123" readonly class="p-2 border border-gray-300 rounded-l w-full sm:w-2/3 lg:w-1/2 text-gray-600" id="referralLink">
+          <input type="text" value="https://truthweb.com/ref/yourcode123" readonly class="p-2 border border-gray-300 rounded-l w-full sm:w-2/3 lg:w-1/2 text-gray-600" id="referralLink" aria-label="Your referral link">
           <button class="btn rounded-l-none" onclick="copyLink()">Copy</button>
         </div>
         <p class="text-gray-600 mb-6">Share this link with your friends to start earning!</p>
         <a href="#" class="btn">Invite Friends Now</a>
       </div>
 
-      <!-- Rewards Stats -->
+      <!-- Rewards Stats (Updated to reflect TruthWeb Points) -->
       <div class="mt-12 max-w-4xl mx-auto">
         <h3 class="text-2xl font-semibold text-center mb-8">Your Referral Stats</h3>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
@@ -287,8 +289,8 @@
             <p class="text-3xl font-bold text-[var(--primary-color)]">8</p>
           </div>
           <div class="card text-center">
-            <h4 class="text-lg font-semibold mb-2">Pi Earned</h4>
-            <p class="text-3xl font-bold text-[var(--primary-color)]">80 Pi</p>
+            <h4 class="text-lg font-semibold mb-2">Points Earned</h4>
+            <p class="text-3xl font-bold text-[var(--primary-color)]">80 Points</p>
           </div>
         </div>
       </div>
