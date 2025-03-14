@@ -1,1 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>TruthWeb Ads - Promoted Products</title>
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- React and ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- React Tinder Card -->
+    <script src="https://unpkg.com/react-tinder-card@1.6.4/dist/react-tinder-card.min.js" crossorigin></script>
+    <style>
+        /* Existing styles from the provided file */
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #FFFFFF;
+            --highlight-color: #CCCCCC;
+            --text-color: #FFFFFF;
+            --button-bg-color: #000000;
+            --button-text-color: #FFFFFF;
+            --button-hover-bg-color: #FFFFFF;
+            --button-hover-text-color: #000000;
+            --background-color: #F5F5F5;
+            --accent-color: #FFFFFF;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--background-color);
+            color: var(--primary-color);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: var(--primary-color);
+            color: var(--text-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+            height: 64px;
+            animation: slideInHeader 0.5s ease-out forwards;
+        }
+        .sticky-header.hidden { transform: translateY(-100%); }
+        .sticky-header.scrolled { box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); }
+        @keyframes slideInHeader {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            transition: font-size 0.3s ease;
+        }
+        @media (max-width: 640px) { .logo-text { font-size: 1.25rem; } }
+        .example-section {
+            padding: 2rem 1rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .tinder-container {
+            position: relative;
+            width: 340px;
+            height: 500px;
+            margin: 2rem auto;
+        }
+        .tinder-card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--secondary-color);
+            border: 1px solid var(--highlight-color);
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .tinder-card img {
+            width: 100%;
+            height: 60%;
+            object-fit: cover;
+            border-bottom: 1px solid var(--highlight-color);
+        }
+        .tinder-card-content {
+            padding: 1rem;
+            text-align: center;
+        }
+        .tinder-card-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .tinder-card-content p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .tinder-card-content .price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0.5rem 0;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn.accent {
+            background: var(--accent-color);
+            color: #000000;
+            border: none;
+        }
+        .btn.accent:hover {
+            background: #E0E0E0;
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .btn.disabled {
+            background: #D3D3D3;
+            color: #666;
+            cursor: not-allowed;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .cart-info {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: var(--primary-color);
+        }
+        .footer-menu {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: var(--primary-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            animation: slideInFooter 0.5s ease-out forwards;
+        }
+        .footer-menu.hidden { transform: translateY(100%); }
+        @keyframes slideInFooter {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .footer-menu a {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .footer-menu a:hover { transform: scale(1.2); }
+        @keyframes cardEnter {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .tinder-card.enter {
+            animation: cardEnter 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <header class="sticky-header">
+        <div class="flex items-center">
+            <a href="index.html" class="text-inherit flex items-center">
+                <span class="logo-text ml-2">TruthWeb Ads</span>
+            </a>
+        </div>
+        <div class="flex items-center">
+            <a href="marketplace.html" class="text-[var(--text-color)] mr-4"><i class="fas fa-shopping-cart"></i></a>
+        </div>
+    </header>
+    <main id="root" class="pt-16 flex flex-col items-center min-h-screen">
+        <section class="example-section">
+            <h2 class="text-3xl font-bold mb-4">Swipe Through Promoted Products</h2>
+            <p class="text-lg mb-6">Discover products from vendors promoting on TruthWeb Ads. Swipe right to add to cart or buy now!</p>
+        </section>
+    </main>
+    <div class="footer-menu">
+        <a href="index.html"><i class="fas fa-home"></i></a>
+        <a href="marketplace.html"><i class="fas fa-shopping-cart"></i></a>
+        <a href="profile.html"><i class="fas fa-user"></i></a>
+        <a href="wallet.html"><i class="fas fa-wallet"></i></a>
+    </div>
+    <script type="text/babel">
+        // Sample product data from vendors promoting their products
+        const promotedProducts = [
+            {
+                id: 1,
+                name: "Smartphone X Pro",
+                vendor: "TechCorp",
+                image: "https://via.placeholder.com/340x204?text=Smartphone+X+Pro",
+                price: "299.99",
+                description: "Latest model with 5G and advanced camera."
+            },
+            {
+                id: 2,
+                name: "Handcrafted Necklace",
+                vendor: "JewelArt",
+                image: "https://via.placeholder.com/340x204?text=Necklace",
+                price: "49.99",
+                description: "Unique artisan design with gemstones."
+            },
+            {
+                id: 3,
+                name: "Organic Coffee Beans",
+                vendor: "BeanBrew",
+                image: "https://via.placeholder.com/340x204?text=Coffee",
+                price: "19.99",
+                description: "Sustainably sourced from Colombia."
+            },
+            {
+                id: 4,
+                name: "Gaming Headset",
+                vendor: "GameZone",
+                image: "https://via.placeholder.com/340x204?text=Headset",
+                price: "79.99",
+                description: "Immersive sound for gamers."
+            },
+            {
+                id: 5,
+                name: "Leather Wallet",
+                vendor: "CraftWorks",
+                image: "https://via.placeholder.com/340x204?text=Wallet",
+                price: "34.99",
+                description: "Handmade with premium leather."
+            },
+            {
+                id: 6,
+                name: "Fitness Tracker",
+                vendor: "FitLife",
+                image: "https://via.placeholder.com/340x204?text=Tracker",
+                price: "59.99",
+                description: "Track your steps and heart rate."
+            }
+        ];
 
+        // Sound effects
+        const swipeSound = new Audio('https://www.soundjay.com/buttons/swipe.wav');
+        const addToCartSound = new Audio('https://www.soundjay.com/buttons/click.wav');
+        const buyNowSound = new Audio('https://www.soundjay.com/buttons/beep.wav');
+        const nextPrevSound = new Audio('https://www.soundjay.com/buttons/blip.wav');
+
+        // Main React Component
+        const ProductSwipePage = () => {
+            const [products, setProducts] = React.useState(promotedProducts);
+            const [currentIndex, setCurrentIndex] = React.useState(0);
+            const [cart, setCart] = React.useState([]);
+            const [swipeFeedback, setSwipeFeedback] = React.useState('');
+            const cardRef = React.useRef(null);
+
+            const handleSwipe = (direction, product) => {
+                swipeSound.play();
+                setSwipeFeedback(direction === 'right' ? 'Added!' : 'Skipped');
+                setTimeout(() => setSwipeFeedback(''), 1000);
+                if (direction === 'right') {
+                    setCart([...cart, product]);
+                }
+                setCurrentIndex((prev) => Math.min(prev + 1, products.length - 1));
+            };
+
+            const handleAddToCart = (product) => {
+                addToCartSound.play();
+                setCart([...cart, product]);
+                alert(`${product.name} added to cart!`);
+            };
+
+            const handleBuyNow = (product) => {
+                buyNowSound.play();
+                alert(`Proceeding to buy ${product.name} now!`);
+                // Simulate purchase flow here (e.g., redirect to checkout)
+            };
+
+            const goToNext = () => {
+                if (currentIndex < products.length - 1) {
+                    nextPrevSound.play();
+                    setCurrentIndex((prev) => prev + 1);
+                    if (cardRef.current) {
+                        cardRef.current.classList.remove('enter');
+                        void cardRef.current.offsetWidth; // Trigger reflow
+                        cardRef.current.classList.add('enter');
+                    }
+                }
+            };
+
+            const goToPrevious = () => {
+                if (currentIndex > 0) {
+                    nextPrevSound.play();
+                    setCurrentIndex((prev) => prev - 1);
+                    if (cardRef.current) {
+                        cardRef.current.classList.remove('enter');
+                        void cardRef.current.offsetWidth; // Trigger reflow
+                        cardRef.current.classList.add('enter');
+                    }
+                }
+            };
+
+            React.useEffect(() => {
+                if (cardRef.current) {
+                    cardRef.current.classList.add('enter');
+                }
+            }, [currentIndex]);
+
+            return (
+                <div className="flex flex-col items-center pb-16">
+                    <h1 className="text-3xl font-bold mb-4">Promoted Products</h1>
+                    <div className="tinder-container">
+                        {products.map((product, index) => (
+                            index === currentIndex && (
+                                <TinderCard
+                                    key={product.id}
+                                    ref={cardRef}
+                                    onSwipe={(dir) => handleSwipe(dir, product)}
+                                    preventSwipe={['up', 'down']}
+                                    className="tinder-card"
+                                    swipeRequirementType="position"
+                                    swipeThreshold={100}
+                                >
+                                    <img src={product.image} alt={product.name} />
+                                    <div className="tinder-card-content">
+                                        <h3>{product.name}</h3>
+                                        <p>by {product.vendor}</p>
+                                        <p className="price">${product.price}</p>
+                                        <p>{product.description}</p>
+                                        <div className="mt-2 flex justify-center gap-2">
+                                            <button
+                                                className="btn accent"
+                                                onClick={() => handleAddToCart(product)}
+                                            >
+                                                Add to Cart
+                                            </button>
+                                            <button
+                                                className="btn accent"
+                                                onClick={() => handleBuyNow(product)}
+                                            >
+                                                Buy Now
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className={`swipe-feedback ${swipeFeedback ? 'visible' : ''}`}>
+                                        {swipeFeedback}
+                                    </div>
+                                </TinderCard>
+                            )
+                        ))}
+                    </div>
+                    <div className="nav-buttons">
+                        <button
+                            className={`btn accent ${currentIndex === 0 ? 'disabled' : ''}`}
+                            onClick={goToPrevious}
+                            disabled={currentIndex === 0}
+                        >
+                            Previous
+                        </button>
+                        <button
+                            className={`btn accent ${currentIndex === products.length - 1 ? 'disabled' : ''}`}
+                            onClick={goToNext}
+                            disabled={currentIndex === products.length - 1}
+                        >
+                            Next
+                        </button>
+                    </div>
+                    <div className="cart-info">
+                        <p>Items in Cart: {cart.length}</p>
+                        <p>Total: ${cart.reduce((sum, item) => sum + parseFloat(item.price), 0).toFixed(2)}</p>
+                    </div>
+                </div>
+            );
+        };
+
+        // Render the React component
+        ReactDOM.render(<ProductSwipePage />, document.getElementById('root'));
+
+        // Scroll-based header/footer hiding
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.sticky-header');
+            const footerMenu = document.querySelector('.footer-menu');
+            const currentScroll = window.scrollY;
+            if (currentScroll > lastScroll && currentScroll > 50) {
+                header.classList.add('hidden');
+                footerMenu.classList.add('hidden');
+            } else if (currentScroll < lastScroll) {
+                header.classList.remove('hidden');
+                footerMenu.classList.remove('hidden');
+                header.classList.toggle('scrolled', currentScroll > 50);
+            }
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>
