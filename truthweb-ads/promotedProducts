@@ -1,0 +1,8 @@
+{
+    id: 7,
+    name: "Wireless Earbuds",
+    vendor: "AudioTech",
+    image: "https://via.placeholder.com/340x204?text=Earbuds",
+    price: "89.99",
+    description: "Noise-canceling wireless earbuds."
+},
