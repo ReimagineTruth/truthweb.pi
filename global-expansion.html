@@ -3,13 +3,15 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" name="viewport"/>
-    <title>TruthWeb - Global Marketplace Expansion</title>
+    <title>TruthWeb - Global Marketplace</title>
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome CDN (v6.5.1 for latest icons) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
     <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <!-- FlagCDN for country flags -->
+    <link href="https://flagcdn.com" rel="preconnect"/>
     <style>
       :root {
         --primary-color: #000000;
@@ -21,7 +23,7 @@
         --button-hover-bg-color: #FFFFFF;
         --button-hover-text-color: #000000;
         --background-color: #FFFFFF;
-        --accent-color: #FFFFFF; /* Changed from #FFD700 to #FFFFFF */
+        --accent-color: #FFFFFF;
       }
       html { scroll-behavior: smooth; }
       body {
@@ -309,12 +311,12 @@
       }
       .btn.accent {
         background: var(--accent-color);
-        color: #000000; /* Changed to black text */
+        color: #000000;
         border: none;
       }
       .btn.accent:hover {
-        background: #E0E0E0; /* Lighter gray for hover effect instead of #FFA500 */
-        color: #000000; /* Maintain black text on hover */
+        background: #E0E0E0;
+        color: #000000;
       }
       @keyframes pulse {
         0% { transform: scale(1); }
@@ -345,6 +347,24 @@
         transition: transform 0.3s ease;
       }
       .card:hover i { transform: scale(1.1); }
+      .country-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .country-card img {
+        width: 48px;
+        height: 48px;
+        margin-bottom: 1rem;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .country-card ul {
+        list-style: disc;
+        padding-left: 1.5rem;
+        text-align: left;
+      }
       .footer-menu {
         position: fixed;
         bottom: 0;
@@ -494,7 +514,7 @@
 
     <main>
         <section class="hero">
-            <h1 class="glow-text">Global Marketplace Expansion</h1>
+            <h1 class="glow-text">Global Marketplace</h1>
             <p class="text-xl mt-4 md:text-2xl">Access International Markets</p>
             <p class="text-lg mt-2">Trade globally with localized currency support</p>
             <a href="#explore-markets" class="btn accent">Explore Now</a>
@@ -550,10 +570,70 @@
             </div>
         </section>
 
-        <section id="explore-markets" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
+        <section id="country-markets" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
+            <h2 class="section-title text-3xl font-bold text-center mb-8">Marketplaces by Country</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="card country-card bg-[var(--secondary-color)] text-[var(--primary-color)]">
+                    <img src="https://flagcdn.com/48x36/us.png" alt="United States Flag">
+                    <h3 class="text-xl font-semibold mb-2">United States</h3>
+                    <ul>
+                        <li>Electronics</li>
+                        <li>Fashion Apparel</li>
+                        <li>Home Goods</li>
+                    </ul>
+                </div>
+                <div class="card country-card bg-[var(--secondary-color)] text-[var(--primary-color)]">
+                    <img src="https://flagcdn.com/48x36/cn.png" alt="China Flag">
+                    <h3 class="text-xl font-semibold mb-2">China</h3>
+                    <ul>
+                        <li>Consumer Electronics</li>
+                        <li>Textiles</li>
+                        <li>Toys</li>
+                    </ul>
+                </div>
+                <div class="card country-card bg-[var(--secondary-color)] text-[var(--primary-color)]">
+                    <img src="https://flagcdn.com/48x36/jp.png" alt="Japan Flag">
+                    <h3 class="text-xl font-semibold mb-2">Japan</h3>
+                    <ul>
+                        <li>Anime Merchandise</li>
+                        <li>Electronics</li>
+                        <li>Traditional Crafts</li>
+                    </ul>
+                </div>
+                <div class="card country-card bg-[var(--secondary-color)] text-[var(--primary-color)]">
+                    <img src="https://flagcdn.com/48x36/br.png" alt="Brazil Flag">
+                    <h3 class="text-xl font-semibold mb-2">Brazil</h3>
+                    <ul>
+                        <li>Coffee</li>
+                        <li>Fashion Accessories</li>
+                        <li>Sports Gear</li>
+                    </ul>
+                </div>
+                <div class="card country-card bg-[var(--secondary-color)] text-[var(--primary-color)]">
+                    <img src="https://flagcdn.com/48x36/de.png" alt="Germany Flag">
+                    <h3 class="text-xl font-semibold mb-2">Germany</h3>
+                    <ul>
+                        <li>Automotive Parts</li>
+                        <li>Beer & Spirits</li>
+                        <li>Precision Tools</li>
+                    </ul>
+                </div>
+                <div class="card country-card bg-[var(--secondary-color)] text-[var(--primary-color)]">
+                    <img src="https://flagcdn.com/48x36/in.png" alt="India Flag">
+                    <h3 class="text-xl font-semibold mb-2">India</h3>
+                    <ul>
+                        <li>Spices</li>
+                        <li>Handicrafts</li>
+                        <li>Textiles</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="explore-markets" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Explore International Markets</h2>
             <div class="max-w-4xl mx-auto text-center">
-                <p class="text-lg mb-6 md:text-xl">From digital goods in Asia to services in Europe, TruthWeb’s global expansion lets you tap into diverse markets. Use Pi as your universal currency, with real-time conversion to local fiat for transparency.</p>
+                <p class="text-lg mb-6 md:text-xl">From digital goods in Asia to services in Europe, TruthWeb’s global marketplace lets you tap into diverse markets. Use Pi as your universal currency, with real-time conversion to local fiat for transparency.</p>
                 <a href="marketplace.html" class="btn accent">Start Trading</a>
             </div>
         </section>
@@ -646,7 +726,7 @@
       const searchInput = document.querySelector('.search-input');
       const searchResults = document.querySelector('.search-results');
       const searchableContent = [];
-      document.querySelectorAll('h1, h2, h3, p, a').forEach(element => {
+      document.querySelectorAll('h1, h2, h3, p, a, li').forEach(element => {
         const text = element.textContent.trim();
         if (text) {
           searchableContent.push({
