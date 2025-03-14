@@ -796,7 +796,6 @@
             </div>
         </section>
 
-    
         <section id="testimonials" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">What Our Users Say</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -815,7 +814,7 @@
             </div>
         </section>
     
-            <section id="fraud-detection" class="py-16 px-4">
+        <section id="fraud-detection" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Fraud Detection</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                 <div class="card">
@@ -839,7 +838,7 @@
             </div>
         </section>
         
-       <section id="news" class="py-16 px-4">
+        <section id="news" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">TruthWeb News</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                 <div class="card"><i class="fas fa-newspaper"></i><h3 class="text-xl font-semibold mb-2">v1.0 Launched!</h3><p>Pi-powered platform live.</p><a href="news.html#launch" class="btn">Read</a></div>
@@ -848,7 +847,7 @@
             </div>
         </section>
  
-             <section id="pitrack" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
+        <section id="pitrack" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
             <h2 class="section-title text-3xl font-bold text-center mb-8">PiTrack</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                 <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-chart-bar"></i><h3 class="text-xl font-semibold mb-2">Track Your Pi</h3><p>Monitor wallet activity.</p><a href="pitrack.html#wallet" class="btn">View</a></div>
@@ -909,7 +908,7 @@
         </section>
     </main>   
    
-  <div class="footer-menu">
+    <div class="footer-menu">
         <a href="index.html"><i class="fas fa-home"></i></a>
         <a href="marketplace.html"><i class="fas fa-shopping-cart"></i></a>
         <a href="profile.html"><i class="fas fa-user"></i></a>
@@ -1058,6 +1057,20 @@
 
         lazyImages.forEach(img => imageObserver.observe(img));
       });
+    </script>
+
+    <!-- Pi Network SDK (Replace the URL with the correct one from Pi Network documentation) -->
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <!-- Pi Network SDK Initialization -->
+    <script>
+      window.Pi = window.Pi || {};
+      try {
+        Pi.init({ version: "2.0", sandbox: true }, () => {
+          console.log("Pi Network App running in Sandbox mode!");
+        });
+      } catch (error) {
+        console.error("Failed to initialize Pi Network SDK:", error);
+      }
     </script>
 </body>
 </html>
