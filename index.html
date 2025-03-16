@@ -22,6 +22,7 @@
         --button-hover-text-color: #000000;
         --background-color: #FFFFFF;
         --accent-color: #FFD700;
+        --progress-bar-color: var(--accent-color);
       }
       html { scroll-behavior: smooth; }
       body {
@@ -34,6 +35,54 @@
         line-height: 1.6;
         padding-bottom: 60px;
       }
+
+      /* Progress Bar Styles */
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 4px;
+        background: var(--progress-bar-color);
+        z-index: 1001;
+        transition: width 0.3s ease;
+        box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+      }
+
+      /* Go to Top Button Styles */
+      .go-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--accent-color);
+        color: var(--primary-color);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        border: none;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 1000;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+      .go-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+      .go-to-top:hover {
+        background: #FFA500;
+        transform: scale(1.1);
+      }
+      .go-to-top:active {
+        transform: scale(0.95);
+      }
+
       .sticky-header {
         position: fixed;
         top: 0;
@@ -544,6 +593,7 @@
         #user-stats .text-4xl { font-size: 1.75rem; }
         #user-stats .text-2xl { font-size: 1.25rem; }
         #user-stats .fa-3x { font-size: 2rem; }
+        .go-to-top { width: 40px; height: 40px; font-size: 1.2rem; }
       }
       @media (min-width: 641px) and (max-width: 1024px) {
         .burger-btn { display: none; }
@@ -566,6 +616,8 @@
     </style>
 </head>
 <body>
+    <div class="progress-bar"></div>
+
     <header class="sticky-header">
         <div class="flex items-center">
             <a href="index.html" class="text-inherit flex items-center">
@@ -951,6 +1003,11 @@
       </div>
     </footer>
 
+    <!-- Go to Top Button -->
+    <button class="go-to-top" aria-label="Go to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <script>
       function adjustLayout() {
         const width = window.innerWidth;
@@ -985,8 +1042,11 @@
       window.addEventListener('scroll', () => {
         const header = document.querySelector('.sticky-header');
         const footerMenu = document.querySelector('.footer-menu');
+        const progressBar = document.querySelector('.progress-bar');
+        const goToTopBtn = document.querySelector('.go-to-top');
         const currentScroll = window.scrollY;
 
+        // Header and footer menu scroll behavior
         if (currentScroll > lastScroll && currentScroll > 64) {
           header.classList.add('hidden');
           footerMenu.classList.add('hidden');
@@ -997,7 +1057,26 @@
 
         header.classList.toggle('scrolled', currentScroll > 64 && !header.classList.contains('hidden'));
 
+        // Progress bar update
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        progressBar.style.width = `${scrollPercent}%`;
+
+        // Go to Top button visibility
+        if (currentScroll > 200) { // Show button after scrolling 200px
+          goToTopBtn.classList.add('visible');
+        } else {
+          goToTopBtn.classList.remove('visible');
+        }
+
         lastScroll = currentScroll;
+      });
+
+      // Go to Top button functionality
+      const goToTopBtn = document.querySelector('.go-to-top');
+      goToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
       const burgerBtn = document.querySelector('.burger-btn');
