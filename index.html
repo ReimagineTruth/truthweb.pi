@@ -40,39 +40,36 @@
         width: 100%;
         z-index: 1000;
         background: var(--primary-color);
-        color: var(--text-color); /* White text by default */
-        transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+        color: var(--text-color);
+        transition: all 0.3s ease;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 0 1rem;
         height: 64px;
-        animation: slideInHeader 0.5s ease-out forwards;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       }
       .sticky-header.hidden { transform: translateY(-100%); }
-      /* When header is scrolled (background becomes white) */
       .sticky-header.scrolled {
         background: var(--secondary-color);
-        color: var(--primary-color); /* Black text when header is white */
+        color: var(--primary-color);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        transform: scale(0.98);
       }
       @keyframes slideInHeader {
         from { transform: translateY(-100%); opacity: 0; }
         to { transform: translateY(0); opacity: 1; }
       }
-      /* Ensure logo text color changes */
       .sticky-header .logo-text {
         font-size: 1.5rem;
         font-weight: 700;
-        color: var(--text-color); /* White by default */
-        transition: font-size 0.3s ease, color 0.3s ease;
+        color: var(--text-color);
+        transition: color 0.3s ease;
       }
       .sticky-header.scrolled .logo-text {
-        font-size: 1.25rem;
-        color: var(--primary-color); /* Black when header is white */
+        color: var(--primary-color);
       }
       .burger-btn {
+        display: flex;
         cursor: pointer;
         flex-direction: column;
         justify-content: center;
@@ -85,13 +82,12 @@
       .burger-btn span {
         width: 100%;
         height: 3px;
-        background: var(--text-color); /* White by default */
+        background: var(--text-color);
         margin: 2px 0;
         transition: all 0.3s ease;
-        transform-origin: center;
       }
       .sticky-header.scrolled .burger-btn span {
-        background: var(--primary-color); /* Black when header is white */
+        background: var(--primary-color);
       }
       .burger-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
       .burger-btn.open span:nth-child(2) { opacity: 0; transform: scale(0); }
@@ -133,12 +129,12 @@
         animation: fadeInUp 0.5s ease-in-out forwards;
       }
       .desktop-nav .nav-item a {
-        color: var(--text-color); /* White by default */
+        color: var(--text-color);
         padding: 0.5rem 1rem;
         transition: all 0.3s ease;
       }
       .sticky-header.scrolled .desktop-nav .nav-item a {
-        color: var(--primary-color); /* Black when header is white */
+        color: var(--primary-color);
       }
       .desktop-nav .nav-item a:hover {
         color: var(--highlight-color);
@@ -184,9 +180,12 @@
         right: 10px;
         top: 50%;
         transform: translateY(-50%);
-        color: var(--primary-color); /* Black by default (search icon is inside input) */
+        color: var(--primary-color);
         font-size: 1.2rem;
         transition: transform 0.3s ease, color 0.3s ease;
+      }
+      .sticky-header.scrolled .search-icon {
+        color: var(--primary-color);
       }
       .search-input:focus + .search-icon { transform: translateY(-50%) scale(1.1); }
       .search-results {
@@ -221,13 +220,13 @@
         transform: scale(1.02);
       }
       .icon {
-        color: var(--text-color); /* White by default */
+        color: var(--text-color);
         font-size: 1.25rem;
         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
         margin-left: 0.75rem;
       }
       .sticky-header.scrolled .icon {
-        color: var(--primary-color); /* Black when header is white */
+        color: var(--primary-color);
       }
       .icon:hover {
         transform: scale(1.15) rotate(5deg);
@@ -922,29 +921,35 @@
             </div>
         </section>
     </main>   
-   
-   <!-- Footer -->
-<footer class="bg-[var(--primary-color)] py-8">
-  <div class="container mx-auto text-center">
-    <div class="mb-4">
-      <a href="donate.html" class="btn accent inline-flex items-center"><i class="fas fa-gift mr-2"></i> Donate</a>
+
+    <div class="footer-menu">
+        <a href="index.html"><i class="fas fa-home"></i></a>
+        <a href="marketplace.html"><i class="fas fa-shopping-cart"></i></a>
+        <a href="profile.html"><i class="fas fa-user"></i></a>
+        <a href="wallet.html"><i class="fas fa-wallet"></i></a>
     </div>
-    <div class="mb-4">
-      <a class="text-[var(--text-color)] mx-2 floating-effect" href="/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-      <a class="text-[var(--text-color)] mx-2 floating-effect" href="/" target="_blank"><i class="fab fa-twitter"></i></a>
-      <a class="text-[var(--text-color)] mx-2 floating-effect" href="/" target="_blank"><i class="fab fa-telegram"></i></a>
-      <a class="text-[var(--text-color)] mx-2 floating-effect" href="/" target="_blank"><i class="fab fa-youtube"></i></a>
-      <a class="text-[var(--text-color)] mx-2 floating-effect" href="/" target="_blank"><i class="fab fa-github"></i></a>
-    </div>
-    <p class="text-[var(--text-color)] mb-4">© 2025 TruthWeb. All rights reserved.</p>
-    <div class="text-[var(--text-color)] text-sm">
-      <a href="about.html" class="mx-2 hover:text-[var(--highlight-color)]">About Us</a> |
-      <a href="terms.html" class="mx-2 hover:text-[var(--highlight-color)]">Terms & Conditions</a> |
-      <a href="privacy.html" class="mx-2 hover:text-[var(--highlight-color)]">Privacy Policy</a> |
-      <a href="contact.html" class="mx-2 hover:text-[var(--highlight-color)]">Contact</a>
-    </div>
-  </div>
-</footer>
+
+    <footer class="bg-[var(--primary-color)] py-8">
+      <div class="container mx-auto text-center">
+        <div class="mb-4">
+          <a href="donate.html" class="btn accent inline-flex items-center"><i class="fas fa-gift mr-2"></i> Donate</a>
+        </div>
+        <div class="mb-4">
+          <a class="text-[var(--text-color)] mx-2 floating-effect" href="/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a class="text-[var(--text-color)] mx-2 floating-effect" href="/" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a class="text-[var(--text-color)] mx-2 floating-effect" href="/" target="_blank"><i class="fab fa-telegram"></i></a>
+          <a class="text-[var(--text-color)] mx-2 floating-effect" href="/" target="_blank"><i class="fab fa-youtube"></i></a>
+          <a class="text-[var(--text-color)] mx-2 floating-effect" href="/" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+        <p class="text-[var(--text-color)] mb-4">© 2025 TruthWeb. All rights reserved.</p>
+        <div class="text-[var(--text-color)] text-sm">
+          <a href="about.html" class="mx-2 hover:text-[var(--highlight-color)]">About Us</a> |
+          <a href="terms.html" class="mx-2 hover:text-[var(--highlight-color)]">Terms & Conditions</a> |
+          <a href="privacy.html" class="mx-2 hover:text-[var(--highlight-color)]">Privacy Policy</a> |
+          <a href="contact.html" class="mx-2 hover:text-[var(--highlight-color)]">Contact</a>
+        </div>
+      </div>
+    </footer>
 
     <script>
       function adjustLayout() {
@@ -982,14 +987,16 @@
         const footerMenu = document.querySelector('.footer-menu');
         const currentScroll = window.scrollY;
 
-        if (currentScroll > lastScroll && currentScroll > 50) {
+        if (currentScroll > lastScroll && currentScroll > 64) {
           header.classList.add('hidden');
           footerMenu.classList.add('hidden');
-        } else if (currentScroll < lastScroll) {
+        } else if (currentScroll < lastScroll || currentScroll <= 64) {
           header.classList.remove('hidden');
           footerMenu.classList.remove('hidden');
-          header.classList.toggle('scrolled', currentScroll > 50);
         }
+
+        header.classList.toggle('scrolled', currentScroll > 64 && !header.classList.contains('hidden'));
+
         lastScroll = currentScroll;
       });
 
@@ -1058,7 +1065,6 @@
         }
       });
 
-      // Lazy load images
       document.addEventListener('DOMContentLoaded', () => {
         const lazyImages = document.querySelectorAll('img[data-src]');
         const imageObserver = new IntersectionObserver((entries) => {
@@ -1075,9 +1081,7 @@
       });
     </script>
 
-    <!-- Pi Network SDK (Replace the URL with the correct one from Pi Network documentation) -->
     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-    <!-- Pi Network SDK Initialization -->
     <script>
       window.Pi = window.Pi || {};
       try {
