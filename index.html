@@ -33,7 +33,7 @@
         padding: 0;
         overflow-x: hidden;
         line-height: 1.6;
-        padding-bottom: 60px;
+        padding-bottom: 0; /* Removed padding-bottom since footer-menu is gone */
       }
 
       /* Progress Bar Styles */
@@ -486,33 +486,6 @@
         border-radius: 8px;
         margin-bottom: 0.5rem;
       }
-      .footer-menu {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 60px;
-        background: var(--primary-color);
-        color: var(--text-color);
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        z-index: 1000;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-        transition: transform 0.3s ease;
-        animation: slideInFooter 0.5s ease-out forwards;
-      }
-      .footer-menu.hidden { transform: translateY(100%); }
-      @keyframes slideInFooter {
-        from { transform: translateY(100%); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-      }
-      .footer-menu a {
-        color: var(--text-color);
-        font-size: 1.5rem;
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
-      .footer-menu a:hover { transform: scale(1.2); }
       footer {
         background: var(--primary-color);
         color: var(--text-color);
@@ -587,7 +560,6 @@
         .feed-container { max-width: 100%; padding: 0 0.5rem; }
         .feed-item img { max-width: 100%; }
         .feed-actions { max-width: 100%; }
-        footer { padding-bottom: 80px; }
         footer .social-icons a, footer .footer-links a { font-size: 0.9rem; }
         .download-buttons { flex-direction: column; gap: 0.5rem; }
         #user-stats .text-4xl { font-size: 1.75rem; }
@@ -602,7 +574,6 @@
         .glow-text { font-size: 2.5rem; }
         .btn { padding: 0.5rem 1.2rem; }
         .card i { font-size: 2.25rem; }
-        .footer-menu { display: none; }
         footer .social-icons a, footer .footer-links a { font-size: 1rem; }
       }
       @media (min-width: 1025px) {
@@ -610,7 +581,6 @@
         .desktop-nav { display: flex; }
         .search-container { max-width: 400px; }
         .glow-text { font-size: 3rem; }
-        .footer-menu { display: none; }
         footer .social-icons a, footer .footer-links a { font-size: 1rem; }
       }
     </style>
@@ -730,6 +700,14 @@
                 <div class="card"><i class="fas fa-clock"></i><h3 class="text-xl font-semibold mb-2">Instant Transactions</h3><p>Real-time transaction tracking and notifications.</p><a href="instant-transactions.html" class="btn">View</a></div>
                 <div class="card"><i class="fas fa-share-alt"></i><h3 class="text-xl font-semibold mb-2">Referral Program</h3><p>Earn Pi by inviting friends</p><a href="referral-program.html" class="btn">Join Now</a></div>
                 <div class="card"><i class="fas fa-brain"></i><h3 class="text-xl font-semibold mb-2">AI Price Predictor</h3><p>Market trend analysis</p><a href="ai-predictor.html" class="btn">Try Now</a></div>
+            </div>
+        </section>
+
+        <!-- New Blank Section -->
+        <section id="new-section" class="py-16 px-4">
+            <h2 class="section-title text-3xl font-bold text-center mb-8">New Section</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Add your content here -->
             </div>
         </section>
 
@@ -972,29 +950,35 @@
                 <div class="card"><i class="fas fa-coins"></i><h3 class="text-xl font-semibold mb-2">Pi Staking</h3><p>Earn rewards.</p><a href="future.html#staking" class="btn">Update</a></div>
             </div>
         </section>
+
+        <!-- Monetization Section -->
+        <section class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
+          <h2 class="text-3xl font-bold text-center mb-8">Support TruthWeb</h2>
+          <div class="max-w-4xl mx-auto text-center">
+            <p class="text-lg mb-6">
+              Love our decentralized content? Subscribe, donate, or join our partners to fuel the TruthWeb journey!
+            </p>
+            <div class="flex justify-center space-x-4">
+              <a href="https://www.youtube.com/@TruthWebYoutube?sub_confirmation=1" target="_blank" class="btn">Subscribe</a>
+              <a href="donate.html" target="_blank" class="btn">Donate</a>
+              <a href="https://www.okx.com/join/96663535" target="_blank" class="btn">Join OKX</a>
+            </div>
+          </div>
+        </section>
     </main>   
 
-    <div class="footer-menu">
-        <a href="index.html"><i class="fas fa-home"></i></a>
-        <a href="marketplace.html"><i class="fas fa-shopping-cart"></i></a>
-        <a href="profile.html"><i class="fas fa-user"></i></a>
-        <a href="wallet.html"><i class="fas fa-wallet"></i></a>
-    </div>
-
+    <!-- Footer -->
     <footer class="bg-[var(--primary-color)] py-8">
       <div class="container mx-auto text-center">
-        <div class="mb-4">
-          <a href="donate.html" class="btn accent inline-flex items-center"><i class="fas fa-gift mr-2"></i> Donate</a>
-        </div>
-        <div class="mb-4">
-          <a class="text-[var(--text-color)] mx-2 floating-effect" href="/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-          <a class="text-[var(--text-color)] mx-2 floating-effect" href="/" target="_blank"><i class="fab fa-twitter"></i></a>
-          <a class="text-[var(--text-color)] mx-2 floating-effect" href="/" target="_blank"><i class="fab fa-telegram"></i></a>
-          <a class="text-[var(--text-color)] mx-2 floating-effect" href="/" target="_blank"><i class="fab fa-youtube"></i></a>
-          <a class="text-[var(--text-color)] mx-2 floating-effect" href="/" target="_blank"><i class="fab fa-github"></i></a>
+        <div class="social-icons mb-4">
+          <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://www.facebook.com/reimaginetruthofficial/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://x.com/reimagine_truth" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://t.me/TruthWebOfficial" target="_blank"><i class="fab fa-telegram"></i></a>
+          <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://www.youtube.com/@TruthWebYoutube" target="_blank"><i class="fab fa-youtube"></i></a>
+          <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://github.com/username/TruthWeb" target="_blank"><i class="fab fa-github"></i></a>
         </div>
         <p class="text-[var(--text-color)] mb-4">© 2025 TruthWeb. All rights reserved.</p>
-        <div class="text-[var(--text-color)] text-sm">
+        <div class="footer-links text-[var(--text-color)] text-sm">
           <a href="about.html" class="mx-2 hover:text-[var(--highlight-color)]">About Us</a> |
           <a href="terms.html" class="mx-2 hover:text-[var(--highlight-color)]">Terms & Conditions</a> |
           <a href="privacy.html" class="mx-2 hover:text-[var(--highlight-color)]">Privacy Policy</a> |
@@ -1041,18 +1025,15 @@
       let lastScroll = 0;
       window.addEventListener('scroll', () => {
         const header = document.querySelector('.sticky-header');
-        const footerMenu = document.querySelector('.footer-menu');
         const progressBar = document.querySelector('.progress-bar');
         const goToTopBtn = document.querySelector('.go-to-top');
         const currentScroll = window.scrollY;
 
-        // Header and footer menu scroll behavior
+        // Header scroll behavior
         if (currentScroll > lastScroll && currentScroll > 64) {
           header.classList.add('hidden');
-          footerMenu.classList.add('hidden');
         } else if (currentScroll < lastScroll || currentScroll <= 64) {
           header.classList.remove('hidden');
-          footerMenu.classList.remove('hidden');
         }
 
         header.classList.toggle('scrolled', currentScroll > 64 && !header.classList.contains('hidden'));
