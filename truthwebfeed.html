@@ -406,6 +406,111 @@
       .compose-btn:hover {
         transform: scale(1.1);
       }
+      /* TruthWeb AI (Grok 3 Style) */
+      .ai-btn {
+        position: fixed;
+        bottom: 130px;
+        right: 1rem;
+        background: var(--button-bg-color);
+        color: var(--button-text-color);
+        border: 1px solid var(--highlight-color);
+        border-radius: 9999px;
+        padding: 0.75rem;
+        font-size: 1.5rem;
+        z-index: 1000;
+        transition: transform 0.3s ease;
+      }
+      .ai-btn:hover {
+        transform: scale(1.1);
+      }
+      .ai-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+      }
+      .ai-modal.active {
+        display: flex;
+      }
+      .ai-modal-content {
+        background: var(--secondary-color);
+        border: 1px solid var(--highlight-color);
+        border-radius: 16px;
+        padding: 1rem;
+        width: 90%;
+        max-width: 600px;
+        max-height: 80vh;
+        overflow-y: auto;
+        animation: slideInModal 0.3s ease-out forwards;
+        position: relative;
+      }
+      .ai-modal-content h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-align: center;
+        text-shadow: 0 0 10px var(--highlight-color);
+        animation: glow 2s infinite alternate;
+      }
+      @keyframes glow {
+        0% { text-shadow: 0 0 10px var(--highlight-color); }
+        100% { text-shadow: 0 0 20px var(--highlight-color); }
+      }
+      .ai-chat {
+        max-height: 400px;
+        overflow-y: auto;
+        padding: 1rem;
+        border: 1px solid var(--highlight-color);
+        border-radius: 10px;
+        background: #f9fafb;
+        margin-bottom: 1rem;
+      }
+      .ai-message {
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+        border-radius: 10px;
+        background: var(--secondary-color);
+        color: var(--primary-color);
+      }
+      .ai-message.user {
+        background: var(--highlight-color);
+        text-align: right;
+      }
+      .ai-input {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .ai-input input {
+        flex: 1;
+        padding: 0.5rem;
+        border: 1px solid var(--highlight-color);
+        border-radius: 10px;
+        background: var(--secondary-color);
+        color: var(--primary-color);
+        font-size: 1rem;
+        outline: none;
+      }
+      .ai-input button {
+        background: var(--button-bg-color);
+        color: var(--button-text-color);
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--highlight-color);
+        border-radius: 9999px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .ai-input button:hover {
+        background: var(--button-hover-bg-color);
+        color: var(--button-hover-text-color);
+        transform: scale(1.05);
+      }
       /* Footer Menu (Mobile-Only) */
       .footer-menu {
         position: fixed;
@@ -438,27 +543,16 @@
       .footer-menu a:hover {
         transform: scale(1.2);
       }
-      /* Footer (Traditional, Desktop) */
-      footer {
-        background: var(--primary-color);
-        color: var(--text-color);
+      /* Infinite Scroll Loader */
+      .scroll-loader {
         text-align: center;
-        padding: 2rem 1rem;
-        position: relative;
-        z-index: 10;
-        animation: fadeIn 1.5s ease-in-out;
-      }
-      @keyframes fadeIn {
-        0% { opacity: 0; }
-        100% { opacity: 1; }
-      }
-      footer .social-icons a, footer .footer-links a {
-        color: var(--text-color);
-        transition: color 0.3s ease, transform 0.3s ease;
-      }
-      footer .social-icons a:hover, footer .footer-links a:hover {
+        padding: 2rem;
+        font-size: 1rem;
         color: var(--highlight-color);
-        transform: scale(1.1);
+        display: none;
+      }
+      .scroll-loader.active {
+        display: block;
       }
       /* Responsive Design */
       @media (max-width: 640px) {
@@ -477,7 +571,6 @@
         .logo-text { font-size: 1.1rem; }
         .icon { font-size: 1.1rem; margin-left: 0.5rem; }
         .feed-media img, .feed-media video { max-width: 100%; }
-        footer { padding-bottom: 80px; }
       }
       @media (min-width: 641px) and (max-width: 1024px) {
         .left-sidebar { width: 80px; }
@@ -584,6 +677,20 @@
                         <button><i class="fas fa-share"></i></button>
                     </div>
                 </div>
+                <div class="ad-item">
+                    <div class="feed-item-header">
+                        <i class="fas fa-ad feed-avatar"></i>
+                        <div class="feed-user-info">
+                            <span class="feed-user">TruthWeb Ads</span>
+                            <span class="feed-time">Sponsored</span>
+                        </div>
+                    </div>
+                    <p class="feed-content">Unlock Premium Pi Analytics for 75 Pi! Gain insights into your trades.</p>
+                    <div class="feed-media">
+                        <img src="https://placehold.co/510x280" alt="Pi Analytics Ad">
+                    </div>
+                    <a href="marketplace.html" class="btn w-full">Get Started</a>
+                </div>
                 <div class="feed-item">
                     <div class="feed-item-header">
                         <i class="fas fa-user-circle feed-avatar"></i>
@@ -601,7 +708,22 @@
                         <button><i class="fas fa-share"></i></button>
                     </div>
                 </div>
+                <div class="ad-item">
+                    <div class="feed-item-header">
+                        <i class="fas fa-ad feed-avatar"></i>
+                        <div class="feed-user-info">
+                            <span class="feed-user">TruthWeb Ads</span>
+                            <span class="feed-time">Sponsored</span>
+                        </div>
+                    </div>
+                    <p class="feed-content">Boost your Pi earnings with our exclusive trading course! Only 150 Pi.</p>
+                    <div class="feed-media">
+                        <img src="https://placehold.co/510x280" alt="Trading Course Ad">
+                    </div>
+                    <a href="marketplace.html" class="btn w-full">Enroll Now</a>
+                </div>
             </div>
+            <div class="scroll-loader">Loading more posts...</div>
         </main>
 
         <!-- Right Sidebar (Desktop) -->
@@ -638,6 +760,21 @@
     <!-- Floating Compose Button (Mobile) -->
     <button class="compose-btn" aria-label="Compose new post"><i class="fas fa-plus"></i></button>
 
+    <!-- TruthWeb AI Modal -->
+    <button class="ai-btn" aria-label="Open TruthWeb AI"><i class="fas fa-robot"></i></button>
+    <div class="ai-modal">
+        <div class="ai-modal-content">
+            <h3>TruthWeb AI</h3>
+            <div class="ai-chat" id="ai-chat">
+                <div class="ai-message">Hey there, Pioneer! I'm TruthWeb AI, your guide to navigating the TruthWeb universe. Ask me anything—marketplace tips, feed insights, or even the meaning of life (just kidding on that last one... or am I?). What's on your mind?</div>
+            </div>
+            <div class="ai-input">
+                <input type="text" id="ai-input" placeholder="Ask TruthWeb AI...">
+                <button id="ai-submit">Send</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer Menu (Mobile-Only) -->
     <nav class="footer-menu" role="navigation" aria-label="Mobile Footer Navigation">
         <a href="index.html"><i class="fas fa-home"></i></a>
@@ -646,24 +783,6 @@
         <a href="profile.html"><i class="fas fa-user"></i></a>
         <a href="walletdashboard.html"><i class="fas fa-wallet"></i></a>
     </nav>
-
-    <!-- Footer (Traditional, Desktop) -->
-    <footer role="contentinfo">
-        <div class="social-icons mb-4">
-            <a href="https://www.facebook.com/reimaginetruthofficial/" target="_blank" aria-label="Facebook" class="floating-effect"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://x.com/reimagine_truth" target="_blank" aria-label="Twitter" class="floating-effect"><i class="fab fa-twitter"></i></a>
-            <a href="https://t.me/TruthWebOfficial" target="_blank" aria-label="Telegram" class="floating-effect"><i class="fab fa-telegram"></i></a>
-            <a href="https://www.youtube.com/@ReimagineTruth" target="_blank" aria-label="YouTube" class="floating-effect"><i class="fab fa-youtube"></i></a>
-            <a href="https://github.com/username/TruthWeb" target="_blank" aria-label="GitHub" class="floating-effect"><i class="fab fa-github"></i></a>
-        </div>
-        <p class="text-sm mb-2">© 2025 TruthWeb. All rights reserved.</p>
-        <div class="footer-links text-sm">
-            <a href="about.html">About</a> |
-            <a href="terms.html">Terms</a> |
-            <a href="privacy.html">Privacy</a> |
-            <a href="contact.html">Contact</a>
-        </div>
-    </footer>
 
     <!-- Scripts -->
     <script>
@@ -811,6 +930,153 @@
       document.querySelectorAll('.retweet-btn').forEach(button => {
         button.addEventListener('click', toggleRetweet);
       });
+
+      // Infinite Scroll
+      const feedContainer = document.getElementById('feed-container');
+      const scrollLoader = document.querySelector('.scroll-loader');
+      let page = 1;
+
+      const samplePosts = [
+        {
+          type: 'post',
+          user: 'PioneerD',
+          handle: '@pioneerd',
+          time: 'Mar 3, 2025, 12:00',
+          content: 'Just discovered a hidden gem in the TruthWeb marketplace! Check out these Pi-powered gadgets.'
+        },
+        {
+          type: 'ad',
+          content: 'Master Pi trading with our expert-led webinars! Only 200 Pi for lifetime access.',
+          media: 'https://placehold.co/510x280',
+          ctaText: 'Sign Up Now',
+          ctaLink: 'marketplace.html'
+        },
+        {
+          type: 'post',
+          user: 'VendorC',
+          handle: '@vendorc',
+          time: 'Mar 2, 2025, 15:30',
+          content: 'New Pi software update available! Download now for enhanced security features.'
+        }
+      ];
+
+      function loadMorePosts() {
+        scrollLoader.classList.add('active');
+        setTimeout(() => {
+          for (let i = 0; i < 5; i++) {
+            const randomPost = samplePosts[Math.floor(Math.random() * samplePosts.length)];
+            const newItem = document.createElement('div');
+            newItem.className = randomPost.type === 'post' ? 'feed-item' : 'ad-item';
+            newItem.style.opacity = '0'; // Start hidden for animation
+            if (randomPost.type === 'post') {
+              newItem.innerHTML = `
+                <div class="feed-item-header">
+                  <i class="fas fa-user-circle feed-avatar"></i>
+                  <div class="feed-user-info">
+                    <span class="feed-user">${randomPost.user}</span>
+                    <span class="feed-handle">${randomPost.handle}</span>
+                    <span class="feed-time">${randomPost.time}</span>
+                  </div>
+                </div>
+                <p class="feed-content">${randomPost.content}</p>
+                <div class="feed-actions">
+                  <button><i class="far fa-comment"></i> ${Math.floor(Math.random() * 10)}</button>
+                  <button class="retweet-btn"><i class="fas fa-retweet"></i> ${Math.floor(Math.random() * 5)}</button>
+                  <button class="like-btn"><i class="far fa-heart"></i> <span class="like-count">${Math.floor(Math.random() * 20)}</span></button>
+                  <button><i class="fas fa-share"></i></button>
+                </div>
+              `;
+            } else {
+              newItem.innerHTML = `
+                <div class="feed-item-header">
+                  <i class="fas fa-ad feed-avatar"></i>
+                  <div class="feed-user-info">
+                    <span class="feed-user">TruthWeb Ads</span>
+                    <span class="feed-time">Sponsored</span>
+                  </div>
+                </div>
+                <p class="feed-content">${randomPost.content}</p>
+                <div class="feed-media">
+                  <img src="${randomPost.media}" alt="Ad">
+                </div>
+                <a href="${randomPost.ctaLink}" class="btn w-full">${randomPost.ctaText}</a>
+              `;
+            }
+            feedContainer.appendChild(newItem);
+            setTimeout(() => { newItem.style.opacity = '1'; }, 10); // Trigger animation
+            if (randomPost.type === 'post') {
+              newItem.querySelector('.like-btn').addEventListener('click', toggleLike);
+              newItem.querySelector('.retweet-btn').addEventListener('click', toggleRetweet);
+            }
+          }
+          scrollLoader.classList.remove('active');
+          page++;
+        }, 1000); // Simulate network delay
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          loadMorePosts();
+        }
+      }, { threshold: 0.1 });
+
+      observer.observe(scrollLoader);
+
+      // TruthWeb AI
+      const aiBtn = document.querySelector('.ai-btn');
+      const aiModal = document.querySelector('.ai-modal');
+      const aiChat = document.getElementById('ai-chat');
+      const aiInput = document.getElementById('ai-input');
+      const aiSubmit = document.getElementById('ai-submit');
+
+      aiBtn.addEventListener('click', () => {
+        aiModal.classList.add('active');
+      });
+
+      aiModal.addEventListener('click', (e) => {
+        if (e.target === aiModal) {
+          aiModal.classList.remove('active');
+        }
+      });
+
+      aiSubmit.addEventListener('click', () => {
+        const userInput = aiInput.value.trim();
+        if (!userInput) return;
+
+        const userMessage = document.createElement('div');
+        userMessage.className = 'ai-message user';
+        userMessage.textContent = userInput;
+        aiChat.appendChild(userMessage);
+
+        const aiResponse = document.createElement('div');
+        aiResponse.className = 'ai-message';
+        aiResponse.textContent = getAIResponse(userInput);
+        aiChat.appendChild(aiResponse);
+
+        aiChat.scrollTop = aiChat.scrollHeight;
+        aiInput.value = '';
+      });
+
+      aiInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          aiSubmit.click();
+        }
+      });
+
+      function getAIResponse(input) {
+        const lowerInput = input.toLowerCase();
+        if (lowerInput.includes('marketplace')) {
+          return "The TruthWeb marketplace is buzzing! You can find everything from Pi software to trading courses. Want me to recommend the hottest items right now? Just say 'recommend marketplace items'!";
+        } else if (lowerInput.includes('feed')) {
+          return "The feed is your window into the TruthWeb community. You're seeing posts from Pioneers and ads from our sponsors. Want to know how to get more engagement on your posts? Ask me for tips!";
+        } else if (lowerInput.includes('recommend marketplace items')) {
+          return "Here are some hot picks: 'Pi Software' for 100 Pi, 'Premium Pi Analytics' for 75 Pi, and 'Trading Course' for 150 Pi. All available in the marketplace—check them out!";
+        } else if (lowerInput.includes('tips')) {
+          return "To boost engagement, try posting about your Pi trading wins, sharing marketplace finds, or asking questions to spark conversations. And don't forget to use hashtags like #PiTrading! Want more specific advice? Just ask!";
+        } else {
+          return "Hmm, I'm not sure I caught that, but I'm here to help! Try asking about the marketplace, feed, or community tips. Or, if you're feeling cosmic, ask me about the meaning of Pi (just kidding... or am I?).";
+        }
+      }
     </script>
 </body>
 </html>
