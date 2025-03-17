@@ -10,6 +10,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
     <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <!-- Socket.IO CDN -->
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
     <style>
       :root {
         --primary-color: #000000;
@@ -47,7 +49,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 0 1rem;
-        height: 53px; /* X-like height */
+        height: 53px;
         animation: slideInHeader 0.5s ease-out forwards;
       }
       .sticky-header.hidden {
@@ -146,7 +148,7 @@
         display: flex;
         max-width: 1265px;
         margin: 0 auto;
-        padding-top: 53px; /* Header height */
+        padding-top: 53px;
       }
       .left-sidebar {
         width: 275px;
@@ -319,10 +321,10 @@
         transform: scale(1.1);
       }
       .feed-actions button.liked i {
-        color: #1DA1F2; /* X-like blue */
+        color: #1DA1F2;
       }
       .feed-actions button.retweeted i {
-        color: #00FF00; /* X-like green for retweet */
+        color: #00FF00;
       }
       .ad-item {
         background: #f9fafb;
@@ -624,104 +626,7 @@
         <!-- Main Feed -->
         <main class="main-feed">
             <div id="feed-container">
-                <!-- Feed Items -->
-                <div class="feed-item">
-                    <div class="feed-item-header">
-                        <i class="fas fa-user-circle feed-avatar"></i>
-                        <div class="feed-user-info">
-                            <span class="feed-user">PioneerA</span>
-                            <span class="feed-handle">@pioneera</span>
-                            <span class="feed-time">Mar 5, 2025, 18:45</span>
-                        </div>
-                    </div>
-                    <p class="feed-content">Just sold 500 Pi in a P2P trade! Loving the seamless experience on TruthWeb.</p>
-                    <div class="feed-actions">
-                        <button><i class="far fa-comment"></i> 2</button>
-                        <button class="retweet-btn"><i class="fas fa-retweet"></i> 1</button>
-                        <button class="like-btn"><i class="far fa-heart"></i> <span class="like-count">3</span></button>
-                        <button><i class="fas fa-share"></i></button>
-                    </div>
-                </div>
-                <div class="ad-item">
-                    <div class="feed-item-header">
-                        <i class="fas fa-ad feed-avatar"></i>
-                        <div class="feed-user-info">
-                            <span class="feed-user">TruthWeb Ads</span>
-                            <span class="feed-time">Sponsored</span>
-                        </div>
-                    </div>
-                    <p class="feed-content">Get the new Pi Software for only 100 Pi! Boost your productivity today.</p>
-                    <div class="feed-media">
-                        <img src="https://placehold.co/510x280" alt="Pi Software Ad">
-                    </div>
-                    <a href="marketplace.html" class="btn w-full">Shop Now</a>
-                </div>
-                <div class="feed-item">
-                    <div class="feed-item-header">
-                        <i class="fas fa-user-circle feed-avatar"></i>
-                        <div class="feed-user-info">
-                            <span class="feed-user">VendorB</span>
-                            <span class="feed-handle">@vendorb</span>
-                            <span class="feed-time">Mar 5, 2025, 14:30</span>
-                        </div>
-                    </div>
-                    <p class="feed-content">New Pi eBook available in the marketplace! Check it out for only 50 Pi.</p>
-                    <div class="feed-media">
-                        <img src="https://placehold.co/510x280" alt="Pi eBook">
-                    </div>
-                    <a href="marketplace.html" class="text-[var(--primary-color)] underline">View Product</a>
-                    <div class="feed-actions mt-2">
-                        <button><i class="far fa-comment"></i> 3</button>
-                        <button class="retweet-btn"><i class="fas fa-retweet"></i> 2</button>
-                        <button class="like-btn"><i class="far fa-heart"></i> <span class="like-count">5</span></button>
-                        <button><i class="fas fa-share"></i></button>
-                    </div>
-                </div>
-                <div class="ad-item">
-                    <div class="feed-item-header">
-                        <i class="fas fa-ad feed-avatar"></i>
-                        <div class="feed-user-info">
-                            <span class="feed-user">TruthWeb Ads</span>
-                            <span class="feed-time">Sponsored</span>
-                        </div>
-                    </div>
-                    <p class="feed-content">Unlock Premium Pi Analytics for 75 Pi! Gain insights into your trades.</p>
-                    <div class="feed-media">
-                        <img src="https://placehold.co/510x280" alt="Pi Analytics Ad">
-                    </div>
-                    <a href="marketplace.html" class="btn w-full">Get Started</a>
-                </div>
-                <div class="feed-item">
-                    <div class="feed-item-header">
-                        <i class="fas fa-user-circle feed-avatar"></i>
-                        <div class="feed-user-info">
-                            <span class="feed-user">PioneerC</span>
-                            <span class="feed-handle">@pioneerc</span>
-                            <span class="feed-time">Mar 4, 2025, 09:15</span>
-                        </div>
-                    </div>
-                    <p class="feed-content">Excited to see my wallet balance growing with TruthWeb’s instant delivery system!</p>
-                    <div class="feed-actions">
-                        <button><i class="far fa-comment"></i> 1</button>
-                        <button class="retweet-btn"><i class="fas fa-retweet"></i> 0</button>
-                        <button class="like-btn"><i class="far fa-heart"></i> <span class="like-count">2</span></button>
-                        <button><i class="fas fa-share"></i></button>
-                    </div>
-                </div>
-                <div class="ad-item">
-                    <div class="feed-item-header">
-                        <i class="fas fa-ad feed-avatar"></i>
-                        <div class="feed-user-info">
-                            <span class="feed-user">TruthWeb Ads</span>
-                            <span class="feed-time">Sponsored</span>
-                        </div>
-                    </div>
-                    <p class="feed-content">Boost your Pi earnings with our exclusive trading course! Only 150 Pi.</p>
-                    <div class="feed-media">
-                        <img src="https://placehold.co/510x280" alt="Trading Course Ad">
-                    </div>
-                    <a href="marketplace.html" class="btn w-full">Enroll Now</a>
-                </div>
+                <!-- Initial feed items will be populated by truthwebfeedbackend.js -->
             </div>
             <div class="scroll-loader">Loading more posts...</div>
         </main>
@@ -766,7 +671,7 @@
         <div class="ai-modal-content">
             <h3>TruthWeb AI</h3>
             <div class="ai-chat" id="ai-chat">
-                <div class="ai-message">Hey there, Pioneer! I'm TruthWeb AI, your guide to navigating the TruthWeb universe. Ask me anything—marketplace tips, feed insights, or even the meaning of life (just kidding on that last one... or am I?). What's on your mind?</div>
+                <!-- Initial message will be populated by truthwebfeedbackend.js -->
             </div>
             <div class="ai-input">
                 <input type="text" id="ai-input" placeholder="Ask TruthWeb AI...">
@@ -785,298 +690,42 @@
     </nav>
 
     <!-- Scripts -->
+    <script src="truthwebfeedbackend.js"></script>
     <script>
-      // Header and Footer Scroll Hide/Show Effect (X-Style)
-      let lastScroll = 0;
-      window.addEventListener('scroll', () => {
-        const header = document.querySelector('.sticky-header');
-        const footerMenu = document.querySelector('.footer-menu');
-        const currentScroll = window.scrollY;
+      // Minimal inline script to initialize backend interactions
+      document.addEventListener('DOMContentLoaded', () => {
+        // Initialize backend functionality
+        initializeFeed();
+        initializeSearch();
+        initializeCompose();
+        initializeAI();
+        initializeScrollEffects();
 
-        if (currentScroll > lastScroll && currentScroll > 50) {
-          header.classList.add('hidden');
-          footerMenu.classList.add('hidden');
-        } else if (currentScroll < lastScroll) {
-          header.classList.remove('hidden');
-          footerMenu.classList.remove('hidden');
-          header.classList.toggle('scrolled', currentScroll > 50);
+        // Like and Retweet button handlers (client-side only)
+        function toggleLike() {
+          const likeCount = this.querySelector('.like-count');
+          let count = parseInt(likeCount.textContent);
+          count++;
+          likeCount.textContent = count;
+          const icon = this.querySelector('i');
+          icon.classList.toggle('far');
+          icon.classList.toggle('fas');
+          this.classList.toggle('liked');
         }
-        lastScroll = currentScroll;
-      });
 
-      // Search Functionality
-      const searchInput = document.querySelector('.search-input');
-      const searchResults = document.querySelector('.search-results');
-      const searchableContent = [];
-      document.querySelectorAll('h1, h2, h3, p, a').forEach(element => {
-        const text = element.textContent.trim();
-        if (text) {
-          searchableContent.push({
-            text: text.toLowerCase(),
-            element,
-            href: element.tagName === 'A' ? element.getAttribute('href') : null
-          });
+        function toggleRetweet() {
+          const icon = this.querySelector('i');
+          icon.classList.toggle('retweeted');
         }
+
+        document.querySelectorAll('.like-btn').forEach(button => {
+          button.addEventListener('click', toggleLike);
+        });
+
+        document.querySelectorAll('.retweet-btn').forEach(button => {
+          button.addEventListener('click', toggleRetweet);
+        });
       });
-
-      searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        searchResults.innerHTML = '';
-        searchResults.classList.remove('active');
-
-        if (query.length > 0) {
-          const results = searchableContent.filter(item => item.text.includes(query));
-          if (results.length > 0) {
-            results.forEach(result => {
-              const div = document.createElement('div');
-              div.classList.add('search-result-item');
-              div.textContent = result.text.slice(0, 50) + (result.text.length > 50 ? '...' : '');
-              div.addEventListener('click', () => {
-                if (result.href) window.location.href = result.href;
-                else result.element.scrollIntoView({ behavior: 'smooth' });
-                searchResults.classList.remove('active');
-                searchInput.value = '';
-              });
-              searchResults.appendChild(div);
-            });
-            searchResults.classList.add('active');
-          } else {
-            const noResult = document.createElement('div');
-            noResult.classList.add('search-result-item');
-            noResult.textContent = 'No results found';
-            searchResults.appendChild(noResult);
-            searchResults.classList.add('active');
-          }
-        }
-      });
-
-      document.addEventListener('click', (e) => {
-        if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-          searchResults.classList.remove('active');
-        }
-      });
-
-      // Compose Modal
-      const composeBtn = document.querySelector('.compose-btn');
-      const composeModal = document.querySelector('.compose-modal');
-      composeBtn.addEventListener('click', () => {
-        composeModal.classList.add('active');
-      });
-      composeModal.addEventListener('click', (e) => {
-        if (e.target === composeModal) {
-          composeModal.classList.remove('active');
-        }
-      });
-
-      // Post Form Submission
-      document.getElementById('post-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const content = document.getElementById('post-content').value.trim();
-        if (!content) return;
-
-        const feedContainer = document.getElementById('feed-container');
-        const newPost = document.createElement('div');
-        newPost.className = 'feed-item';
-        newPost.style.opacity = '0'; // Start hidden for animation
-        newPost.innerHTML = `
-          <div class="feed-item-header">
-            <i class="fas fa-user-circle feed-avatar"></i>
-            <div class="feed-user-info">
-              <span class="feed-user">You</span>
-              <span class="feed-handle">@yourhandle</span>
-              <span class="feed-time">${new Date().toLocaleString()}</span>
-            </div>
-          </div>
-          <p class="feed-content">${content}</p>
-          <div class="feed-actions">
-            <button><i class="far fa-comment"></i> 0</button>
-            <button class="retweet-btn"><i class="fas fa-retweet"></i> 0</button>
-            <button class="like-btn"><i class="far fa-heart"></i> <span class="like-count">0</span></button>
-            <button><i class="fas fa-share"></i></button>
-          </div>
-        `;
-        feedContainer.insertBefore(newPost, feedContainer.firstChild);
-        setTimeout(() => { newPost.style.opacity = '1'; }, 10); // Trigger animation
-        this.reset();
-        composeModal.classList.remove('active');
-
-        // Reattach event listeners to new post
-        newPost.querySelector('.like-btn').addEventListener('click', toggleLike);
-        newPost.querySelector('.retweet-btn').addEventListener('click', toggleRetweet);
-      });
-
-      // Like Button Functionality
-      function toggleLike() {
-        const likeCount = this.querySelector('.like-count');
-        let count = parseInt(likeCount.textContent);
-        count++;
-        likeCount.textContent = count;
-        const icon = this.querySelector('i');
-        icon.classList.toggle('far');
-        icon.classList.toggle('fas');
-        this.classList.toggle('liked');
-      }
-
-      // Retweet Button Functionality
-      function toggleRetweet() {
-        const icon = this.querySelector('i');
-        icon.classList.toggle('retweeted');
-      }
-
-      document.querySelectorAll('.like-btn').forEach(button => {
-        button.addEventListener('click', toggleLike);
-      });
-
-      document.querySelectorAll('.retweet-btn').forEach(button => {
-        button.addEventListener('click', toggleRetweet);
-      });
-
-      // Infinite Scroll
-      const feedContainer = document.getElementById('feed-container');
-      const scrollLoader = document.querySelector('.scroll-loader');
-      let page = 1;
-
-      const samplePosts = [
-        {
-          type: 'post',
-          user: 'PioneerD',
-          handle: '@pioneerd',
-          time: 'Mar 3, 2025, 12:00',
-          content: 'Just discovered a hidden gem in the TruthWeb marketplace! Check out these Pi-powered gadgets.'
-        },
-        {
-          type: 'ad',
-          content: 'Master Pi trading with our expert-led webinars! Only 200 Pi for lifetime access.',
-          media: 'https://placehold.co/510x280',
-          ctaText: 'Sign Up Now',
-          ctaLink: 'marketplace.html'
-        },
-        {
-          type: 'post',
-          user: 'VendorC',
-          handle: '@vendorc',
-          time: 'Mar 2, 2025, 15:30',
-          content: 'New Pi software update available! Download now for enhanced security features.'
-        }
-      ];
-
-      function loadMorePosts() {
-        scrollLoader.classList.add('active');
-        setTimeout(() => {
-          for (let i = 0; i < 5; i++) {
-            const randomPost = samplePosts[Math.floor(Math.random() * samplePosts.length)];
-            const newItem = document.createElement('div');
-            newItem.className = randomPost.type === 'post' ? 'feed-item' : 'ad-item';
-            newItem.style.opacity = '0'; // Start hidden for animation
-            if (randomPost.type === 'post') {
-              newItem.innerHTML = `
-                <div class="feed-item-header">
-                  <i class="fas fa-user-circle feed-avatar"></i>
-                  <div class="feed-user-info">
-                    <span class="feed-user">${randomPost.user}</span>
-                    <span class="feed-handle">${randomPost.handle}</span>
-                    <span class="feed-time">${randomPost.time}</span>
-                  </div>
-                </div>
-                <p class="feed-content">${randomPost.content}</p>
-                <div class="feed-actions">
-                  <button><i class="far fa-comment"></i> ${Math.floor(Math.random() * 10)}</button>
-                  <button class="retweet-btn"><i class="fas fa-retweet"></i> ${Math.floor(Math.random() * 5)}</button>
-                  <button class="like-btn"><i class="far fa-heart"></i> <span class="like-count">${Math.floor(Math.random() * 20)}</span></button>
-                  <button><i class="fas fa-share"></i></button>
-                </div>
-              `;
-            } else {
-              newItem.innerHTML = `
-                <div class="feed-item-header">
-                  <i class="fas fa-ad feed-avatar"></i>
-                  <div class="feed-user-info">
-                    <span class="feed-user">TruthWeb Ads</span>
-                    <span class="feed-time">Sponsored</span>
-                  </div>
-                </div>
-                <p class="feed-content">${randomPost.content}</p>
-                <div class="feed-media">
-                  <img src="${randomPost.media}" alt="Ad">
-                </div>
-                <a href="${randomPost.ctaLink}" class="btn w-full">${randomPost.ctaText}</a>
-              `;
-            }
-            feedContainer.appendChild(newItem);
-            setTimeout(() => { newItem.style.opacity = '1'; }, 10); // Trigger animation
-            if (randomPost.type === 'post') {
-              newItem.querySelector('.like-btn').addEventListener('click', toggleLike);
-              newItem.querySelector('.retweet-btn').addEventListener('click', toggleRetweet);
-            }
-          }
-          scrollLoader.classList.remove('active');
-          page++;
-        }, 1000); // Simulate network delay
-      }
-
-      const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          loadMorePosts();
-        }
-      }, { threshold: 0.1 });
-
-      observer.observe(scrollLoader);
-
-      // TruthWeb AI
-      const aiBtn = document.querySelector('.ai-btn');
-      const aiModal = document.querySelector('.ai-modal');
-      const aiChat = document.getElementById('ai-chat');
-      const aiInput = document.getElementById('ai-input');
-      const aiSubmit = document.getElementById('ai-submit');
-
-      aiBtn.addEventListener('click', () => {
-        aiModal.classList.add('active');
-      });
-
-      aiModal.addEventListener('click', (e) => {
-        if (e.target === aiModal) {
-          aiModal.classList.remove('active');
-        }
-      });
-
-      aiSubmit.addEventListener('click', () => {
-        const userInput = aiInput.value.trim();
-        if (!userInput) return;
-
-        const userMessage = document.createElement('div');
-        userMessage.className = 'ai-message user';
-        userMessage.textContent = userInput;
-        aiChat.appendChild(userMessage);
-
-        const aiResponse = document.createElement('div');
-        aiResponse.className = 'ai-message';
-        aiResponse.textContent = getAIResponse(userInput);
-        aiChat.appendChild(aiResponse);
-
-        aiChat.scrollTop = aiChat.scrollHeight;
-        aiInput.value = '';
-      });
-
-      aiInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          aiSubmit.click();
-        }
-      });
-
-      function getAIResponse(input) {
-        const lowerInput = input.toLowerCase();
-        if (lowerInput.includes('marketplace')) {
-          return "The TruthWeb marketplace is buzzing! You can find everything from Pi software to trading courses. Want me to recommend the hottest items right now? Just say 'recommend marketplace items'!";
-        } else if (lowerInput.includes('feed')) {
-          return "The feed is your window into the TruthWeb community. You're seeing posts from Pioneers and ads from our sponsors. Want to know how to get more engagement on your posts? Ask me for tips!";
-        } else if (lowerInput.includes('recommend marketplace items')) {
-          return "Here are some hot picks: 'Pi Software' for 100 Pi, 'Premium Pi Analytics' for 75 Pi, and 'Trading Course' for 150 Pi. All available in the marketplace—check them out!";
-        } else if (lowerInput.includes('tips')) {
-          return "To boost engagement, try posting about your Pi trading wins, sharing marketplace finds, or asking questions to spark conversations. And don't forget to use hashtags like #PiTrading! Want more specific advice? Just ask!";
-        } else {
-          return "Hmm, I'm not sure I caught that, but I'm here to help! Try asking about the marketplace, feed, or community tips. Or, if you're feeling cosmic, ask me about the meaning of Pi (just kidding... or am I?).";
-        }
-      }
     </script>
 </body>
 </html>
