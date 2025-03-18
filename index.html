@@ -33,7 +33,7 @@
         padding: 0;
         overflow-x: hidden;
         line-height: 1.6;
-        padding-bottom: 60px; /* Added back to accommodate fixed footer menu on mobile */
+        padding-bottom: 60px; /* Space for fixed footer menu on mobile */
       }
 
       /* Progress Bar Styles */
@@ -52,7 +52,7 @@
       /* Go to Top Button Styles */
       .go-to-top {
         position: fixed;
-        bottom: 80px; /* Adjusted to account for footer menu height */
+        bottom: 80px; /* Adjusted for footer menu on mobile */
         right: 20px;
         background: var(--accent-color);
         color: var(--primary-color);
@@ -559,6 +559,10 @@
         height: 60px;
         z-index: 1000;
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease; /* Smooth transition for hide/show */
+      }
+      .footer-menu.hidden {
+        transform: translateY(100%); /* Hide by sliding down */
       }
       .footer-menu a {
         color: var(--text-color);
@@ -1108,6 +1112,7 @@
       let lastScroll = 0;
       window.addEventListener('scroll', () => {
         const header = document.querySelector('.sticky-header');
+        const footerMenu = document.querySelector('.footer-menu');
         const progressBar = document.querySelector('.progress-bar');
         const goToTopBtn = document.querySelector('.go-to-top');
         const currentScroll = window.scrollY;
@@ -1118,8 +1123,14 @@
         } else if (currentScroll < lastScroll || currentScroll <= 64) {
           header.classList.remove('hidden');
         }
-
         header.classList.toggle('scrolled', currentScroll > 64 && !header.classList.contains('hidden'));
+
+        // Footer menu scroll behavior (hide on scroll down, show on scroll up)
+        if (currentScroll > lastScroll && currentScroll > 60) { // Hide when scrolling down past 60px
+          footerMenu.classList.add('hidden');
+        } else if (currentScroll < lastScroll || currentScroll <= 60) { // Show when scrolling up or near top
+          footerMenu.classList.remove('hidden');
+        }
 
         // Progress bar update
         const scrollTop = window.scrollY;
