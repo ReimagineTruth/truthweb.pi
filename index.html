@@ -33,7 +33,7 @@
         padding: 0;
         overflow-x: hidden;
         line-height: 1.6;
-        padding-bottom: 0; /* Removed padding-bottom since footer-menu is gone */
+        padding-bottom: 60px; /* Added back to accommodate fixed footer menu on mobile */
       }
 
       /* Progress Bar Styles */
@@ -52,7 +52,7 @@
       /* Go to Top Button Styles */
       .go-to-top {
         position: fixed;
-        bottom: 20px;
+        bottom: 80px; /* Adjusted to account for footer menu height */
         right: 20px;
         background: var(--accent-color);
         color: var(--primary-color);
@@ -545,6 +545,42 @@
         transition: transform 0.3s ease;
       }
       .stat-item:hover i { transform: scale(1.1); }
+
+      /* Footer Menu Styles (Fixed, Mobile-Only) */
+      .footer-menu {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: var(--primary-color);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 60px;
+        z-index: 1000;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+      }
+      .footer-menu a {
+        color: var(--text-color);
+        font-size: 1.5rem;
+        padding: 0.5rem;
+        transition: transform 0.3s ease, color 0.3s ease;
+      }
+      .footer-menu a:hover {
+        color: var(--accent-color);
+        transform: scale(1.2);
+      }
+      @media (min-width: 641px) {
+        .footer-menu {
+          display: none; /* Hide on larger screens */
+        }
+        .go-to-top {
+          bottom: 20px; /* Reset to original position on desktop */
+        }
+        body {
+          padding-bottom: 0; /* Remove padding on desktop */
+        }
+      }
       @media (max-width: 640px) {
         .burger-btn { display: flex; }
         .desktop-nav { display: none; }
@@ -565,7 +601,7 @@
         #user-stats .text-4xl { font-size: 1.75rem; }
         #user-stats .text-2xl { font-size: 1.25rem; }
         #user-stats .fa-3x { font-size: 2rem; }
-        .go-to-top { width: 40px; height: 40px; font-size: 1.2rem; }
+        .go-to-top { width: 40px; height: 40px; font-size: 1.2rem; bottom: 80px; } /* Adjusted for mobile */
       }
       @media (min-width: 641px) and (max-width: 1024px) {
         .burger-btn { display: none; }
@@ -1024,6 +1060,15 @@
             </div>
         </div>
     </footer>
+
+    <!-- Footer Menu (Fixed, Mobile-Only) -->
+    <nav class="footer-menu" role="navigation" aria-label="Mobile Footer Navigation">
+        <a href="index.html"><i class="fas fa-home"></i></a>
+        <a href="marketplace.html"><i class="fas fa-shopping-cart"></i></a>
+        <a href="profile.html"><i class="fas fa-user"></i></a>
+        <a href="wallet.html"><i class="fas fa-wallet"></i></a>
+        <a href="community.html"><i class="fas fa-users"></i></a>
+    </nav>
 
     <!-- Go to Top Button -->
     <button class="go-to-top" aria-label="Go to Top">
