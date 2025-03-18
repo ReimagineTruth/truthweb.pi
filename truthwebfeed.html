@@ -47,7 +47,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 0 1rem;
-        height: 53px; /* X-like height */
+        height: 53px;
         animation: slideInHeader 0.5s ease-out forwards;
       }
       .sticky-header.hidden {
@@ -141,12 +141,85 @@
       .icon:hover {
         transform: scale(1.15) rotate(5deg);
       }
+      /* Desktop Navigation */
+      .desktop-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .desktop-nav .nav-item a {
+        color: var(--text-color);
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        transition: color 0.3s ease, transform 0.3s ease;
+      }
+      .desktop-nav .nav-item a:hover {
+        color: var(--highlight-color);
+        transform: scale(1.05);
+      }
+      /* Burger Button */
+      .burger-btn {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 20px;
+        cursor: pointer;
+        margin-left: 1rem;
+      }
+      .burger-btn span {
+        width: 100%;
+        height: 3px;
+        background: var(--text-color);
+        transition: all 0.3s ease;
+      }
+      .burger-btn.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      .burger-btn.active span:nth-child(2) {
+        opacity: 0;
+      }
+      .burger-btn.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+      /* Mobile Menu */
+      .mobile-menu {
+        position: fixed;
+        top: 53px;
+        left: -100%;
+        width: 250px;
+        height: calc(100vh - 53px);
+        background: var(--primary-color);
+        color: var(--text-color);
+        padding: 1rem;
+        z-index: 999;
+        transition: left 0.3s ease;
+      }
+      .mobile-menu.active {
+        left: 0;
+      }
+      .mobile-menu ul {
+        list-style: none;
+        padding: 0;
+      }
+      .mobile-menu .nav-item a {
+        color: var(--text-color);
+        font-size: 1.1rem;
+        padding: 0.75rem;
+        display: block;
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+      .mobile-menu .nav-item a:hover {
+        background: var(--highlight-color);
+        transform: scale(1.02);
+      }
       /* Main Layout (X-Style) */
       .main-container {
         display: flex;
         max-width: 1265px;
         margin: 0 auto;
-        padding-top: 53px; /* Header height */
+        padding-top: 53px;
       }
       .left-sidebar {
         width: 275px;
@@ -319,10 +392,10 @@
         transform: scale(1.1);
       }
       .feed-actions button.liked i {
-        color: #1DA1F2; /* X-like blue */
+        color: #1DA1F2;
       }
       .feed-actions button.retweeted i {
-        color: #00FF00; /* X-like green for retweet */
+        color: #00FF00;
       }
       .ad-item {
         background: #f9fafb;
@@ -571,6 +644,8 @@
         .logo-text { font-size: 1.1rem; }
         .icon { font-size: 1.1rem; margin-left: 0.5rem; }
         .feed-media img, .feed-media video { max-width: 100%; }
+        .desktop-nav { display: none !important; }
+        .burger-btn { display: flex; }
       }
       @media (min-width: 641px) and (max-width: 1024px) {
         .left-sidebar { width: 80px; }
@@ -579,14 +654,16 @@
         .right-sidebar { display: none; }
         .main-feed { max-width: 500px; }
         .footer-menu { display: none; }
+        .burger-btn { display: none; }
       }
       @media (min-width: 1025px) {
         .footer-menu { display: none; }
+        .burger-btn { display: none; }
       }
     </style>
 </head>
 <body>
-    <!-- Header (X-Style) -->
+    <!-- Header (X-Style with Desktop Nav and Burger Menu) -->
     <header class="sticky-header">
         <div class="flex items-center">
             <a href="index.html" class="text-inherit flex items-center">
@@ -599,9 +676,42 @@
             <div class="search-results"></div>
         </div>
         <div class="flex items-center">
+            <nav class="desktop-nav hidden md:flex items-center">
+                <ul class="flex space-x-4">
+                    <li class="nav-item"><a href="index.html">Home</a></li>
+                    <li class="nav-item"><a href="marketplace.html">Marketplace</a></li>
+                    <li class="nav-item"><a href="profile.html">Profile</a></li>
+                    <li class="nav-item"><a href="wallet.html">Wallet</a></li>
+                    <li class="nav-item"><a href="ledger-testnet.html">Ledger Testnet</a></li>
+                    <li class="nav-item"><a href="community.html">Community</a></li>
+                    <li class="nav-item"><a href="developers.html">Developers</a></li>
+                    <li class="nav-item"><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+            <a href="marketplace.html" class="icon floating-effect"><i class="fas fa-shopping-cart"></i></a>
             <a href="profile.html" class="icon floating-effect"><i class="fas fa-user"></i></a>
+            <a href="wallet.html" class="icon floating-effect"><i class="fas fa-wallet"></i></a>
+            <div class="burger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </header>
+
+    <!-- Mobile Menu -->
+    <nav class="mobile-menu">
+        <ul>
+            <li class="nav-item"><a href="index.html">Home</a></li>
+            <li class="nav-item"><a href="marketplace.html">Marketplace</a></li>
+            <li class="nav-item"><a href="profile.html">Profile</a></li>
+            <li class="nav-item"><a href="wallet.html">Wallet</a></li>
+            <li class="nav-item"><a href="ledger-testnet.html">Ledger Testnet</a></li>
+            <li class="nav-item"><a href="community.html">Community</a></li>
+            <li class="nav-item"><a href="developers.html">Developers</a></li>
+            <li class="nav-item"><a href="about.html">About</a></li>
+        </ul>
+    </nav>
 
     <!-- Main Content (X-Style Layout) -->
     <div class="main-container">
@@ -786,297 +896,306 @@
 
     <!-- Scripts -->
     <script>
-      // Header and Footer Scroll Hide/Show Effect (X-Style)
-      let lastScroll = 0;
-      window.addEventListener('scroll', () => {
-        const header = document.querySelector('.sticky-header');
-        const footerMenu = document.querySelector('.footer-menu');
-        const currentScroll = window.scrollY;
+      document.addEventListener('DOMContentLoaded', () => {
+        // Header and Footer Scroll Hide/Show Effect (X-Style)
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+          const header = document.querySelector('.sticky-header');
+          const footerMenu = document.querySelector('.footer-menu');
+          const currentScroll = window.scrollY;
 
-        if (currentScroll > lastScroll && currentScroll > 50) {
-          header.classList.add('hidden');
-          footerMenu.classList.add('hidden');
-        } else if (currentScroll < lastScroll) {
-          header.classList.remove('hidden');
-          footerMenu.classList.remove('hidden');
-          header.classList.toggle('scrolled', currentScroll > 50);
-        }
-        lastScroll = currentScroll;
-      });
+          if (currentScroll > lastScroll && currentScroll > 50) {
+            header.classList.add('hidden');
+            footerMenu.classList.add('hidden');
+          } else if (currentScroll < lastScroll) {
+            header.classList.remove('hidden');
+            footerMenu.classList.remove('hidden');
+            header.classList.toggle('scrolled', currentScroll > 50);
+          }
+          lastScroll = currentScroll;
+        });
 
-      // Search Functionality
-      const searchInput = document.querySelector('.search-input');
-      const searchResults = document.querySelector('.search-results');
-      const searchableContent = [];
-      document.querySelectorAll('h1, h2, h3, p, a').forEach(element => {
-        const text = element.textContent.trim();
-        if (text) {
-          searchableContent.push({
-            text: text.toLowerCase(),
-            element,
-            href: element.tagName === 'A' ? element.getAttribute('href') : null
-          });
-        }
-      });
+        // Burger menu toggle
+        const burgerBtn = document.querySelector('.burger-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        burgerBtn.addEventListener('click', () => {
+          burgerBtn.classList.toggle('active');
+          mobileMenu.classList.toggle('active');
+        });
 
-      searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        searchResults.innerHTML = '';
-        searchResults.classList.remove('active');
-
-        if (query.length > 0) {
-          const results = searchableContent.filter(item => item.text.includes(query));
-          if (results.length > 0) {
-            results.forEach(result => {
-              const div = document.createElement('div');
-              div.classList.add('search-result-item');
-              div.textContent = result.text.slice(0, 50) + (result.text.length > 50 ? '...' : '');
-              div.addEventListener('click', () => {
-                if (result.href) window.location.href = result.href;
-                else result.element.scrollIntoView({ behavior: 'smooth' });
-                searchResults.classList.remove('active');
-                searchInput.value = '';
-              });
-              searchResults.appendChild(div);
+        // Search Functionality
+        const searchInput = document.querySelector('.search-input');
+        const searchResults = document.querySelector('.search-results');
+        const searchableContent = [];
+        document.querySelectorAll('h1, h2, h3, p, a').forEach(element => {
+          const text = element.textContent.trim();
+          if (text) {
+            searchableContent.push({
+              text: text.toLowerCase(),
+              element,
+              href: element.tagName === 'A' ? element.getAttribute('href') : null
             });
-            searchResults.classList.add('active');
-          } else {
-            const noResult = document.createElement('div');
-            noResult.classList.add('search-result-item');
-            noResult.textContent = 'No results found';
-            searchResults.appendChild(noResult);
-            searchResults.classList.add('active');
           }
-        }
-      });
+        });
 
-      document.addEventListener('click', (e) => {
-        if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+        searchInput.addEventListener('input', (e) => {
+          const query = e.target.value.toLowerCase().trim();
+          searchResults.innerHTML = '';
           searchResults.classList.remove('active');
-        }
-      });
 
-      // Compose Modal
-      const composeBtn = document.querySelector('.compose-btn');
-      const composeModal = document.querySelector('.compose-modal');
-      composeBtn.addEventListener('click', () => {
-        composeModal.classList.add('active');
-      });
-      composeModal.addEventListener('click', (e) => {
-        if (e.target === composeModal) {
-          composeModal.classList.remove('active');
-        }
-      });
-
-      // Post Form Submission
-      document.getElementById('post-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const content = document.getElementById('post-content').value.trim();
-        if (!content) return;
-
-        const feedContainer = document.getElementById('feed-container');
-        const newPost = document.createElement('div');
-        newPost.className = 'feed-item';
-        newPost.style.opacity = '0'; // Start hidden for animation
-        newPost.innerHTML = `
-          <div class="feed-item-header">
-            <i class="fas fa-user-circle feed-avatar"></i>
-            <div class="feed-user-info">
-              <span class="feed-user">You</span>
-              <span class="feed-handle">@yourhandle</span>
-              <span class="feed-time">${new Date().toLocaleString()}</span>
-            </div>
-          </div>
-          <p class="feed-content">${content}</p>
-          <div class="feed-actions">
-            <button><i class="far fa-comment"></i> 0</button>
-            <button class="retweet-btn"><i class="fas fa-retweet"></i> 0</button>
-            <button class="like-btn"><i class="far fa-heart"></i> <span class="like-count">0</span></button>
-            <button><i class="fas fa-share"></i></button>
-          </div>
-        `;
-        feedContainer.insertBefore(newPost, feedContainer.firstChild);
-        setTimeout(() => { newPost.style.opacity = '1'; }, 10); // Trigger animation
-        this.reset();
-        composeModal.classList.remove('active');
-
-        // Reattach event listeners to new post
-        newPost.querySelector('.like-btn').addEventListener('click', toggleLike);
-        newPost.querySelector('.retweet-btn').addEventListener('click', toggleRetweet);
-      });
-
-      // Like Button Functionality
-      function toggleLike() {
-        const likeCount = this.querySelector('.like-count');
-        let count = parseInt(likeCount.textContent);
-        count++;
-        likeCount.textContent = count;
-        const icon = this.querySelector('i');
-        icon.classList.toggle('far');
-        icon.classList.toggle('fas');
-        this.classList.toggle('liked');
-      }
-
-      // Retweet Button Functionality
-      function toggleRetweet() {
-        const icon = this.querySelector('i');
-        icon.classList.toggle('retweeted');
-      }
-
-      document.querySelectorAll('.like-btn').forEach(button => {
-        button.addEventListener('click', toggleLike);
-      });
-
-      document.querySelectorAll('.retweet-btn').forEach(button => {
-        button.addEventListener('click', toggleRetweet);
-      });
-
-      // Infinite Scroll
-      const feedContainer = document.getElementById('feed-container');
-      const scrollLoader = document.querySelector('.scroll-loader');
-      let page = 1;
-
-      const samplePosts = [
-        {
-          type: 'post',
-          user: 'PioneerD',
-          handle: '@pioneerd',
-          time: 'Mar 3, 2025, 12:00',
-          content: 'Just discovered a hidden gem in the TruthWeb marketplace! Check out these Pi-powered gadgets.'
-        },
-        {
-          type: 'ad',
-          content: 'Master Pi trading with our expert-led webinars! Only 200 Pi for lifetime access.',
-          media: 'https://placehold.co/510x280',
-          ctaText: 'Sign Up Now',
-          ctaLink: 'marketplace.html'
-        },
-        {
-          type: 'post',
-          user: 'VendorC',
-          handle: '@vendorc',
-          time: 'Mar 2, 2025, 15:30',
-          content: 'New Pi software update available! Download now for enhanced security features.'
-        }
-      ];
-
-      function loadMorePosts() {
-        scrollLoader.classList.add('active');
-        setTimeout(() => {
-          for (let i = 0; i < 5; i++) {
-            const randomPost = samplePosts[Math.floor(Math.random() * samplePosts.length)];
-            const newItem = document.createElement('div');
-            newItem.className = randomPost.type === 'post' ? 'feed-item' : 'ad-item';
-            newItem.style.opacity = '0'; // Start hidden for animation
-            if (randomPost.type === 'post') {
-              newItem.innerHTML = `
-                <div class="feed-item-header">
-                  <i class="fas fa-user-circle feed-avatar"></i>
-                  <div class="feed-user-info">
-                    <span class="feed-user">${randomPost.user}</span>
-                    <span class="feed-handle">${randomPost.handle}</span>
-                    <span class="feed-time">${randomPost.time}</span>
-                  </div>
-                </div>
-                <p class="feed-content">${randomPost.content}</p>
-                <div class="feed-actions">
-                  <button><i class="far fa-comment"></i> ${Math.floor(Math.random() * 10)}</button>
-                  <button class="retweet-btn"><i class="fas fa-retweet"></i> ${Math.floor(Math.random() * 5)}</button>
-                  <button class="like-btn"><i class="far fa-heart"></i> <span class="like-count">${Math.floor(Math.random() * 20)}</span></button>
-                  <button><i class="fas fa-share"></i></button>
-                </div>
-              `;
+          if (query.length > 0) {
+            const results = searchableContent.filter(item => item.text.includes(query));
+            if (results.length > 0) {
+              results.forEach(result => {
+                const div = document.createElement('div');
+                div.classList.add('search-result-item');
+                div.textContent = result.text.slice(0, 50) + (result.text.length > 50 ? '...' : '');
+                div.addEventListener('click', () => {
+                  if (result.href) window.location.href = result.href;
+                  else result.element.scrollIntoView({ behavior: 'smooth' });
+                  searchResults.classList.remove('active');
+                  searchInput.value = '';
+                });
+                searchResults.appendChild(div);
+              });
+              searchResults.classList.add('active');
             } else {
-              newItem.innerHTML = `
-                <div class="feed-item-header">
-                  <i class="fas fa-ad feed-avatar"></i>
-                  <div class="feed-user-info">
-                    <span class="feed-user">TruthWeb Ads</span>
-                    <span class="feed-time">Sponsored</span>
-                  </div>
-                </div>
-                <p class="feed-content">${randomPost.content}</p>
-                <div class="feed-media">
-                  <img src="${randomPost.media}" alt="Ad">
-                </div>
-                <a href="${randomPost.ctaLink}" class="btn w-full">${randomPost.ctaText}</a>
-              `;
-            }
-            feedContainer.appendChild(newItem);
-            setTimeout(() => { newItem.style.opacity = '1'; }, 10); // Trigger animation
-            if (randomPost.type === 'post') {
-              newItem.querySelector('.like-btn').addEventListener('click', toggleLike);
-              newItem.querySelector('.retweet-btn').addEventListener('click', toggleRetweet);
+              const noResult = document.createElement('div');
+              noResult.classList.add('search-result-item');
+              noResult.textContent = 'No results found';
+              searchResults.appendChild(noResult);
+              searchResults.classList.add('active');
             }
           }
-          scrollLoader.classList.remove('active');
-          page++;
-        }, 1000); // Simulate network delay
-      }
+        });
 
-      const observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          loadMorePosts();
+        document.addEventListener('click', (e) => {
+          if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+            searchResults.classList.remove('active');
+          }
+        });
+
+        // Compose Modal
+        const composeBtn = document.querySelector('.compose-btn');
+        const composeModal = document.querySelector('.compose-modal');
+        composeBtn.addEventListener('click', () => {
+          composeModal.classList.add('active');
+        });
+        composeModal.addEventListener('click', (e) => {
+          if (e.target === composeModal) {
+            composeModal.classList.remove('active');
+          }
+        });
+
+        // Post Form Submission
+        document.getElementById('post-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          const content = document.getElementById('post-content').value.trim();
+          if (!content) return;
+
+          const feedContainer = document.getElementById('feed-container');
+          const newPost = document.createElement('div');
+          newPost.className = 'feed-item';
+          newPost.style.opacity = '0';
+          newPost.innerHTML = `
+            <div class="feed-item-header">
+              <i class="fas fa-user-circle feed-avatar"></i>
+              <div class="feed-user-info">
+                <span class="feed-user">You</span>
+                <span class="feed-handle">@yourhandle</span>
+                <span class="feed-time">${new Date().toLocaleString()}</span>
+              </div>
+            </div>
+            <p class="feed-content">${content}</p>
+            <div class="feed-actions">
+              <button><i class="far fa-comment"></i> 0</button>
+              <button class="retweet-btn"><i class="fas fa-retweet"></i> 0</button>
+              <button class="like-btn"><i class="far fa-heart"></i> <span class="like-count">0</span></button>
+              <button><i class="fas fa-share"></i></button>
+            </div>
+          `;
+          feedContainer.insertBefore(newPost, feedContainer.firstChild);
+          setTimeout(() => { newPost.style.opacity = '1'; }, 10);
+          this.reset();
+          composeModal.classList.remove('active');
+
+          newPost.querySelector('.like-btn').addEventListener('click', toggleLike);
+          newPost.querySelector('.retweet-btn').addEventListener('click', toggleRetweet);
+        });
+
+        // Like Button Functionality
+        function toggleLike() {
+          const likeCount = this.querySelector('.like-count');
+          let count = parseInt(likeCount.textContent);
+          count++;
+          likeCount.textContent = count;
+          const icon = this.querySelector('i');
+          icon.classList.toggle('far');
+          icon.classList.toggle('fas');
+          this.classList.toggle('liked');
         }
-      }, { threshold: 0.1 });
 
-      observer.observe(scrollLoader);
+        // Retweet Button Functionality
+        function toggleRetweet() {
+          const icon = this.querySelector('i');
+          icon.classList.toggle('retweeted');
+        }
 
-      // TruthWeb AI
-      const aiBtn = document.querySelector('.ai-btn');
-      const aiModal = document.querySelector('.ai-modal');
-      const aiChat = document.getElementById('ai-chat');
-      const aiInput = document.getElementById('ai-input');
-      const aiSubmit = document.getElementById('ai-submit');
+        document.querySelectorAll('.like-btn').forEach(button => {
+          button.addEventListener('click', toggleLike);
+        });
 
-      aiBtn.addEventListener('click', () => {
-        aiModal.classList.add('active');
-      });
+        document.querySelectorAll('.retweet-btn').forEach(button => {
+          button.addEventListener('click', toggleRetweet);
+        });
 
-      aiModal.addEventListener('click', (e) => {
-        if (e.target === aiModal) {
-          aiModal.classList.remove('active');
+        // Infinite Scroll
+        const feedContainer = document.getElementById('feed-container');
+        const scrollLoader = document.querySelector('.scroll-loader');
+        let page = 1;
+
+        const samplePosts = [
+          {
+            type: 'post',
+            user: 'PioneerD',
+            handle: '@pioneerd',
+            time: 'Mar 3, 2025, 12:00',
+            content: 'Just discovered a hidden gem in the TruthWeb marketplace! Check out these Pi-powered gadgets.'
+          },
+          {
+            type: 'ad',
+            content: 'Master Pi trading with our expert-led webinars! Only 200 Pi for lifetime access.',
+            media: 'https://placehold.co/510x280',
+            ctaText: 'Sign Up Now',
+            ctaLink: 'marketplace.html'
+          },
+          {
+            type: 'post',
+            user: 'VendorC',
+            handle: '@vendorc',
+            time: 'Mar 2, 2025, 15:30',
+            content: 'New Pi software update available! Download now for enhanced security features.'
+          }
+        ];
+
+        function loadMorePosts() {
+          scrollLoader.classList.add('active');
+          setTimeout(() => {
+            for (let i = 0; i < 5; i++) {
+              const randomPost = samplePosts[Math.floor(Math.random() * samplePosts.length)];
+              const newItem = document.createElement('div');
+              newItem.className = randomPost.type === 'post' ? 'feed-item' : 'ad-item';
+              newItem.style.opacity = '0';
+              if (randomPost.type === 'post') {
+                newItem.innerHTML = `
+                  <div class="feed-item-header">
+                    <i class="fas fa-user-circle feed-avatar"></i>
+                    <div class="feed-user-info">
+                      <span class="feed-user">${randomPost.user}</span>
+                      <span class="feed-handle">${randomPost.handle}</span>
+                      <span class="feed-time">${randomPost.time}</span>
+                    </div>
+                  </div>
+                  <p class="feed-content">${randomPost.content}</p>
+                  <div class="feed-actions">
+                    <button><i class="far fa-comment"></i> ${Math.floor(Math.random() * 10)}</button>
+                    <button class="retweet-btn"><i class="fas fa-retweet"></i> ${Math.floor(Math.random() * 5)}</button>
+                    <button class="like-btn"><i class="far fa-heart"></i> <span class="like-count">${Math.floor(Math.random() * 20)}</span></button>
+                    <button><i class="fas fa-share"></i></button>
+                  </div>
+                `;
+              } else {
+                newItem.innerHTML = `
+                  <div class="feed-item-header">
+                    <i class="fas fa-ad feed-avatar"></i>
+                    <div class="feed-user-info">
+                      <span class="feed-user">TruthWeb Ads</span>
+                      <span class="feed-time">Sponsored</span>
+                    </div>
+                  </div>
+                  <p class="feed-content">${randomPost.content}</p>
+                  <div class="feed-media">
+                    <img src="${randomPost.media}" alt="Ad">
+                  </div>
+                  <a href="${randomPost.ctaLink}" class="btn w-full">${randomPost.ctaText}</a>
+                `;
+              }
+              feedContainer.appendChild(newItem);
+              setTimeout(() => { newItem.style.opacity = '1'; }, 10);
+              if (randomPost.type === 'post') {
+                newItem.querySelector('.like-btn').addEventListener('click', toggleLike);
+                newItem.querySelector('.retweet-btn').addEventListener('click', toggleRetweet);
+              }
+            }
+            scrollLoader.classList.remove('active');
+            page++;
+          }, 1000);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            loadMorePosts();
+          }
+        }, { threshold: 0.1 });
+
+        observer.observe(scrollLoader);
+
+        // TruthWeb AI
+        const aiBtn = document.querySelector('.ai-btn');
+        const aiModal = document.querySelector('.ai-modal');
+        const aiChat = document.getElementById('ai-chat');
+        const aiInput = document.getElementById('ai-input');
+        const aiSubmit = document.getElementById('ai-submit');
+
+        aiBtn.addEventListener('click', () => {
+          aiModal.classList.add('active');
+        });
+
+        aiModal.addEventListener('click', (e) => {
+          if (e.target === aiModal) {
+            aiModal.classList.remove('active');
+          }
+        });
+
+        aiSubmit.addEventListener('click', () => {
+          const userInput = aiInput.value.trim();
+          if (!userInput) return;
+
+          const userMessage = document.createElement('div');
+          userMessage.className = 'ai-message user';
+          userMessage.textContent = userInput;
+          aiChat.appendChild(userMessage);
+
+          const aiResponse = document.createElement('div');
+          aiResponse.className = 'ai-message';
+          aiResponse.textContent = getAIResponse(userInput);
+          aiChat.appendChild(aiResponse);
+
+          aiChat.scrollTop = aiChat.scrollHeight;
+          aiInput.value = '';
+        });
+
+        aiInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            aiSubmit.click();
+          }
+        });
+
+        function getAIResponse(input) {
+          const lowerInput = input.toLowerCase();
+          if (lowerInput.includes('marketplace')) {
+            return "The TruthWeb marketplace is buzzing! You can find everything from Pi software to trading courses. Want me to recommend the hottest items right now? Just say 'recommend marketplace items'!";
+          } else if (lowerInput.includes('feed')) {
+            return "The feed is your window into the TruthWeb community. You're seeing posts from Pioneers and ads from our sponsors. Want to know how to get more engagement on your posts? Ask me for tips!";
+          } else if (lowerInput.includes('recommend marketplace items')) {
+            return "Here are some hot picks: 'Pi Software' for 100 Pi, 'Premium Pi Analytics' for 75 Pi, and 'Trading Course' for 150 Pi. All available in the marketplace—check them out!";
+          } else if (lowerInput.includes('tips')) {
+            return "To boost engagement, try posting about your Pi trading wins, sharing marketplace finds, or asking questions to spark conversations. And don't forget to use hashtags like #PiTrading! Want more specific advice? Just ask!";
+          } else {
+            return "Hmm, I'm not sure I caught that, but I'm here to help! Try asking about the marketplace, feed, or community tips. Or, if you're feeling cosmic, ask me about the meaning of Pi (just kidding... or am I?).";
+          }
         }
       });
-
-      aiSubmit.addEventListener('click', () => {
-        const userInput = aiInput.value.trim();
-        if (!userInput) return;
-
-        const userMessage = document.createElement('div');
-        userMessage.className = 'ai-message user';
-        userMessage.textContent = userInput;
-        aiChat.appendChild(userMessage);
-
-        const aiResponse = document.createElement('div');
-        aiResponse.className = 'ai-message';
-        aiResponse.textContent = getAIResponse(userInput);
-        aiChat.appendChild(aiResponse);
-
-        aiChat.scrollTop = aiChat.scrollHeight;
-        aiInput.value = '';
-      });
-
-      aiInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          aiSubmit.click();
-        }
-      });
-
-      function getAIResponse(input) {
-        const lowerInput = input.toLowerCase();
-        if (lowerInput.includes('marketplace')) {
-          return "The TruthWeb marketplace is buzzing! You can find everything from Pi software to trading courses. Want me to recommend the hottest items right now? Just say 'recommend marketplace items'!";
-        } else if (lowerInput.includes('feed')) {
-          return "The feed is your window into the TruthWeb community. You're seeing posts from Pioneers and ads from our sponsors. Want to know how to get more engagement on your posts? Ask me for tips!";
-        } else if (lowerInput.includes('recommend marketplace items')) {
-          return "Here are some hot picks: 'Pi Software' for 100 Pi, 'Premium Pi Analytics' for 75 Pi, and 'Trading Course' for 150 Pi. All available in the marketplace—check them out!";
-        } else if (lowerInput.includes('tips')) {
-          return "To boost engagement, try posting about your Pi trading wins, sharing marketplace finds, or asking questions to spark conversations. And don't forget to use hashtags like #PiTrading! Want more specific advice? Just ask!";
-        } else {
-          return "Hmm, I'm not sure I caught that, but I'm here to help! Try asking about the marketplace, feed, or community tips. Or, if you're feeling cosmic, ask me about the meaning of Pi (just kidding... or am I?).";
-        }
-      }
     </script>
 </body>
 </html>
