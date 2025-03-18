@@ -424,6 +424,38 @@
       .scroll-loader.active {
         display: block;
       }
+      /* Footer Menu (Mobile-Only) */
+      .footer-menu {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background: var(--primary-color);
+        color: var(--text-color);
+        display: none; /* Hidden by default, shown on mobile */
+        justify-content: space-around;
+        align-items: center;
+        z-index: 1000;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+        animation: slideInFooter 0.5s ease-out forwards;
+      }
+      .footer-menu.hidden {
+        transform: translateY(100%);
+      }
+      @keyframes slideInFooter {
+        from { transform: translateY(100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+      .footer-menu a {
+        color: var(--text-color);
+        font-size: 1.5rem;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .footer-menu a:hover {
+        transform: scale(1.2);
+      }
       /* Responsive Design */
       @media (max-width: 640px) {
         .main-container {
@@ -442,6 +474,7 @@
         .icon { font-size: 1.1rem; margin-left: 0.5rem; }
         .desktop-nav { display: none !important; }
         .burger-btn { display: flex; }
+        .footer-menu { display: flex; }
       }
       @media (min-width: 641px) and (max-width: 1024px) {
         .left-sidebar { width: 80px; }
@@ -474,7 +507,7 @@
                 <ul class="flex space-x-4">
                     <li class="nav-item"><a href="index.html">Home</a></li>
                     <li class="nav-item"><a href="marketplace.html">Marketplace</a></li>
-                    <li class="nav-item"><a href="profile.html">Profile</a></li>
+                    <li class="nav-item"><a href="feeduser.html">Profile</a></li>
                     <li class="nav-item"><a href="wallet.html">Wallet</a></li>
                     <li class="nav-item"><a href="ledger-testnet.html">Ledger Testnet</a></li>
                     <li class="nav-item"><a href="community.html">Community</a></li>
@@ -483,7 +516,7 @@
                 </ul>
             </nav>
             <a href="marketplace.html" class="icon floating-effect"><i class="fas fa-shopping-cart"></i></a>
-            <a href="profile.html" class="icon floating-effect"><i class="fas fa-user"></i></a>
+            <a href="feeduser.html" class="icon floating-effect"><i class="fas fa-user"></i></a>
             <a href="wallet.html" class="icon floating-effect"><i class="fas fa-wallet"></i></a>
             <div class="burger-btn">
                 <span></span>
@@ -496,9 +529,9 @@
     <!-- Mobile Menu -->
     <nav class="mobile-menu">
         <ul>
-            <li class="nav-item"><a href="index.html">Home</a></li>
+            <li class="nav-item"><a href="truthwebfeed.html">Home</a></li>
             <li class="nav-item"><a href="marketplace.html">Marketplace</a></li>
-            <li class="nav-item"><a href="profile.html">Profile</a></li>
+            <li class="nav-item"><a href="feeduser.html">Profile</a></li>
             <li class="nav-item"><a href="wallet.html">Wallet</a></li>
             <li class="nav-item"><a href="ledger-testnet.html">Ledger Testnet</a></li>
             <li class="nav-item"><a href="community.html">Community</a></li>
@@ -513,9 +546,9 @@
         <aside class="left-sidebar">
             <nav>
                 <ul>
-                    <li><a href="index.html"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                    <li><a href="truthwebfeed.html"><i class="fas fa-home"></i> <span>Home</span></a></li>
                     <li><a href="explore.html"><i class="fas fa-hashtag"></i> <span>Explore</span></a></li>
-                    <li><a href="profile.html"><i class="fas fa-user"></i> <span>Profile</span></a></li>
+                    <li><a href="feeduser.html"><i class="fas fa-user"></i> <span>Profile</span></a></li>
                     <li><a href="walletdashboard.html"><i class="fas fa-wallet"></i> <span>Wallet</span></a></li>
                     <li><a href="marketplace.html"><i class="fas fa-shopping-cart"></i> <span>Marketplace</span></a></li>
                     <li><a href="community.html"><i class="fas fa-users"></i> <span>Community</span></a></li>
@@ -630,10 +663,20 @@
         </aside>
     </div>
 
+    <!-- Footer Menu (Mobile-Only) -->
+    <nav class="footer-menu" role="navigation" aria-label="Mobile Footer Navigation">
+        <a href="index.html"><i class="fas fa-home"></i></a>
+        <a href="explore.html"><i class="fas fa-hashtag"></i></a>
+        <a href="marketplace.html"><i class="fas fa-shopping-cart"></i></a>
+        <a href="feeduser.html"><i class="fas fa-user"></i></a>
+        <a href="walletdashboard.html"><i class="fas fa-wallet"></i></a>
+    </nav>
+
     <!-- Scripts -->
     <script src="truthwebfeedbackend.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
+        // Initialize existing functions from your original script
         initializeExplore();
         initializeSearch();
         initializeScrollEffects();
@@ -646,13 +689,138 @@
           });
         });
 
-        // Burger menu toggle
+        // Header and Footer Scroll Hide/Show Effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+          const header = document.querySelector('.sticky-header');
+          const footerMenu = document.querySelector('.footer-menu');
+          const currentScroll = window.scrollY;
+
+          if (currentScroll > lastScroll && currentScroll > 50) {
+            header.classList.add('hidden');
+            footerMenu.classList.add('hidden');
+          } else if (currentScroll < lastScroll) {
+            header.classList.remove('hidden');
+            footerMenu.classList.remove('hidden');
+            header.classList.toggle('scrolled', currentScroll > 50);
+          }
+          lastScroll = currentScroll;
+        });
+
+        // Burger Menu Toggle
         const burgerBtn = document.querySelector('.burger-btn');
         const mobileMenu = document.querySelector('.mobile-menu');
         burgerBtn.addEventListener('click', () => {
           burgerBtn.classList.toggle('active');
           mobileMenu.classList.toggle('active');
         });
+
+        // Search Functionality
+        const searchInput = document.querySelector('.search-input');
+        const searchResults = document.querySelector('.search-results');
+        const searchableContent = [];
+        document.querySelectorAll('h1, h2, h3, p, a').forEach(element => {
+          const text = element.textContent.trim();
+          if (text) {
+            searchableContent.push({
+              text: text.toLowerCase(),
+              element,
+              href: element.tagName === 'A' ? element.getAttribute('href') : null
+            });
+          }
+        });
+
+        searchInput.addEventListener('input', (e) => {
+          const query = e.target.value.toLowerCase().trim();
+          searchResults.innerHTML = '';
+          searchResults.classList.remove('active');
+
+          if (query.length > 0) {
+            const results = searchableContent.filter(item => item.text.includes(query));
+            if (results.length > 0) {
+              results.forEach(result => {
+                const div = document.createElement('div');
+                div.classList.add('search-result-item');
+                div.textContent = result.text.slice(0, 50) + (result.text.length > 50 ? '...' : '');
+                div.addEventListener('click', () => {
+                  if (result.href) window.location.href = result.href;
+                  else result.element.scrollIntoView({ behavior: 'smooth' });
+                  searchResults.classList.remove('active');
+                  searchInput.value = '';
+                });
+                searchResults.appendChild(div);
+              });
+              searchResults.classList.add('active');
+            } else {
+              const noResult = document.createElement('div');
+              noResult.classList.add('search-result-item');
+              noResult.textContent = 'No results found';
+              searchResults.appendChild(noResult);
+              searchResults.classList.add('active');
+            }
+          }
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+            searchResults.classList.remove('active');
+          }
+        });
+
+        // Infinite Scroll for Popular Posts (Sample)
+        const popularPosts = document.getElementById('popular-posts');
+        const scrollLoader = document.querySelector('.scroll-loader');
+        let page = 1;
+
+        const samplePosts = [
+          {
+            user: 'TraderX',
+            handle: '@TraderX',
+            time: 'Mar 16, 2025',
+            content: 'Exploring new trading strategies on TruthWeb. #CryptoP2P'
+          },
+          {
+            user: 'MarketGuru',
+            handle: '@MarketGuru',
+            time: 'Mar 15, 2025',
+            content: 'The Marketplace is heating up! Check out my latest Pi deals.'
+          }
+        ];
+
+        function loadMorePosts() {
+          scrollLoader.classList.add('active');
+          setTimeout(() => {
+            for (let i = 0; i < 2; i++) {
+              const randomPost = samplePosts[Math.floor(Math.random() * samplePosts.length)];
+              const newPost = document.createElement('div');
+              newPost.className = 'popular-post';
+              newPost.style.opacity = '0';
+              newPost.innerHTML = `
+                <div class="post-header">
+                  <i class="fas fa-user-circle post-avatar"></i>
+                  <div class="post-user-info">
+                    <span class="post-user">${randomPost.user}</span>
+                    <span class="post-handle">${randomPost.handle}</span>
+                    <span class="post-time">${randomPost.time}</span>
+                  </div>
+                </div>
+                <p class="post-content">${randomPost.content}</p>
+              `;
+              popularPosts.appendChild(newPost);
+              setTimeout(() => { newPost.style.opacity = '1'; }, 10);
+            }
+            scrollLoader.classList.remove('active');
+            page++;
+          }, 1000);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            loadMorePosts();
+          }
+        }, { threshold: 0.1 });
+
+        observer.observe(scrollLoader);
       });
     </script>
 </body>
