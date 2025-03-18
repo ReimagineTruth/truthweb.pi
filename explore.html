@@ -196,10 +196,10 @@
         color: var(--text-color);
         padding: 1rem;
         z-index: 999;
-        transition: left 0.3s ease;
+        transition: left 0.3s ease; /* Ensure smooth transition */
       }
       .mobile-menu.active {
-        left: 0;
+        left: 0; /* Slide in when active */
       }
       .mobile-menu ul {
         list-style: none;
@@ -441,7 +441,7 @@
         .logo-text { font-size: 1.1rem; }
         .icon { font-size: 1.1rem; margin-left: 0.5rem; }
         .desktop-nav { display: none !important; }
-        .burger-btn { display: flex; }
+        .burger-btn { display: flex; } /* Ensure burger button is visible on mobile */
       }
       @media (min-width: 641px) and (max-width: 1024px) {
         .left-sidebar { width: 80px; }
@@ -634,6 +634,7 @@
     <script src="truthwebfeedbackend.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
+        // Initialize existing functions
         initializeExplore();
         initializeSearch();
         initializeScrollEffects();
@@ -646,33 +647,36 @@
           });
         });
 
-        // Header and Footer Scroll Hide/Show Effect (from feeduser.html)
+        // Header Scroll Hide/Show Effect
         let lastScroll = 0;
         window.addEventListener('scroll', () => {
           const header = document.querySelector('.sticky-header');
-          const footerMenu = document.querySelector('.footer-menu'); // Note: No footer in this version yet
           const currentScroll = window.scrollY;
 
           if (currentScroll > lastScroll && currentScroll > 50) {
             header.classList.add('hidden');
-            if (footerMenu) footerMenu.classList.add('hidden'); // Footer not present yet
           } else if (currentScroll < lastScroll) {
             header.classList.remove('hidden');
-            if (footerMenu) footerMenu.classList.remove('hidden'); // Footer not present yet
             header.classList.toggle('scrolled', currentScroll > 50);
           }
           lastScroll = currentScroll;
         });
 
-        // Burger Menu Toggle (from feeduser.html)
+        // Burger Menu Toggle (Fixed)
         const burgerBtn = document.querySelector('.burger-btn');
         const mobileMenu = document.querySelector('.mobile-menu');
-        burgerBtn.addEventListener('click', () => {
-          burgerBtn.classList.toggle('active');
-          mobileMenu.classList.toggle('active');
-        });
 
-        // Search Functionality (from feeduser.html)
+        if (burgerBtn && mobileMenu) { // Ensure elements exist
+          burgerBtn.addEventListener('click', () => {
+            burgerBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            console.log('Burger clicked, active:', mobileMenu.classList.contains('active')); // Debugging
+          });
+        } else {
+          console.error('Burger button or mobile menu not found');
+        }
+
+        // Search Functionality
         const searchInput = document.querySelector('.search-input');
         const searchResults = document.querySelector('.search-results');
         const searchableContent = [];
