@@ -1,16 +1,14 @@
-// server.js
 require('dotenv').config();
 const express = require('express');
 const fetch = require('node-fetch');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware to parse JSON requests
 app.use(express.json());
 
 // CORS setup (allow frontend to access backend)
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*'); // Adjust for production (e.g., specific domain)
+    res.header('Access-Control-Allow-Origin', '*'); // Restrict to specific domain in production
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
@@ -49,7 +47,6 @@ app.post('/api/gemini', async (req, res) => {
     }
 });
 
-// Start the server
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
