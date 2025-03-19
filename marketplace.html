@@ -4,11 +4,8 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" name="viewport"/>
     <title>Marketplace - TruthWeb</title>
-    <!-- Tail internal CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome CDN (v6.5.1 for consistency with index) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
-    <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
     <style>
       :root {
@@ -21,7 +18,9 @@
         --button-hover-bg-color: #FFFFFF;
         --button-hover-text-color: #000000;
         --background-color: #FFFFFF;
+        --accent-color: #FFD700; /* Added for progress bar and highlights */
       }
+      html { scroll-behavior: smooth; }
       body {
         background: var(--background-color);
         color: var(--primary-color);
@@ -32,7 +31,47 @@
         line-height: 1.6;
         padding-bottom: 60px; /* Space for footer menu */
       }
-      /* Header (X-Style with Hide/Show) */
+
+      /* Progress Bar */
+      .progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 4px;
+        background: var(--accent-color);
+        z-index: 1001;
+        transition: width 0.3s ease;
+        box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+      }
+
+      /* Go to Top Button */
+      .go-to-top {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        background: var(--accent-color);
+        color: var(--primary-color);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        border: none;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 1000;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+      .go-to-top.visible { opacity: 1; visibility: visible; }
+      .go-to-top:hover { background: #FFA500; transform: scale(1.1); }
+      .go-to-top:active { transform: scale(0.95); }
+
+      /* Header */
       .sticky-header {
         position: fixed;
         top: 0;
@@ -48,14 +87,11 @@
         height: 64px;
         animation: slideInHeader 0.5s ease-out forwards;
       }
-      .sticky-header.hidden {
-        transform: translateY(-100%);
-      }
+      .sticky-header.hidden { transform: translateY(-100%); }
       .sticky-header.scrolled {
         background: var(--secondary-color);
         color: var(--primary-color);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        transform: scale(0.98);
       }
       @keyframes slideInHeader {
         from { transform: translateY(-100%); opacity: 0; }
@@ -64,10 +100,12 @@
       .sticky-header .logo-text {
         font-size: 1.5rem;
         font-weight: 700;
-        transition: font-size 0.3s ease;
+        color: var(--text-color);
+        transition: color 0.3s ease;
       }
-      .sticky-header.scrolled .logo-text { font-size: 1.25rem; }
+      .sticky-header.scrolled .logo-text { color: var(--primary-color); }
       .burger-btn {
+        display: flex;
         cursor: pointer;
         flex-direction: column;
         justify-content: center;
@@ -83,8 +121,8 @@
         background: var(--text-color);
         margin: 2px 0;
         transition: all 0.3s ease;
-        transform-origin: center;
       }
+      .sticky-header.scrolled .burger-btn span { background: var(--primary-color); }
       .burger-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
       .burger-btn.open span:nth-child(2) { opacity: 0; transform: scale(0); }
       .burger-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
@@ -100,13 +138,8 @@
         transition: left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
         z-index: 999;
         padding: 1rem;
-        animation: fadeInMenu 0.4s ease-out forwards;
       }
       .mobile-menu.open { left: 0; }
-      @keyframes fadeInMenu {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
       .mobile-menu ul { list-style: none; padding: 0; }
       .mobile-menu .nav-item a {
         display: block;
@@ -119,19 +152,22 @@
         color: var(--highlight-color);
         transform: translateX(10px) scale(1.05);
       }
+      .mobile-menu .nav-item a.active { font-weight: 700; color: var(--accent-color); }
       .desktop-nav { display: flex; }
       .desktop-nav .nav-item a {
         color: var(--text-color);
         padding: 0.5rem 1rem;
         transition: all 0.3s ease;
       }
+      .sticky-header.scrolled .desktop-nav .nav-item a { color: var(--primary-color); }
       .desktop-nav .nav-item a:hover {
         color: var(--highlight-color);
         transform: scale(1.1);
       }
       .desktop-nav .nav-item a.active {
         font-weight: 700;
-        border-bottom: 2px solid var(--highlight-color);
+        border-bottom: 2px solid var(--accent-color);
+        color: var(--accent-color);
       }
       .search-container {
         position: relative;
@@ -153,7 +189,7 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       }
       .search-input:focus {
-        border-color: var(--primary-color);
+        border-color: var(--accent-color);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         transform: scale(1.02) translateY(-2px);
       }
@@ -166,6 +202,7 @@
         font-size: 1.2rem;
         transition: transform 0.3s ease;
       }
+      .sticky-header.scrolled .search-icon { color: var(--primary-color); }
       .search-input:focus + .search-icon { transform: translateY(-50%) scale(1.1); }
       .search-results {
         position: absolute;
@@ -203,20 +240,23 @@
         font-size: 1.25rem;
         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         margin-left: 0.75rem;
+        position: relative;
       }
-      .icon:hover {
-        transform: scale(1.15) rotate(5deg);
-      }
+      .sticky-header.scrolled .icon { color: var(--primary-color); }
+      .icon:hover { transform: scale(1.15) rotate(5deg); }
       .cart-btn::after {
         content: attr(data-count);
         position: absolute;
-        top: -5px;
-        right: -5px;
-        background: red;
+        top: -8px;
+        right: -8px;
+        background: #FF4500;
         color: white;
         border-radius: 50%;
         padding: 2px 6px;
         font-size: 12px;
+        font-weight: 600;
+        min-width: 12px;
+        text-align: center;
       }
       main { margin-top: 64px; }
       .hero {
@@ -248,20 +288,14 @@
         background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
         animation: pulseGlow 3s infinite alternate;
       }
-      @keyframes pulseGlow {
-        0% { opacity: 0.5; }
-        100% { opacity: 0.8; }
-      }
+      @keyframes pulseGlow { 0% { opacity: 0.5; } 100% { opacity: 0.8; } }
       .glow-text {
         font-size: 3rem;
         font-weight: 700;
         text-shadow: 0 0 10px var(--highlight-color);
         animation: glow 2s infinite alternate;
       }
-      @keyframes glow {
-        0% { text-shadow: 0 0 10px var(--highlight-color); }
-        100% { text-shadow: 0 0 20px var(--highlight-color); }
-      }
+      @keyframes glow { 0% { text-shadow: 0 0 10px var(--highlight-color); } 100% { text-shadow: 0 0 20px var(--highlight-color); } }
       .btn {
         display: inline-flex;
         align-items: center;
@@ -289,10 +323,7 @@
         transform: scale(1.05) translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       }
-      .btn:active {
-        transform: scale(0.98);
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-      }
+      .btn:active { transform: scale(0.98); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
       section { padding: 2rem 1rem; }
       .category-btn {
         background: var(--secondary-color);
@@ -321,7 +352,8 @@
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
       }
-      /* Footer Menu (Fixed, Mobile-Only) */
+      .product-card img { transition: transform 0.3s ease; }
+      .product-card:hover img { transform: scale(1.05); }
       .footer-menu {
         position: fixed;
         bottom: 0;
@@ -336,24 +368,14 @@
         z-index: 1000;
         box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
         transition: transform 0.3s ease;
-        animation: slideInFooter 0.5s ease-out forwards;
       }
-      .footer-menu.hidden {
-        transform: translateY(100%);
-      }
-      @keyframes slideInFooter {
-        from { transform: translateY(100%); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-      }
+      .footer-menu.hidden { transform: translateY(100%); }
       .footer-menu a {
         color: var(--text-color);
         font-size: 1.5rem;
         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
-      .footer-menu a:hover {
-        transform: scale(1.2);
-      }
-      /* Footer Navigation (Traditional Footer, All Devices) */
+      .footer-menu a:hover { transform: scale(1.2); color: var(--accent-color); }
       footer {
         background: var(--primary-color);
         color: var(--text-color);
@@ -367,20 +389,13 @@
         transition: color 0.3s ease, transform 0.3s ease;
       }
       footer .social-icons a:hover, footer .footer-links a:hover {
-        color: var(--highlight-color);
+        color: var(--accent-color);
         transform: scale(1.1);
       }
-      footer .social-icons {
-        margin-bottom: 1rem;
-      }
-      footer .social-icons a {
-        font-size: 1.25rem;
-        margin: 0 0.5rem;
-      }
-      footer .footer-links a {
-        margin: 0 0.5rem;
-        text-decoration: none;
-      }
+      footer .social-icons { margin-bottom: 1rem; }
+      footer .social-icons a { font-size: 1.25rem; margin: 0 0.5rem; }
+      footer .footer-links a { margin: 0 0.5rem; text-decoration: none; }
+
       /* Responsive Design */
       @media (max-width: 640px) {
         .burger-btn { display: flex; }
@@ -392,8 +407,7 @@
         .glow-text { font-size: 1.75rem; }
         .btn { padding: 0.4rem 1rem; font-size: 0.85rem; min-width: 80px; }
         .section-title { font-size: 1.5rem; }
-        footer { padding-bottom: 80px; }
-        footer .social-icons a, footer .footer-links a { font-size: 0.9rem; }
+        .go-to-top { width: 40px; height: 40px; font-size: 1.2rem; bottom: 80px; }
       }
       @media (min-width: 641px) and (max-width: 1024px) {
         .burger-btn { display: none; }
@@ -402,7 +416,8 @@
         .glow-text { font-size: 2.5rem; }
         .btn { padding: 0.5rem 1.2rem; }
         .footer-menu { display: none; }
-        footer .social-icons a, footer .footer-links a { font-size: 1rem; }
+        .go-to-top { bottom: 20px; }
+        body { padding-bottom: 0; }
       }
       @media (min-width: 1025px) {
         .burger-btn { display: none; }
@@ -410,12 +425,15 @@
         .search-container { max-width: 400px; }
         .glow-text { font-size: 3rem; }
         .footer-menu { display: none; }
-        footer .social-icons a, footer .footer-links a { font-size: 1rem; }
+        .go-to-top { bottom: 20px; }
+        body { padding-bottom: 0; }
       }
     </style>
 </head>
 <body>
-    <!-- Header with X-Style Hide/Show -->
+    <div class="progress-bar"></div>
+
+    <!-- Header -->
     <header class="sticky-header">
         <div class="flex items-center">
             <a href="index.html" class="text-inherit flex items-center">
@@ -480,21 +498,21 @@
         <section id="categories" class="py-16 px-4 bg-gray-100">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Shop by Category</h2>
             <div class="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                <button class="category-btn">Electronics</button>
-                <button class="category-btn">Clothing</button>
-                <button class="category-btn">NFTs</button>
-                <button class="category-btn">Services</button>
-                <button class="category-btn">Home Goods</button>
+                <button class="category-btn" onclick="filterCategory('Electronics')">Electronics</button>
+                <button class="category-btn" onclick="filterCategory('Clothing')">Clothing</button>
+                <button class="category-btn" onclick="filterCategory('NFTs')">NFTs</button>
+                <button class="category-btn" onclick="filterCategory('Services')">Services</button>
+                <button class="category-btn" onclick="filterCategory('Home Goods')">Home Goods</button>
             </div>
         </section>
 
         <!-- Product Listings Section -->
         <section id="products" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">TruthWeb Marketplace</h2>
-            <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="product-list">
                 <!-- Product 1 -->
-                <div class="product-card">
-                    <img src="https://placehold.co/200x200" alt="Pi Smart Watch" class="w-full h-48 object-cover mb-4 rounded">
+                <div class="product-card" data-category="Electronics">
+                    <img src="https://placehold.co/200x200" alt="Pi Smart Watch" class="w-full h-48 object-cover mb-4 rounded" loading="lazy">
                     <h3 class="text-xl font-semibold mb-2">Pi Smart Watch</h3>
                     <p class="text-gray-600 mb-2">Seller: PioneerA</p>
                     <p class="text-lg font-bold mb-4">25 Pi</p>
@@ -505,8 +523,8 @@
                     </div>
                 </div>
                 <!-- Product 2 -->
-                <div class="product-card">
-                    <img src="https://placehold.co/200x200" alt="Pi T-Shirt" class="w-full h-48 object-cover mb-4 rounded">
+                <div class="product-card" data-category="Clothing">
+                    <img src="https://placehold.co/200x200" alt="Pi T-Shirt" class="w-full h-48 object-cover mb-4 rounded" loading="lazy">
                     <h3 class="text-xl font-semibold mb-2">Pi T-Shirt</h3>
                     <p class="text-gray-600 mb-2">Seller: PioneerB</p>
                     <p class="text-lg font-bold mb-4">15 Pi</p>
@@ -517,8 +535,8 @@
                     </div>
                 </div>
                 <!-- Product 3 -->
-                <div class="product-card">
-                    <img src="https://placehold.co/200x200" alt="Pi NFT Art" class="w-full h-48 object-cover mb-4 rounded">
+                <div class="product-card" data-category="NFTs">
+                    <img src="https://placehold.co/200x200" alt="Pi NFT Art" class="w-full h-48 object-cover mb-4 rounded" loading="lazy">
                     <h3 class="text-xl font-semibold mb-2">Pi NFT Art</h3>
                     <p class="text-gray-600 mb-2">Seller: PioneerC</p>
                     <p class="text-lg font-bold mb-4">50 Pi</p>
@@ -532,7 +550,7 @@
         </section>
     </main>
 
-    <!-- Footer Menu (Fixed, Mobile-Only) -->
+    <!-- Footer Menu (Mobile-Only) -->
     <nav class="footer-menu" role="navigation" aria-label="Mobile Footer Navigation">
         <a href="index.html"><i class="fas fa-home"></i></a>
         <a href="marketplace.html"><i class="fas fa-shopping-cart"></i></a>
@@ -541,7 +559,7 @@
         <a href="community.html"><i class="fas fa-users"></i></a>
     </nav>
 
-    <!-- Footer Navigation (Traditional Footer, All Devices) -->
+    <!-- Footer -->
     <footer role="contentinfo">
         <div class="social-icons mb-4">
             <a href="https://www.facebook.com/reimaginetruthofficial/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -559,17 +577,21 @@
         </div>
     </footer>
 
+    <!-- Go to Top Button -->
+    <button class="go-to-top" aria-label="Go to Top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <!-- Scripts -->
     <script>
       let cartCount = 0;
 
-      // Device Detection and Dynamic Adjustments
+      // Layout Adjustments
       function adjustLayout() {
         const width = window.innerWidth;
         const isMobile = width <= 640;
         const isTablet = width > 640 && width <= 1024;
         const isDesktop = width > 1024;
-
         const burgerBtn = document.querySelector('.burger-btn');
         const desktopNav = document.querySelector('.desktop-nav');
         const searchContainer = document.querySelector('.search-container');
@@ -592,25 +614,45 @@
       window.addEventListener('load', adjustLayout);
       window.addEventListener('resize', adjustLayout);
 
-      // Header and Footer Scroll Hide/Show Effect (X-Style)
+      // Scroll Behavior
       let lastScroll = 0;
       window.addEventListener('scroll', () => {
         const header = document.querySelector('.sticky-header');
         const footerMenu = document.querySelector('.footer-menu');
+        const progressBar = document.querySelector('.progress-bar');
+        const goToTopBtn = document.querySelector('.go-to-top');
         const currentScroll = window.scrollY;
 
-        if (currentScroll > lastScroll && currentScroll > 50) {
+        if (currentScroll > lastScroll && currentScroll > 64) {
           header.classList.add('hidden');
           footerMenu.classList.add('hidden');
-        } else if (currentScroll < lastScroll) {
+        } else if (currentScroll < lastScroll || currentScroll <= 64) {
           header.classList.remove('hidden');
           footerMenu.classList.remove('hidden');
-          header.classList.toggle('scrolled', currentScroll > 50);
         }
+        header.classList.toggle('scrolled', currentScroll > 64 && !header.classList.contains('hidden'));
+
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        progressBar.style.width = `${scrollPercent}%`;
+
+        if (currentScroll > 200) {
+          goToTopBtn.classList.add('visible');
+        } else {
+          goToTopBtn.classList.remove('visible');
+        }
+
         lastScroll = currentScroll;
       });
 
-      // Burger Menu Toggle
+      // Go to Top
+      const goToTopBtn = document.querySelector('.go-to-top');
+      goToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Burger Menu
       const burgerBtn = document.querySelector('.burger-btn');
       const mobileMenu = document.querySelector('.mobile-menu');
       burgerBtn.addEventListener('click', () => {
@@ -618,7 +660,6 @@
         mobileMenu.classList.toggle('open');
       });
 
-      // Close Menu on Link Click
       document.querySelectorAll('.mobile-menu a').forEach(link => {
         link.addEventListener('click', () => {
           burgerBtn.classList.remove('open');
@@ -646,10 +687,10 @@
         searchResults.innerHTML = '';
         searchResults.classList.remove('active');
 
-        if (query.length > 0) {
+        if (query.length > 2) { // Minimum query length for efficiency
           const results = searchableContent.filter(item => item.text.includes(query));
           if (results.length > 0) {
-            results.forEach(result => {
+            results.slice(0, 5).forEach(result => { // Limit to 5 results
               const div = document.createElement('div');
               div.classList.add('search-result-item');
               div.textContent = result.text.slice(0, 50) + (result.text.length > 50 ? '...' : '');
@@ -678,7 +719,7 @@
         }
       });
 
-      // Add to Cart Function
+      // Cart Functions
       function addToCart(productName, price) {
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         const existingItem = cart.find(item => item.name === productName);
@@ -692,13 +733,9 @@
         window.location.href = 'addtocart.html'; // Redirect to cart page
       }
 
-      // Buy Now Function (Updated to link to payment.html)
       function buyNow(productName, price) {
-        // Encode product name to handle spaces and special characters
         const encodedProductName = encodeURIComponent(productName);
-        // Redirect to payment.html with product details as URL parameters
         window.location.href = `payment.html?product=${encodedProductName}&price=${price}`;
-        // Optional: Add animation for feedback
         const productCards = document.querySelectorAll('.product-card');
         productCards.forEach(card => {
           if (card.querySelector('h3').textContent === productName) {
@@ -708,16 +745,46 @@
         });
       }
 
-      // Update Cart Count
       function updateCartCount() {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         cartCount = cart.reduce((total, item) => total + (item.quantity || 1), 0);
         const cartBtn = document.querySelector('.cart-btn');
-        cartBtn.setAttribute('data-count', cartCount);
+        cartBtn.setAttribute('data-count', cartCount > 0 ? cartCount : '');
       }
 
-      // Initialize Cart Count on Page Load
-      document.addEventListener('DOMContentLoaded', updateCartCount);
+      // Category Filter (Basic Example)
+      function filterCategory(category) {
+        const products = document.querySelectorAll('.product-card');
+        products.forEach(product => {
+          const productCategory = product.getAttribute('data-category');
+          if (category === 'All' || productCategory === category) {
+            product.style.display = 'block';
+          } else {
+            product.style.display = 'none';
+          }
+        });
+      }
+
+      // Initialize
+      document.addEventListener('DOMContentLoaded', () => {
+        updateCartCount();
+        // Add animation delays to product cards
+        document.querySelectorAll('.product-card').forEach((card, index) => {
+          card.style.animationDelay = `${index * 0.1}s`;
+        });
+      });
+    </script>
+
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <script>
+      window.Pi = window.Pi || {};
+      try {
+        Pi.init({ version: "2.0", sandbox: true }, () => {
+          console.log("Pi Network SDK initialized in Sandbox mode!");
+        });
+      } catch (error) {
+        console.error("Failed to initialize Pi Network SDK:", error);
+      }
     </script>
 </body>
 </html>
