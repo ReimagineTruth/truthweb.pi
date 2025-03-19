@@ -7,7 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
-    <style>
+    <style> 
+
       :root {
         --primary-color: #000000;
         --secondary-color: #FFFFFF;
@@ -183,6 +184,23 @@
       }
       .sticky-header.scrolled .icon { color: var(--primary-color); }
       .icon:hover { transform: scale(1.15) rotate(5deg); }
+
+      .icon-container {
+        position: relative;
+        display: inline-block;  /* ensures text wraps nicely */
+      }
+
+      .icon-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0.6em;
+        font-weight: bold;
+        color: var(--text-color);
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        pointer-events: none;  /* makes text unselectable */
+      }
       
       /* Main Content Styles */
       main { margin-top: 64px; }
@@ -354,7 +372,10 @@
             </nav>
             <a href="marketplace.html" class="icon"><i class="fas fa-shopping-cart"></i></a>
             <a href="profile.html" class="icon"><i class="fas fa-user"></i></a>
-            <a href="wallet.html" class="icon"><i class="fas fa-wallet"></i></a>
+            <a href="wallet.html" class="icon icon-container">
+              <i class="fas fa-wallet"></i>
+              <span class="icon-text">Pi</span>
+            </a>
         </div>
     </header>
 
@@ -477,6 +498,7 @@
             <input id="wallet-address" class="input-field" type="text" placeholder="Pi Wallet Address" aria-label="Pi Wallet Address"/>
             <input id="wallet-passphrase" class="input-field" type="password" placeholder="Wallet Passphrase" aria-label="Wallet Passphrase"/>
             <button id="confirm-connect-btn" class="btn accent w-full">Confirm Connection</button>
+              <p class="text-sm text-gray-500 italic mt-2">Important: TruthWeb never stores your wallet passphrase. This information is used locally and securely to simulate wallet linking.  Actual Pi Network wallet integration will depend on official APIs.</p>
         </div>
     </div>
 
@@ -581,7 +603,8 @@
         searchResults.classList.remove('active');
 
         if (query.length > 2) {
-          const results = searchableContent.filter(item => item.text.includes(query));
+          const results = searchableContent.filter(item => item.
+          text.includes(query));
           if (results.length > 0) {
             results.slice(0, 5).forEach(result => {
               const div = document.createElement('div');
@@ -625,6 +648,10 @@
       const closeModals = document.querySelectorAll('.close-modal');
       const confirmConnectBtn = document.getElementById('confirm-connect-btn');
       const confirmSendBtn = document.getElementById('confirm-send-btn');
+      const walletAddressInput = document.getElementById('wallet-address'); // Added
+      const walletPassphraseInput = document.getElementById('wallet-passphrase'); // Added
+      const recipientAddressInput = document.getElementById('recipient-address'); // Added
+      const sendAmountInput = document.getElementById('send-amount'); // Added
 
       let isWalletLinked = false;
       let balance = 150; // Simulated initial balance
@@ -638,15 +665,7 @@
           walletActivity.innerHTML = `
             <div class="flex items-center justify-between">
               <p class="font-semibold">Wallet Linked</p>
-              <p class="text-gray-600">PioneerA - Mar 20, 2025, 10:00</p>
-            </div>
-            <div class="flex items-center justify-between">
-              <p class="font-semibold">Sent: Course Payment</p>
-              <p class="text-gray-600">50 Pi - Mar 20, 2025, 10:05</p>
-            </div>
-            <div class="flex items-center justify-between">
-              <p class="font-semibold">Received: P2P Trade</p>
-              <p class="text-green-600">+100 Pi - Mar 20, 2025, 10:10</p>
+              <p class="text-gray-600">TruthWeb - ${new Date().toLocaleDateString()}, ${new Date().toLocaleTimeString()}</p>
             </div>
           `;
           linkWalletBtn.textContent = 'Wallet Linked';
@@ -678,60 +697,123 @@
       closeModals.forEach(btn => btn.addEventListener('click', () => {
         closeModal(walletModal);
         closeModal(sendPiModal);
+          clearModalInputs();  // clear the inputs
       }));
       document.addEventListener('click', (e) => {
-        if (e.target === walletModal) closeModal(walletModal);
-        if (e.target === sendPiModal) closeModal(sendPiModal);
+        if (e.target === walletModal) {
+          closeModal(walletModal);
+          clearModalInputs();  // clear the inputs
+        }
+
+        if (e.target === sendPiModal){
+          closeModal(sendPiModal);
+          clearModalInputs(); // clear the inputs
+        }
+
       });
 
+      function clearModalInputs(){
+          walletAddressInput.value = '';
+          walletPassphraseInput.value = '';
+          recipientAddressInput.value = '';
+          sendAmountInput.value = '';
+      }
+
       // Wallet Connection
-      confirmConnectBtn.addEventListener('click', () => {
-        const address = document.getElementById('wallet-address').value.trim();
-        const passphrase = document.getElementById('wallet-passphrase').value.trim();
-        if (address && passphrase) {
-          isWalletLinked = true;
-          updateWalletUI();
-          closeModal(walletModal);
-          alert('Wallet connected successfully! (Simulation)');
-          document.getElementById('wallet-address').value = '';
-          document.getElementById('wallet-passphrase').value = '';
-        } else {
+      confirmConnectBtn.addEventListener('click', async () => {
+        const address = walletAddressInput.value.trim();
+        const passphrase = walletPassphraseInput.value.trim();
+
+        if (!address || !passphrase) {
           alert('Please enter both wallet address and passphrase.');
+          return;
         }
+
+          loadingSpinner(walletModal, true);
+
+          try{
+              const response = await fetch('/api/validate-pi-wallet', {   // replace with actual server
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ address: address, passphrase: passphrase})
+              });
+
+              if(!response.ok){
+                  const errorData = await response.json();  // try to parse json error
+                  throw new Error(errorData.message || `Failed to validate wallet - ${response.status}`);
+              }
+
+              const data = await response.json();
+              if(data.isValid){
+                  isWalletLinked = true;
+                  updateWalletUI();
+                  closeModal(walletModal);
+                  alert('Wallet connected successfully! (Simulation)');
+              }else{
+                  alert('Invalid wallet address or passphrase. (Simulation)');
+              }
+
+
+          } catch (error) {
+              console.error('Error connecting wallet', error);
+              alert(`Error connecting wallet: ${error.message}`);
+          } finally {
+              loadingSpinner(walletModal, false);
+              clearModalInputs();  // clear after attempt
+          }
+
+
+
       });
 
       // Send Pi Simulation
       confirmSendBtn.addEventListener('click', () => {
         const recipient = document.getElementById('recipient-address').value.trim();
         const amount = parseFloat(document.getElementById('send-amount').value);
-        if (recipient && amount > 0 && amount <= balance) {
-          balance -= amount;
-          updateWalletUI();
-          const now = new Date().toLocaleString();
-          walletActivity.insertAdjacentHTML('afterbegin', `
-            <div class="flex items-center justify-between">
-              <p class="font-semibold">Sent: Transfer</p>
-              <p class="text-gray-600">${amount.toFixed(2)} Pi - ${now}</p>
-            </div>
-          `);
-          closeModal(sendPiModal);
-          alert(`Successfully sent ${amount} Pi to ${recipient}! (Simulation)`);
-          document.getElementById('recipient-address').value = '';
-          document.getElementById('send-amount').value = '';
-        } else if (amount > balance) {
+
+        if (!recipient || amount <= 0 || isNaN(amount)) {
+              alert('Please enter a valid recipient address and a valid amount.');
+              return;
+          }
+
+        if (amount > balance) {
           alert('Insufficient balance!');
-        } else {
-          alert('Please enter a valid recipient address and amount.');
+          return;
         }
+
+        balance -= amount;
+        updateWalletUI();
+        const now = new Date().toLocaleString();
+        walletActivity.insertAdjacentHTML('afterbegin', `
+          <div class="flex items-center justify-between">
+            <p class="font-semibold">Sent: Transfer to ${recipient.substring(0,10)}...</p>
+            <p class="text-gray-600">-${amount.toFixed(2)} Pi - ${now}</p>
+          </div>
+        `);
+        closeModal(sendPiModal);
+        alert(`Successfully sent ${amount} Pi to ${recipient}! (Simulation)`);
       });
 
       // Initial UI Update
       updateWalletUI();
 
+       function loadingSpinner(modal, show) {
+          const btn = modal.querySelector('.btn.accent'); // assuming it's in the modal
+          if (!btn) return; // safety check
+
+          if (show) {
+              btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connecting...';
+              btn.disabled = true;
+          } else {
+              btn.innerHTML = 'Confirm Connection';
+              btn.disabled = false;
+          }
+       }
+
       // Fetch Insights from Backend Proxy
       async function fetchWalletInsights() {
         try {
-          const response = await fetch('http://localhost:3000/api/gemini', {
+          const response = await fetch('/api/gemini', {  // Make this an absolute URL if needed
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ feeling: 'hopeful', query: 'How should I manage my Pi wallet?' })
