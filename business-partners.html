@@ -374,44 +374,56 @@
     </nav>
 
     <main>
-        <!-- Business Partners Section -->
-        <section id="business-partners" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
+        <!-- Business Partners Section with Working Buttons -->
+        <section id="business-partners" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)] relative overflow-hidden">
             <h2 class="text-3xl font-bold text-center mb-8">Our Business Partners</h2>
-            <p class="text-center text-lg mb-8 max-w-2xl mx-auto">We collaborate with leading organizations to drive innovation in blockchain and AI. <em>This is a sample Business Partners page, not official.</em></p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
-                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)] flex flex-col items-center justify-center">
-                    <img src="https://minepi.com/assets/img/pi-logo.png" alt="Pi Network Logo" class="h-28 mb-6 transition-transform duration-300 hover:scale-110" loading="lazy">
-                    <h3 class="text-xl font-semibold mb-3">Pi Network</h3>
-                    <p class="text-center">Pioneering mobile-first blockchain technology and decentralized ecosystems.</p>
-                    <a href="https://minepi.com" target="_blank" class="btn mt-6">Learn More</a>
+            <p class="text-center text-lg mb-12 max-w-2xl mx-auto">We collaborate with leading organizations to drive innovation in blockchain and AI. <em>This is a sample Business Partners page, not official.</em></p>
+            
+            <!-- Carousel Container -->
+            <div class="relative max-w-6xl mx-auto">
+                <div class="carousel flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 pb-4" style="scrollbar-width: thin;">
+                    <div class="card bg-gradient-to-br from-[var(--secondary-color)] to-gray-100 text-[var(--primary-color)] min-w-[280px] snap-center rounded-xl p-6 flex flex-col items-center justify-between transform transition-all duration-500 hover:scale-105 hover:shadow-2xl">
+                        <img src="https://i.ibb.co/RGWhLsQr/pi-network-pi-icons-pi-logo-design-illustration-trendy-and-modern-crypto-currency-pi-symbol-for-logo.jpg" alt="Pi Network Logo" class="h-24 w-24 object-contain mb-4 transition-transform duration-300 hover:scale-110" loading="lazy" onerror="this.src='https://via.placeholder.com/96x96?text=Pi+Network';">
+                        <h3 class="text-xl font-semibold mb-2">Pi Network</h3>
+                        <p class="text-sm text-center text-gray-700">Pioneering mobile-first blockchain technology and decentralized ecosystems.</p>
+                        <a href="https://minepi.com" target="_blank" class="btn mt-4 bg-[var(--accent-color)] text-[var(--primary-color)] hover:bg-[#FFA500] border-none">Learn More</a>
+                    </div>
+                    <div class="card bg-gradient-to-br from-[var(--secondary-color)] to-gray-100 text-[var(--primary-color)] min-w-[280px] snap-center rounded-xl p-6 flex flex-col items-center justify-between transform transition-all duration-500 hover:scale-105 hover:shadow-2xl">
+                        <img src="https://i.ibb.co/152gNjb/openai-chatgpt-logo-icon-free-png.webp" alt="OpenAI Logo" class="h-24 w-24 object-contain mb-4 transition-transform duration-300 hover:scale-110" loading="lazy" onerror="this.src='https://via.placeholder.com/96x96?text=OpenAI';">
+                        <h3 class="text-xl font-semibold mb-2">OpenAI</h3>
+                        <p class="text-sm text-center text-gray-700">Advancing AI integration and ethical implementation in blockchain systems.</p>
+                        <a href="https://openai.com" target="_blank" class="btn mt-4 bg-[var(--accent-color)] text-[var(--primary-color)] hover:bg-[#FFA500] border-none">Learn More</a>
+                    </div>
+                    <div class="card bg-gradient-to-br from-[var(--secondary-color)] to-gray-100 text-[var(--primary-color)] min-w-[280px] snap-center rounded-xl p-6 flex flex-col items-center justify-between transform transition-all duration-500 hover:scale-105 hover:shadow-2xl">
+                        <img src="https://i.ibb.co/0RbTWGxz/OKX-Logo-svg.png" alt="OKX Logo" class="h-24 w-24 object-contain mb-4 transition-transform duration-300 hover:scale-110" loading="lazy" onerror="this.src='https://via.placeholder.com/96x96?text=OKX';">
+                        <h3 class="text-xl font-semibold mb-2">OKX</h3>
+                        <p class="text-sm text-center text-gray-700">Providing secure crypto trading infrastructure and liquidity solutions.</p>
+                        <a href="https://www.okx.com" target="_blank" class="btn mt-4 bg-[var(--accent-color)] text-[var(--primary-color)] hover:bg-[#FFA500] border-none">Learn More</a>
+                    </div>
+                    <div class="card bg-gradient-to-br from-[var(--secondary-color)] to-gray-100 text-[var(--primary-color)] min-w-[280px] snap-center rounded-xl p-6 flex flex-col items-center justify-between transform transition-all duration-500 hover:scale-105 hover:shadow-2xl">
+                        <img src="https://i.ibb.co/DHLPvq43/block-s-right.webp" alt="Stanford University Logo" class="h-24 w-24 object-contain mb-4 transition-transform duration-300 hover:scale-110" loading="lazy" onerror="this.src='https://via.placeholder.com/96x96?text=Stanford';">
+                        <h3 class="text-xl font-semibold mb-2">Stanford University</h3>
+                        <p class="text-sm text-center text-gray-700">Collaborating on blockchain research and AI ethics frameworks.</p>
+                        <a href="https://www.stanford.edu" target="_blank" class="btn mt-4 bg-[var(--accent-color)] text-[var(--primary-color)] hover:bg-[#FFA500] border-none">Learn More</a>
+                    </div>
+                    <div class="card bg-gradient-to-br from-[var(--secondary-color)] to-gray-100 text-[var(--primary-color)] min-w-[280px] snap-center rounded-xl p-6 flex flex-col items-center justify-between transform transition-all duration-500 hover:scale-105 hover:shadow-2xl">
+                        <img src="https://i.ibb.co/Pvv2fdWM/nvidia-logo-brandlogos-net.png" alt="NVIDIA Logo" class="h-24 w-24 object-contain mb-4 transition-transform duration-300 hover:scale-110" loading="lazy" onerror="this.src='https://via.placeholder.com/96x96?text=NVIDIA';">
+                        <h3 class="text-xl font-semibold mb-2">NVIDIA</h3>
+                        <p class="text-sm text-center text-gray-700">Powering AI computing and GPU acceleration for blockchain networks.</p>
+                        <a href="https://www.nvidia.com" target="_blank" class="btn mt-4 bg-[var(--accent-color)] text-[var(--primary-color)] hover:bg-[#FFA500] border-none">Learn More</a>
+                    </div>
                 </div>
-                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)] flex flex-col items-center justify-center">
-                    <img src="https://openai.com/assets/images/openai-logo.png" alt="OpenAI Logo" class="h-28 mb-6 transition-transform duration-300 hover:scale-110" loading="lazy">
-                    <h3 class="text-xl font-semibold mb-3">OpenAI</h3>
-                    <p class="text-center">Advancing AI integration and ethical implementation in blockchain systems.</p>
-                    <a href="https://openai.com" target="_blank" class="btn mt-6">Learn More</a>
-                </div>
-                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)] flex flex-col items-center justify-center">
-                    <img src="https://www.okx.com/cdn/assets/imgs/221/8E6B8B8E6B8B8E6B.png" alt="OKX Logo" class="h-28 mb-6 transition-transform duration-300 hover:scale-110" loading="lazy">
-                    <h3 class="text-xl font-semibold mb-3">OKX</h3>
-                    <p class="text-center">Providing secure crypto trading infrastructure and liquidity solutions.</p>
-                    <a href="https://www.okx.com" target="_blank" class="btn mt-6">Learn More</a>
-                </div>
-                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)] flex flex-col items-center justify-center">
-                    <img src="https://identity.stanford.edu/wp-content/uploads/sites/3/2020/07/Block-S-screen-red.png" alt="Stanford University Logo" class="h-28 mb-6 transition-transform duration-300 hover:scale-110" loading="lazy">
-                    <h3 class="text-xl font-semibold mb-3">Stanford University</h3>
-                    <p class="text-center">Collaborating on blockchain research and AI ethics frameworks.</p>
-                    <a href="https://www.stanford.edu" target="_blank" class="btn mt-6">Learn More</a>
-                </div>
-                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)] flex flex-col items-center justify-center">
-                    <img src="https://www.nvidia.com/content/dam/en-zz/Solutions/about-nvidia/logo-vert-500x500.png" alt="NVIDIA Logo" class="h-28 mb-6 transition-transform duration-300 hover:scale-110" loading="lazy">
-                    <h3 class="text-xl font-semibold mb-3">NVIDIA</h3>
-                    <p class="text-center">Powering AI computing and GPU acceleration for blockchain networks.</p>
-                    <a href="https://www.nvidia.com" target="_blank" class="btn mt-6">Learn More</a>
-                </div>
+                <!-- Navigation Arrows -->
+                <button class="carousel-prev absolute left-0 top-1/2 transform -translate-y-1/2 bg-[var(--accent-color)] text-[var(--primary-color)] w-12 h-12 rounded-full flex items-center justify-center hover:bg-[#FFA500] transition-all duration-300" aria-label="Previous Partner">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-next absolute right-0 top-1/2 transform -translate-y-1/2 bg-[var(--accent-color)] text-[var(--primary-color)] w-12 h-12 rounded-full flex items-center justify-center hover:bg-[#FFA500] transition-all duration-300" aria-label="Next Partner">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
-            <div class="text-center mt-10">
-                <a href="partners.html" class="btn accent">View All Partners</a>
+            
+            <div class="text-center mt-12">
+                <a href="business-partners.html" class="btn accent px-6 py-3 text-lg">View All Partners</a>
             </div>
         </section>
     </main>
@@ -498,6 +510,30 @@
 
       window.addEventListener('load', adjustLayout);
       window.addEventListener('resize', adjustLayout);
+
+      // Carousel Functionality
+      const carousel = document.querySelector('.carousel');
+      const prevBtn = document.querySelector('.carousel-prev');
+      const nextBtn = document.querySelector('.carousel-next');
+      const cardWidth = 280 + 24; // Card width (280px) + gap (24px)
+
+      prevBtn.addEventListener('click', () => {
+        carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+      });
+
+      nextBtn.addEventListener('click', () => {
+        carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+      });
+
+      // Ensure carousel buttons are clickable and responsive
+      [prevBtn, nextBtn].forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+          btn.style.transform = 'scale(1.1) translateY(-50%)';
+        });
+        btn.addEventListener('mouseleave', () => {
+          btn.style.transform = 'scale(1) translateY(-50%)';
+        });
+      });
     </script>
 </body>
 </html>
