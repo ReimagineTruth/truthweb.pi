@@ -19,7 +19,7 @@
             --button-hover-text-color: #000000;
             --background-color: #FFFFFF;
             --accent-color: #FFD700;
-            --cart-badge-color: #FF4500;
+            --cart-badge-color: #FFD700; /* Updated from #FF4500 */
         }
         html { scroll-behavior: smooth; }
         body {
@@ -147,7 +147,7 @@
             transition: all 0.3s ease;
         }
         .mobile-menu .nav-item a:hover {
-            color: var(--highlight-color);
+            color: var(--accent-color); /* Updated from --highlight-color */
             transform: translateX(10px) scale(1.05);
         }
         .mobile-menu .nav-item a.active { font-weight: 700; color: var(--accent-color); }
@@ -159,7 +159,7 @@
         }
         .sticky-header.scrolled .desktop-nav .nav-item a { color: var(--primary-color); }
         .desktop-nav .nav-item a:hover {
-            color: var(--highlight-color);
+            color: var(--accent-color); /* Updated from --highlight-color */
             transform: scale(1.1);
         }
         .desktop-nav .nav-item a.active {
@@ -248,7 +248,7 @@
             top: -10px;
             right: -10px;
             background: var(--cart-badge-color);
-            color: white;
+            color: var(--primary-color); /* Updated to contrast with yellow */
             border-radius: 50%;
             padding: 4px;
             font-size: 12px;
@@ -328,7 +328,7 @@
             position: relative;
             z-index: 1;
             min-width: 100px;
-            margin-top: 1rem;
+            margin: 0.5rem; /* Updated from margin-top: 1rem */
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
         .btn:hover {
@@ -339,14 +339,14 @@
         }
         .btn:active { transform: scale(0.98); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
         .btn-danger {
-            background: #FF4500;
-            color: white;
-            border-color: #FF4500;
+            background: var(--accent-color); /* Updated from #FF4500 */
+            color: var(--primary-color); /* Updated to contrast with yellow */
+            border-color: var(--accent-color);
         }
         .btn-danger:hover {
-            background: #CC3700;
-            color: white;
-            border-color: #CC3700;
+            background: #D4AF37; /* Darker shade of yellow for hover */
+            color: var(--primary-color);
+            border-color: #D4AF37;
         }
         section { padding: 2rem 1rem; }
         .cart-item {
