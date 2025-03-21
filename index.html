@@ -1,12 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Pi Network SDK and Authentication Logic -->
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <script>
+      Pi.init({ version: "2.0", sandbox: true });
+      const scopes = ['payments', 'username'];
+
+      function onIncompletePaymentFound(payment) { 
+        console.log('incomplete payment found');
+        const paymentId = payment.identifier;
+        const txid = payment.transaction.txid;
+        $.post('/payment/complete', {
+          paymentId: paymentId,
+          txid: txid,
+          debug: 'cancel'
+        });
+      }
+
+      function authenticateUser() {
+        Pi.authenticate(scopes, onIncompletePaymentFound).then(function(auth) {
+          console.log(`Hi there, ${auth.user.username}! You're ready to make payments!`);
+          const accessToken = auth.accessToken;
+          alert(`Welcome, ${auth.user.username}! Access Token: ${accessToken}`);
+        }).catch(function(error) {
+          console.error('Authentication failed:', error);
+          alert('Authentication failed. Please try again.');
+        });
+      }
+    </script>
+    <!-- jQuery for $.post compatibility -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" name="viewport"/>
     <title>TruthWeb - The Ultimate Pi Network Hub</title>
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome CDN (v6.5.1 for latest icons) -->
+    <!-- Font Awesome CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
     <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
@@ -35,8 +65,6 @@
         line-height: 1.6;
         padding-bottom: 60px;
       }
-
-      /* Progress Bar Styles */
       .progress-bar {
         position: fixed;
         top: 0;
@@ -48,8 +76,6 @@
         transition: width 0.3s ease;
         box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
       }
-
-      /* Go to Top Button Styles */
       .go-to-top {
         position: fixed;
         bottom: 80px;
@@ -71,18 +97,9 @@
         z-index: 1000;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       }
-      .go-to-top.visible {
-        opacity: 1;
-        visibility: visible;
-      }
-      .go-to-top:hover {
-        background: #FFA500;
-        transform: scale(1.1);
-      }
-      .go-to-top:active {
-        transform: scale(0.95);
-      }
-
+      .go-to-top.visible { opacity: 1; visibility: visible; }
+      .go-to-top:hover { background: #FFA500; transform: scale(1.1); }
+      .go-to-top:active { transform: scale(0.95); }
       .sticky-header {
         position: fixed;
         top: 0;
@@ -110,9 +127,7 @@
         color: var(--text-color);
         transition: color 0.3s ease;
       }
-      .sticky-header.scrolled .logo-text {
-        color: var(--primary-color);
-      }
+      .sticky-header.scrolled .logo-text { color: var(--primary-color); }
       .burger-btn {
         display: flex;
         cursor: pointer;
@@ -131,9 +146,7 @@
         margin: 2px 0;
         transition: all 0.3s ease;
       }
-      .sticky-header.scrolled .burger-btn span {
-        background: var(--primary-color);
-      }
+      .sticky-header.scrolled .burger-btn span { background: var(--primary-color); }
       .burger-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
       .burger-btn.open span:nth-child(2) { opacity: 0; transform: scale(0); }
       .burger-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
@@ -152,10 +165,7 @@
         animation: fadeInMenu 0.4s ease-out forwards;
       }
       .mobile-menu.open { left: 0; }
-      @keyframes fadeInMenu {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
+      @keyframes fadeInMenu { from { opacity: 0; } to { opacity: 1; } }
       .mobile-menu ul { list-style: none; padding: 0; }
       .mobile-menu .nav-item a {
         display: block;
@@ -164,27 +174,16 @@
         font-size: 1.1rem;
         transition: all 0.3s ease;
       }
-      .mobile-menu .nav-item a:hover {
-        color: var(--highlight-color);
-        transform: translateX(10px) scale(1.05);
-      }
+      .mobile-menu .nav-item a:hover { color: var(--highlight-color); transform: translateX(10px) scale(1.05); }
       .desktop-nav { display: flex; }
-      .desktop-nav .nav-item {
-        transition: transform 0.3s ease;
-        animation: fadeInUp 0.5s ease-in-out forwards;
-      }
+      .desktop-nav .nav-item { transition: transform 0.3s ease; animation: fadeInUp 0.5s ease-in-out forwards; }
       .desktop-nav .nav-item a {
         color: var(--text-color);
         padding: 0.5rem 1rem;
         transition: all 0.3s ease;
       }
-      .sticky-header.scrolled .desktop-nav .nav-item a {
-        color: var(--primary-color);
-      }
-      .desktop-nav .nav-item a:hover {
-        color: var(--highlight-color);
-        transform: scale(1.1);
-      }
+      .sticky-header.scrolled .desktop-nav .nav-item a { color: var(--primary-color); }
+      .desktop-nav .nav-item a:hover { color: var(--highlight-color); transform: scale(1.1); }
       .desktop-nav .nav-item:nth-child(1) { animation-delay: 0.1s; }
       .desktop-nav .nav-item:nth-child(2) { animation-delay: 0.2s; }
       .desktop-nav .nav-item:nth-child(3) { animation-delay: 0.3s; }
@@ -193,9 +192,7 @@
       .desktop-nav .nav-item:nth-child(6) { animation-delay: 0.6s; }
       .desktop-nav .nav-item:nth-child(7) { animation-delay: 0.7s; }
       .desktop-nav .nav-item:nth-child(8) { animation-delay: 0.8s; }
-      .desktop-nav .nav-item:hover {
-        transform: scale(1.1) translateY(-5px);
-      }
+      .desktop-nav .nav-item:hover { transform: scale(1.1) translateY(-5px); }
       .search-container {
         position: relative;
         flex-grow: 1;
@@ -229,9 +226,7 @@
         font-size: 1.2rem;
         transition: transform 0.3s ease, color 0.3s ease;
       }
-      .sticky-header.scrolled .search-icon {
-        color: var(--primary-color);
-      }
+      .sticky-header.scrolled .search-icon { color: var(--primary-color); }
       .search-input:focus + .search-icon { transform: translateY(-50%) scale(1.1); }
       .search-results {
         position: absolute;
@@ -249,10 +244,7 @@
         animation: dropIn 0.3s ease-out forwards;
       }
       .search-results.active { display: block; }
-      @keyframes dropIn {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
+      @keyframes dropIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
       .search-result-item {
         padding: 0.75rem;
         color: var(--primary-color);
@@ -260,28 +252,17 @@
         cursor: pointer;
         transition: background 0.3s ease, transform 0.2s ease;
       }
-      .search-result-item:hover {
-        background: var(--highlight-color);
-        transform: scale(1.02);
-      }
+      .search-result-item:hover { background: var(--highlight-color); transform: scale(1.02); }
       .icon {
         color: var(--text-color);
         font-size: 1.25rem;
         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
         margin-left: 0.75rem;
       }
-      .sticky-header.scrolled .icon {
-        color: var(--primary-color);
-      }
-      .icon:hover {
-        transform: scale(1.15) rotate(5deg);
-      }
-      .floating-effect {
-        transition: transform 0.3s ease;
-      }
-      .floating-effect:hover {
-        transform: translateY(-5px) rotate(5deg);
-      }
+      .sticky-header.scrolled .icon { color: var(--primary-color); }
+      .icon:hover { transform: scale(1.15) rotate(5deg); }
+      .floating-effect { transition: transform 0.3s ease; }
+      .floating-effect:hover { transform: translateY(-5px) rotate(5deg); }
       main { margin-top: 64px; }
       .hero {
         min-height: 100vh;
@@ -297,10 +278,7 @@
         overflow: hidden;
         animation: fadeInHero 1s ease-out forwards;
       }
-      @keyframes fadeInHero {
-        from { opacity: 0; transform: scale(0.95); }
-        to { opacity: 1; transform: scale(1); }
-      }
+      @keyframes fadeInHero { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
       .hero::after {
         content: '';
         position: absolute;
@@ -311,28 +289,16 @@
         background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
         animation: pulseGlow 3s infinite alternate, float 6s infinite ease-in-out;
       }
-      @keyframes pulseGlow {
-        0% { opacity: 0.5; }
-        100% { opacity: 0.8; }
-      }
-      @keyframes float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-20px); }
-      }
+      @keyframes pulseGlow { 0% { opacity: 0.5; } 100% { opacity: 0.8; } }
+      @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
       .glow-text {
         font-size: 3rem;
         font-weight: 700;
         text-shadow: 0 0 10px var(--highlight-color);
         animation: glow 2s infinite alternate, bounce 3s infinite ease-in-out;
       }
-      @keyframes glow {
-        0% { text-shadow: 0 0 10px var(--highlight-color); }
-        100% { text-shadow: 0 0 20px var(--highlight-color); }
-      }
-      @keyframes bounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-      }
+      @keyframes glow { 0% { text-shadow: 0 0 10px var(--highlight-color); } 100% { text-shadow: 0 0 20px var(--highlight-color); } }
+      @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
       .btn {
         display: inline-flex;
         align-items: center;
@@ -361,24 +327,10 @@
         transform: scale(1.05) translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       }
-      .btn:active {
-        transform: scale(0.98);
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-      }
-      .btn.accent {
-        background: var(--accent-color);
-        color: var(--primary-color);
-        border: none;
-      }
-      .btn.accent:hover {
-        background: #FFA500;
-        color: var(--primary-color);
-      }
-      @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
-      }
+      .btn:active { transform: scale(0.98); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1); }
+      .btn.accent { background: var(--accent-color); color: var(--primary-color); border: none; }
+      .btn.accent:hover { background: #FFA500; color: var(--primary-color); }
+      @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
       section { padding: 2rem 1rem; }
       .card {
         background: var(--secondary-color);
@@ -388,66 +340,21 @@
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         animation: slideInCard 0.5s ease-out forwards;
       }
-      .card:hover {
-        transform: translateY(-10px) rotate(2deg);
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-      }
-      @keyframes slideInCard {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      .card i {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-        color: var(--primary-color);
-        transition: transform 0.3s ease;
-      }
+      .card:hover { transform: translateY(-10px) rotate(2deg); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); }
+      @keyframes slideInCard { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+      .card i { font-size: 2.5rem; margin-bottom: 1rem; color: var(--primary-color); transition: transform 0.3s ease; }
       .card:hover i { transform: scale(1.1); }
-      .feed-container {
-        max-width: 600px;
-        margin: 0 auto;
-      }
-      .feed-item {
-        padding: 1rem;
-        border-bottom: 1px solid var(--highlight-color);
-        transition: background 0.2s ease, transform 0.3s ease;
-      }
-      .feed-item:hover {
-        background: rgba(204, 204, 204, 0.1);
-        transform: scale(1.01);
-      }
+      .feed-container { max-width: 600px; margin: 0 auto; }
+      .feed-item { padding: 1rem; border-bottom: 1px solid var(--highlight-color); transition: background 0.2s ease, transform 0.3s ease; }
+      .feed-item:hover { background: rgba(204, 204, 204, 0.1); transform: scale(1.01); }
       .feed-item:last-child { border-bottom: none; }
-      .feed-header {
-        display: flex;
-        align-items: center;
-        margin-bottom: 0.5rem;
-      }
-      .feed-avatar {
-        font-size: 2rem;
-        margin-right: 0.75rem;
-        color: var(--primary-color);
-        transition: transform 0.3s ease;
-      }
+      .feed-header { display: flex; align-items: center; margin-bottom: 0.5rem; }
+      .feed-avatar { font-size: 2rem; margin-right: 0.75rem; color: var(--primary-color); transition: transform 0.3s ease; }
       .feed-item:hover .feed-avatar { transform: scale(1.1); }
-      .feed-user {
-        font-weight: 600;
-        font-size: 1rem;
-      }
-      .feed-time {
-        font-size: 0.85rem;
-        color: var(--highlight-color);
-        margin-left: 0.5rem;
-      }
-      .feed-content {
-        font-size: 1rem;
-        margin-bottom: 0.75rem;
-        line-height: 1.4;
-      }
-      .feed-actions {
-        display: flex;
-        justify-content: space-between;
-        max-width: 300px;
-      }
+      .feed-user { font-weight: 600; font-size: 1rem; }
+      .feed-time { font-size: 0.85rem; color: var(--highlight-color); margin-left: 0.5rem; }
+      .feed-content { font-size: 1rem; margin-bottom: 0.75rem; line-height: 1.4; }
+      .feed-actions { display: flex; justify-content: space-between; max-width: 300px; }
       .feed-actions button {
         background: none;
         border: none;
@@ -462,247 +369,52 @@
         transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
       .feed-actions button i { font-size: 1rem; }
-      .feed-actions button:hover {
-        background: var(--highlight-color);
-        color: var(--primary-color);
-        transform: scale(1.1);
-      }
-      .feed-banner {
-        background: var(--secondary-color);
-        border: 1px solid var(--highlight-color);
-        border-radius: 10px;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        text-align: center;
-        animation: slideInCard 0.5s ease-out forwards;
-      }
-      .feed-banner img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        margin-bottom: 0.5rem;
-      }
-      footer {
-        background: var(--primary-color);
-        color: var(--text-color);
-        text-align: center;
-        padding: 2rem 1rem;
-        position: relative;
-        z-index: 10;
-        animation: fadeIn 1.5s ease-in-out;
-      }
-      @keyframes fadeIn {
-        0% { opacity: 0; }
-        100% { opacity: 1; }
-      }
-      @keyframes fadeInUp {
-        0% { opacity: 0; transform: translateY(20px); }
-        100% { opacity: 1; transform: translateY(0); }
-      }
-      footer .social-icons a, footer .footer-links a {
-        color: var(--text-color);
-        transition: color 0.3s ease, transform 0.3s ease;
-      }
-      footer .social-icons a:hover, footer .footer-links a:hover {
-        color: var(--highlight-color);
-        transform: scale(1.1);
-      }
+      .feed-actions button:hover { background: var(--highlight-color); color: var(--primary-color); transform: scale(1.1); }
+      .feed-banner { background: var(--secondary-color); border: 1px solid var(--highlight-color); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; text-align: center; animation: slideInCard 0.5s ease-out forwards; }
+      .feed-banner img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 0.5rem; }
+      footer { background: var(--primary-color); color: var(--text-color); text-align: center; padding: 2rem 1rem; position: relative; z-index: 10; animation: fadeIn 1.5s ease-in-out; }
+      @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
+      @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+      footer .social-icons a, footer .footer-links a { color: var(--text-color); transition: color 0.3s ease, transform 0.3s ease; }
+      footer .social-icons a:hover, footer .footer-links a:hover { color: var(--highlight-color); transform: scale(1.1); }
       footer .social-icons { margin-bottom: 1rem; }
-      footer .social-icons a {
-        font-size: 1.25rem;
-        margin: 0 0.5rem;
-      }
-      footer .footer-links a {
-        margin: 0 0.5rem;
-        text-decoration: none;
-      }
-      .download-buttons {
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        margin-top: 1rem;
-      }
-      .download-btn img {
-        height: 40px;
-        transition: transform 0.3s ease;
-      }
+      footer .social-icons a { font-size: 1.25rem; margin: 0 0.5rem; }
+      footer .footer-links a { margin: 0 0.5rem; text-decoration: none; }
+      .download-buttons { display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; }
+      .download-btn img { height: 40px; transition: transform 0.3s ease; }
       .download-btn:hover img { transform: scale(1.1); }
       #user-stats { position: relative; z-index: 10; }
-      .stat-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.3s ease;
-      }
+      .stat-item { display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.3s ease; }
       .stat-item:hover { transform: scale(1.05); }
-      .stat-item i {
-        color: var(--text-color);
-        transition: transform 0.3s ease;
-      }
+      .stat-item i { color: var(--text-color); transition: transform 0.3s ease; }
       .stat-item:hover i { transform: scale(1.1); }
-
-      /* Footer Menu Styles (Fixed, Mobile-Only) */
-      .footer-menu {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: var(--primary-color);
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        height: 60px;
-        z-index: 1000;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease;
-      }
-      .footer-menu.hidden {
-        transform: translateY(100%);
-      }
-      .footer-menu a {
-        color: var(--text-color);
-        font-size: 1.5rem;
-        padding: 0.5rem;
-        transition: transform 0.3s ease, color 0.3s ease;
-      }
-      .footer-menu a:hover {
-        color: var(--accent-color);
-        transform: scale(1.2);
-      }
-
-      /* Video Player Section Styles */
-      .video-player-section {
-        background: var(--primary-color);
-        color: var(--text-color);
-        padding: 2rem 1rem;
-      }
-      .video-container {
-        max-width: 1000px;
-        margin: 0 auto;
-      }
-      .main-video-card {
-        background: var(--secondary-color);
-        border: 1px solid var(--highlight-color);
-        border-radius: 10px;
-        padding: 1.5rem;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-      }
-      .main-video-card:hover {
-        transform: translateY(-5px);
-      }
-      .main-video-card iframe {
-        width: 100%;
-        height: 400px;
-        border: none;
-        border-radius: 10px;
-      }
-      .video-controls {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 1rem;
-      }
-      .control-btn {
-        background: var(--button-bg-color);
-        color: var(--button-text-color);
-        padding: 0.5rem 1rem;
-        border: 1px solid var(--highlight-color);
-        border-radius: 9999px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-      .control-btn:hover {
-        background: var(--button-hover-bg-color);
-        color: var(--button-hover-text-color);
-        transform: scale(1.05);
-      }
-      .interaction-btn {
-        background: none;
-        border: none;
-        color: var(--primary-color);
-        cursor: pointer;
-        margin-right: 1rem;
-        transition: color 0.3s ease, transform 0.3s ease;
-      }
-      .interaction-btn:hover, .interaction-btn.active {
-        color: var(--accent-color);
-        transform: scale(1.1);
-      }
-      .comment-section {
-        margin-top: 1.5rem;
-        max-height: 200px;
-        overflow-y: auto;
-        background: #F5F5F5;
-        padding: 1rem;
-        border-radius: 10px;
-      }
-      .comment {
-        border-bottom: 1px solid #E0E0E0;
-        padding: 0.5rem 0;
-        color: var(--primary-color);
-      }
+      .footer-menu { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--primary-color); display: flex; justify-content: space-around; align-items: center; height: 60px; z-index: 1000; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2); transition: transform 0.3s ease; }
+      .footer-menu.hidden { transform: translateY(100%); }
+      .footer-menu a { color: var(--text-color); font-size: 1.5rem; padding: 0.5rem; transition: transform 0.3s ease, color 0.3s ease; }
+      .footer-menu a:hover { color: var(--accent-color); transform: scale(1.2); }
+      .video-player-section { background: var(--primary-color); color: var(--text-color); padding: 2rem 1rem; }
+      .video-container { max-width: 1000px; margin: 0 auto; }
+      .main-video-card { background: var(--secondary-color); border: 1px solid var(--highlight-color); border-radius: 10px; padding: 1.5rem; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease; }
+      .main-video-card:hover { transform: translateY(-5px); }
+      .main-video-card iframe { width: 100%; height: 400px; border: none; border-radius: 10px; }
+      .video-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; }
+      .control-btn { background: var(--button-bg-color); color: var(--button-text-color); padding: 0.5rem 1rem; border: 1px solid var(--highlight-color); border-radius: 9999px; cursor: pointer; transition: all 0.3s ease; }
+      .control-btn:hover { background: var(--button-hover-bg-color); color: var(--button-hover-text-color); transform: scale(1.05); }
+      .interaction-btn { background: none; border: none; color: var(--primary-color); cursor: pointer; margin-right: 1rem; transition: color 0.3s ease, transform 0.3s ease; }
+      .interaction-btn:hover, .interaction-btn.active { color: var(--accent-color); transform: scale(1.1); }
+      .comment-section { margin-top: 1.5rem; max-height: 200px; overflow-y: auto; background: #F5F5F5; padding: 1rem; border-radius: 10px; }
+      .comment { border-bottom: 1px solid #E0E0E0; padding: 0.5rem 0; color: var(--primary-color); }
       .comment:last-child { border-bottom: none; }
-      .comment-input {
-        width: 100%;
-        padding: 0.75rem;
-        margin-top: 1rem;
-        border: 1px solid var(--highlight-color);
-        border-radius: 8px;
-        font-family: 'Poppins', sans-serif;
-        background: var(--secondary-color);
-        color: var(--primary-color);
-      }
-      .comment-input:focus {
-        outline: none;
-        border-color: var(--accent-color);
-        box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-      }
-
-      /* Carousel Styles */
-      .carousel {
-        display: flex;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        gap: 1.5rem;
-        padding-bottom: 1rem;
-        scrollbar-width: thin;
-      }
-      .carousel::-webkit-scrollbar {
-        height: 8px;
-      }
-      .carousel::-webkit-scrollbar-thumb {
-        background: var(--accent-color);
-        border-radius: 4px;
-      }
-      .carousel-prev, .carousel-next {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: var(--accent-color);
-        color: var(--primary-color);
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-      }
-      .carousel-prev:hover, .carousel-next:hover {
-        background: #FFA500;
-        transform: translateY(-50%) scale(1.1);
-      }
+      .comment-input { width: 100%; padding: 0.75rem; margin-top: 1rem; border: 1px solid var(--highlight-color); border-radius: 8px; font-family: 'Poppins', sans-serif; background: var(--secondary-color); color: var(--primary-color); }
+      .comment-input:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+      .carousel { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; gap: 1.5rem; padding-bottom: 1rem; scrollbar-width: thin; }
+      .carousel::-webkit-scrollbar { height: 8px; }
+      .carousel::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 4px; }
+      .carousel-prev, .carousel-next { position: absolute; top: 50%; transform: translateY(-50%); background: var(--accent-color); color: var(--primary-color); width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+      .carousel-prev:hover, .carousel-next:hover { background: #FFA500; transform: translateY(-50%) scale(1.1); }
       .carousel-prev { left: 0; }
       .carousel-next { right: 0; }
-
-      @media (min-width: 641px) {
-        .footer-menu { display: none; }
-        .go-to-top { bottom: 20px; }
-        body { padding-bottom: 0; }
-      }
+      @media (min-width: 641px) { .footer-menu { display: none; } .go-to-top { bottom: 20px; } body { padding-bottom: 0; } }
       @media (max-width: 640px) {
         .burger-btn { display: flex; }
         .desktop-nav { display: none; }
@@ -747,12 +459,9 @@
 </head>
 <body>
     <div class="progress-bar"></div>
-
     <header class="sticky-header">
         <div class="flex items-center">
-            <a href="index.html" class="text-inherit flex items-center">
-                <span class="logo-text ml-2">TruthWeb</span>
-            </a>
+            <a href="index.html" class="text-inherit flex items-center"><span class="logo-text ml-2">TruthWeb</span></a>
         </div>
         <div class="search-container">
             <input type="text" class="search-input" placeholder="Search TruthWeb..." aria-label="Search TruthWeb">
@@ -775,14 +484,9 @@
             <a href="addtocart.html" class="icon floating-effect"><i class="fas fa-shopping-cart"></i></a>
             <a href="profile.html" class="icon floating-effect"><i class="fas fa-user"></i></a>
             <a href="wallet.html" class="icon floating-effect"><i class="fas fa-wallet"></i></a>
-            <div class="burger-btn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="burger-btn"><span></span><span></span><span></span></div>
         </div>
     </header>
-
     <nav class="mobile-menu">
         <ul>
             <li class="nav-item"><a href="index.html">Home</a></li>
@@ -795,7 +499,6 @@
             <li class="nav-item"><a href="about.html">About</a></li>
         </ul>
     </nav>
-
     <main>
         <section class="hero">
             <h1 class="glow-text">TruthWeb</h1>
@@ -803,44 +506,23 @@
             <p class="text-lg mt-2">Join over 60+ Million Pioneers worldwide in the leading platform for Pi Network</p>
             <p class="text-sm mt-2 opacity-75">[This is a test net mode, not official]</p>
             <div class="download-buttons">
-                <a href="https://play.google.com/store" target="_blank" class="download-btn">
-                    <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
-                </a>
-                <a href="https://www.apple.com/app-store/" target="_blank" class="download-btn">
-                    <img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
-                </a>
+                <a href="https://play.google.com/store" target="_blank" class="download-btn"><img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play"></a>
+                <a href="https://www.apple.com/app-store/" target="_blank" class="download-btn"><img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store"></a>
             </div>
             <p class="text-sm mt-4">Over 10M+ million downloads worldwide!</p>
+            <button id="pi-auth-btn" class="btn accent mt-4">Authenticate with Pi</button>
         </section>
-
         <section id="user-stats" class="py-16 px-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white">
             <div class="max-w-6xl mx-auto text-center">
                 <h2 class="text-4xl font-bold mb-6">Join Millions of Pioneers Worldwide</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                    <div class="stat-item">
-                        <i class="fas fa-users fa-3x mb-4"></i>
-                        <h3 class="text-2xl font-semibold" data-count="55000000">0</h3>
-                        <p>Active Pioneers</p>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-globe fa-3x mb-4"></i>
-                        <h3 class="text-2xl font-semibold" data-count="200">0</h3>
-                        <p>Countries Reached</p>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-download fa-3x mb-4"></i>
-                        <h3 class="text-2xl font-semibold" data-count="10000000">0</h3>
-                        <p>App Downloads</p>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-handshake fa-3x mb-4"></i>
-                        <h3 class="text-2xl font-semibold" data-count="950000">0</h3>
-                        <p>Daily Transactions</p>
-                    </div>
+                    <div class="stat-item"><i class="fas fa-users fa-3x mb-4"></i><h3 class="text-2xl font-semibold" data-count="55000000">0</h3><p>Active Pioneers</p></div>
+                    <div class="stat-item"><i class="fas fa-globe fa-3x mb-4"></i><h3 class="text-2xl font-semibold" data-count="200">0</h3><p>Countries Reached</p></div>
+                    <div class="stat-item"><i class="fas fa-download fa-3x mb-4"></i><h3 class="text-2xl font-semibold" data-count="10000000">0</h3><p>App Downloads</p></div>
+                    <div class="stat-item"><i class="fas fa-handshake fa-3x mb-4"></i><h3 class="text-2xl font-semibold" data-count="950000">0</h3><p>Daily Transactions</p></div>
                 </div>
             </div>
         </section>
-
         <section id="hub" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">TruthWeb: Your Global Pi Network Hub</h2>
             <div class="max-w-4xl mx-auto text-center">
@@ -848,15 +530,13 @@
                 <a href="about.html" class="btn">Learn More</a>
             </div>
         </section>
-
-        <!-- Enhanced Video Player Section -->
         <section id="video-player" class="video-player-section">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Featured Videos</h2>
             <div class="video-container">
                 <div class="main-video-card">
-                    <iframe id="main-video" src="https://www.youtube.com/embed/gacKcyPxbrA?si=TM_tVWd25-1I1JMK" title="Pi's Open Network Launch" allowfullscreen></iframe>
-                    <h3 id="video-title" class="text-xl font-semibold mt-4 text-[var(--primary-color)]">Pi's Open Network Launch</h3>
-                    <p id="video-description" class="text-lg mt-2 text-[var(--primary-color)]">Discover how TruthWeb integrates with Pi's Open Network launch.</p>
+                    <iframe id="main-video" src="https://www.youtube.com/embed/MfOVBHbgDK8?si=TM_tVWd25-1I1JMK" title="Happy Pi Day 2025!" allowfullscreen></iframe>
+                    <h3 id="video-title" class="text-xl font-semibold mt-4 text-[var(--primary-color)]">Happy Pi Day 2025!</h3>
+                    <p id="video-description" class="text-lg mt-2 text-[var(--primary-color)]">Happy Pi Day 2025, Pi Network’s 6th official anniversary!</p>
                     <div class="video-controls">
                         <div>
                             <button class="control-btn" onclick="prevVideo()">❮ Prev</button>
@@ -880,7 +560,6 @@
                 </div>
             </div>
         </section>
-
         <section id="core-features" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Core Features</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -894,8 +573,6 @@
                 <div class="card"><i class="fas fa-brain"></i><h3 class="text-xl font-semibold mb-2">AI Price Predictor</h3><p>Market trend analysis</p><a href="ai-predictor.html" class="btn">Try Now</a></div>
             </div>
         </section>
-
-        <!-- Business Partners Section with Carousel -->
         <section id="business-partners" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)] relative overflow-hidden">
             <h2 class="text-3xl font-bold text-center mb-8">Our Business Partners</h2>
             <p class="text-center text-lg mb-12 max-w-2xl mx-auto">We collaborate with leading organizations to drive innovation in blockchain and AI. <em>This is a sample Business Partners page, not official.</em></p>
@@ -939,7 +616,6 @@
                 <a href="business-partners.html" class="btn accent px-6 py-3 text-lg">View All Partners</a>
             </div>
         </section>
-
         <section id="new-features" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">New Features</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -948,7 +624,6 @@
                 <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-mobile-alt"></i><h3 class="text-xl font-semibold mb-2">Mobile App Enhancements</h3><p>Enjoy a revamped UI, push notifications, and offline mode.</p><a href="mobile-enhancements.html" class="btn">Learn More</a></div>
             </div>
         </section>
-
         <section id="ai-bot" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">TruthWeb AI Bot</h2>
             <div class="max-w-4xl mx-auto text-center">
@@ -956,7 +631,6 @@
                 <a href="truwebbot.html" class="btn">Chat Now</a>
             </div>
         </section>
-
         <section id="feed" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
             <h2 class="section-title text-3xl font-bold text-center mb-4">TruthWeb Feed</h2>
             <p class="text-center text-lg mb-8 max-w-2xl mx-auto">The TruthWeb Feed connects Pioneers worldwide, showcasing user posts, updates, and sponsored ads. Share your experiences, discover Pi-powered products, and stay informed—all in one decentralized hub.</p>
@@ -971,10 +645,7 @@
                     <div class="feed-item">
                         <div class="feed-header">
                             <i class="fas fa-user-circle feed-avatar"></i>
-                            <div>
-                                <span class="feed-user">PioneerA</span>
-                                <span class="feed-time">Mar 5, 2025, 18:45</span>
-                            </div>
+                            <div><span class="feed-user">PioneerA</span><span class="feed-time">Mar 5, 2025, 18:45</span></div>
                         </div>
                         <p class="feed-content">Just sold 500 Pi in a P2P trade! Loving the seamless experience on TruthWeb.</p>
                         <div class="feed-actions">
@@ -987,10 +658,7 @@
                     <div class="feed-item">
                         <div class="feed-header">
                             <i class="fas fa-ad feed-avatar"></i>
-                            <div>
-                                <span class="feed-user">TruthWeb Ads</span>
-                                <span class="feed-time">Sponsored</span>
-                            </div>
+                            <div><span class="feed-user">TruthWeb Ads</span><span class="feed-time">Sponsored</span></div>
                         </div>
                         <p class="feed-content">Get the new Pi Software for only 100 Pi! Boost your productivity today.</p>
                         <img loading="lazy" src="https://images.unsplash.com/photo-1666875753105-c63a6f3bdc86?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=200&q=80" alt="Pi Software Ad" class="mb-2 rounded">
@@ -999,10 +667,7 @@
                     <div class="feed-item">
                         <div class="feed-header">
                             <i class="fas fa-ad feed-avatar"></i>
-                            <div>
-                                <span class="feed-user">TruthWeb Ads</span>
-                                <span class="feed-time">Sponsored</span>
-                            </div>
+                            <div><span class="feed-user">TruthWeb Ads</span><span class="feed-time">Sponsored</span></div>
                         </div>
                         <p class="feed-content">Join the Pi Mining Workshop! Learn to maximize your earnings for just 25 Pi.</p>
                         <img loading="lazy" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=200&q=80" alt="Pi Mining Workshop Ad" class="mb-2 rounded">
@@ -1011,10 +676,7 @@
                     <div class="feed-item">
                         <div class="feed-header">
                             <i class="fas fa-user-circle feed-avatar"></i>
-                            <div>
-                                <span class="feed-user">VendorB</span>
-                                <span class="feed-time">Mar 5, 2025, 14:30</span>
-                            </div>
+                            <div><span class="feed-user">VendorB</span><span class="feed-time">Mar 5, 2025, 14:30</span></div>
                         </div>
                         <p class="feed-content">New Pi eBook available in the marketplace! Check it out for only 50 Pi.</p>
                         <a href="marketplace.html" class="text-[var(--primary-color)] underline">View Product</a>
@@ -1028,10 +690,7 @@
                     <div class="feed-item">
                         <div class="feed-header">
                             <i class="fas fa-ad feed-avatar"></i>
-                            <div>
-                                <span class="feed-user">TruthWeb Ads</span>
-                                <span class="feed-time">Sponsored</span>
-                            </div>
+                            <div><span class="feed-user">TruthWeb Ads</span><span class="feed-time">Sponsored</span></div>
                         </div>
                         <p class="feed-content">Upgrade your wallet with Pi Premium Security! Only 75 Pi for lifetime access.</p>
                         <img loading="lazy" src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=200&q=80" alt="Pi Premium Security Ad" class="mb-2 rounded">
@@ -1040,10 +699,7 @@
                     <div class="feed-item">
                         <div class="feed-header">
                             <i class="fas fa-ad feed-avatar"></i>
-                            <div>
-                                <span class="feed-user">TruthWeb Ads</span>
-                                <span class="feed-time">Sponsored</span>
-                            </div>
+                            <div><span class="feed-user">TruthWeb Ads</span><span class="feed-time">Sponsored</span></div>
                         </div>
                         <p class="feed-content">Advertise your business on TruthWeb! Reach 5M+ Pioneers starting at 200 Pi.</p>
                         <img loading="lazy" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=200&q=80" alt="Advertise on TruthWeb Ad" class="mb-2 rounded">
@@ -1055,7 +711,6 @@
                 </div>
             </div>
         </section>
-
         <section id="community" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Community & Social</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -1064,7 +719,6 @@
                 <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-comments"></i><h3 class="text-xl font-semibold mb-2">Messaging & Chat</h3><p>Direct, secure communication with other Pioneers.</p><a href="messagingchat.html" class="btn">Chat</a></div>
             </div>
         </section>
-
         <section id="developers" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Developer & Business</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -1076,7 +730,6 @@
                 <div class="card"><i class="fas fa-code-branch"></i><h3 class="text-xl font-semibold mb-2">API Playground</h3><p>Test API endpoints in real-time</p><a href="api-playground.html" class="btn">Explore</a></div>
             </div>
         </section>
-
         <section id="testimonials" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">What Our Users Say</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -1085,7 +738,6 @@
                 <div class="card"><p class="mb-4">"Top-notch API docs!"</p><p>- Dev789</p></div>
             </div>
         </section>
-
         <section id="security" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Security & Trust</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -1094,7 +746,6 @@
                 <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-mobile-alt"></i><h3 class="text-xl font-semibold mb-2">Two-Factor Authentication</h3><p>Add an extra layer of security with 2FA.</p><a href="twofactor.html" class="btn">Enable</a></div>
             </div>
         </section>
-
         <section id="fraud-detection" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Fraud Detection</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -1103,7 +754,6 @@
                 <div class="card"><i class="fas fa-chart-line"></i><h3 class="text-xl font-semibold mb-2">Anomaly Detection</h3><p>Spot suspicious activity instantly.</p><a href="fraud-detection.html#anomaly" class="btn">Explore</a></div>
             </div>
         </section>
-
         <section id="news" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">TruthWeb News</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -1112,8 +762,7 @@
                 <div class="card"><i class="fas fa-users"></i><h3 class="text-xl font-semibold mb-2">Community Update</h3><p>New forum features.</p><a href="community.html#update" class="btn">Read</a></div>
             </div>
         </section>
-
-        <section id="pitrack" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
+ <section id="pitrack" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
             <h2 class="section-title text-3xl font-bold text-center mb-8">PiTrack</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                 <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-chart-bar"></i><h3 class="text-xl font-semibold mb-2">Track Your Pi</h3><p>Monitor wallet activity.</p><a href="pitrack.html#wallet" class="btn">View</a></div>
@@ -1157,52 +806,139 @@
                 <div class="card"><i class="fas fa-coins"></i><h3 class="text-xl font-semibold mb-2">Pi Staking</h3><p>Earn rewards.</p><a href="future.html#staking" class="btn">Update</a></div>
             </div>
              </section>
+   
+        
         <section class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
-            <h2 class="text-3xl font-bold text-center mb-8">Support TruthWeb</h2>
+            <h2 class="section-title text-3xl font-bold text-center mb-8">Join the TruthWeb Movement</h2>
             <div class="max-w-4xl mx-auto text-center">
-                <p class="text-lg mb-6">Love our decentralized content? Subscribe, donate, or join our partners to fuel the TruthWeb journey!</p>
-                <div class="flex justify-center space-x-4">
+                <p class="text-lg mb-6 md:text-xl">Be part of a global revolution in decentralized finance and community-driven innovation. Sign up today and start exploring TruthWeb!</p>
+                <a href="signup.html" class="btn accent">Get Started</a>
+   <div class="flex justify-center space-x-4">
                     <a href="https://www.youtube.com/@TruthWebYoutube?sub_confirmation=1" target="_blank" class="btn">Subscribe</a>
                     <a href="donate.html" target="_blank" class="btn">Donate</a>
                     <a href="https://www.okx.com/join/96663535" target="_blank" class="btn">Join OKX</a>
                 </div>
             </div>
         </section>
+        
     </main>
-
-         <footer class="bg-[var(--primary-color)] py-8">
-        <div class="container mx-auto text-center">
-            <div class="social-icons mb-4">
-                <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://www.facebook.com/reimaginetruthofficial/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://x.com/reimagine_truth" target="_blank"><i class="fab fa-twitter"></i></a>
-                <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://t.me/TruthWebOfficial" target="_blank"><i class="fab fa-telegram"></i></a>
-                <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://www.youtube.com/@TruthWebYoutube" target="_blank"><i class="fab fa-youtube"></i></a>
-                <a class="text-[var(--text-color)] mx-2 floating-effect" href="https://github.com/username/TruthWeb" target="_blank"><i class="fab fa-github"></i></a>
-            </div>
-            <p class="text-[var(--text-color)] mb-4">© 2025 TruthWeb. All rights reserved.</p>
-            <div class="footer-links text-[var(--text-color)] text-sm">
-                <a href="about.html" class="mx-2 hover:text-[var(--highlight-color)]">About Us</a> |
-                <a href="terms.html" class="mx-2 hover:text-[var(--highlight-color)]">Terms & Conditions</a> |
-                <a href="privacy.html" class="mx-2 hover:text-[var(--highlight-color)]">Privacy Policy</a> |
-                <a href="contact.html" class="mx-2 hover:text-[var(--highlight-color)]">Contact</a>
-            </div>
+    <footer>
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://telegram.org" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+            <a href="https://discord.com" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
         </div>
+        <div class="footer-links">
+            <a href="terms.html">Terms</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="contact.html">Contact</a>
+            <a href="faq.html">FAQ</a>
+            <a href="about.html">About</a>
+        </div>
+        <p class="mt-4">© 2025 TruthWeb. All rights reserved. Built with <i class="fas fa-heart text-red-500"></i> for the Pi Network Community.</p>
     </footer>
-
-    <nav class="footer-menu" role="navigation" aria-label="Mobile Footer Navigation">
-        <a href="index.html"><i class="fas fa-home"></i></a>
-        <a href="marketplace.html"><i class="fas fa-shopping-cart"></i></a>
-        <a href="profile.html"><i class="fas fa-user"></i></a>
-        <a href="wallet.html"><i class="fas fa-wallet"></i></a>
-        <a href="community.html"><i class="fas fa-users"></i></a>
+    <nav class="footer-menu">
+        <a href="index.html" aria-label="Home"><i class="fas fa-home"></i></a>
+        <a href="marketplace.html" aria-label="Marketplace"><i class="fas fa-shopping-cart"></i></a>
+        <a href="profile.html" aria-label="Profile"><i class="fas fa-user"></i></a>
+        <a href="wallet.html" aria-label="Wallet"><i class="fas fa-wallet"></i></a>
+        <a href="community.html" aria-label="Community"><i class="fas fa-users"></i></a>
     </nav>
-
-    <button class="go-to-top" aria-label="Go to Top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
+    <button class="go-to-top" aria-label="Go to Top"><i class="fas fa-arrow-up"></i></button>
     <script>
-      // Video Player Data
+      const burgerBtn = document.querySelector('.burger-btn');
+      const mobileMenu = document.querySelector('.mobile-menu');
+      const header = document.querySelector('.sticky-header');
+      const goToTopBtn = document.querySelector('.go-to-top');
+      const progressBar = document.querySelector('.progress-bar');
+      const footerMenu = document.querySelector('.footer-menu');
+      const searchInput = document.querySelector('.search-input');
+      const searchResults = document.querySelector('.search-results');
+      const piAuthBtn = document.getElementById('pi-auth-btn');
+
+      burgerBtn.addEventListener('click', () => {
+        burgerBtn.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+      });
+
+      let lastScroll = 0;
+      window.addEventListener('scroll', () => {
+        const currentScroll = window.scrollY;
+        header.classList.toggle('scrolled', currentScroll > 50);
+        header.classList.toggle('hidden', currentScroll > lastScroll && currentScroll > 100);
+        goToTopBtn.classList.toggle('visible', currentScroll > 300);
+        footerMenu.classList.toggle('hidden', currentScroll > lastScroll && currentScroll > 100);
+        lastScroll = currentScroll;
+        const totalHeight = document.body.scrollHeight - window.innerHeight;
+        const progress = (currentScroll / totalHeight) * 100;
+        progressBar.style.width = `${progress}%`;
+      });
+
+      goToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      document.querySelectorAll('.stat-item h3').forEach(stat => {
+        const target = parseInt(stat.getAttribute('data-count'));
+        let count = 0;
+        const increment = target / 100;
+        const updateCount = () => {
+          count += increment;
+          if (count < target) {
+            stat.textContent = Math.floor(count).toLocaleString();
+            requestAnimationFrame(updateCount);
+          } else {
+            stat.textContent = target.toLocaleString();
+          }
+        };
+        const observer = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            requestAnimationFrame(updateCount);
+            observer.disconnect();
+          }
+        }, { threshold: 0.5 });
+        observer.observe(stat);
+      });
+
+      const pages = [
+        { title: 'Home', url: 'index.html' },
+        { title: 'Marketplace', url: 'marketplace.html' },
+        { title: 'Profile', url: 'profile.html' },
+        { title: 'Wallet', url: 'wallet.html' },
+        { title: 'Ledger Testnet', url: 'ledger-testnet.html' },
+        { title: 'Community', url: 'community.html' },
+        { title: 'Developers', url: 'developers.html' },
+        { title: 'About', url: 'about.html' }
+      ];
+
+      searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        searchResults.innerHTML = '';
+        if (query) {
+          const results = pages.filter(page => page.title.toLowerCase().includes(query));
+          results.forEach(result => {
+            const div = document.createElement('div');
+            div.className = 'search-result-item';
+            div.innerHTML = `<a href="${result.url}">${result.title}</a>`;
+            searchResults.appendChild(div);
+          });
+          searchResults.classList.toggle('active', results.length > 0);
+        } else {
+          searchResults.classList.remove('active');
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!searchContainer.contains(e.target)) {
+          searchResults.classList.remove('active');
+        }
+      });
+
+      piAuthBtn.addEventListener('click', authenticateUser);
+
+      // Updated Video Player Data
       const videos = [
         {
           id: "MfOVBHbgDK8",
@@ -1215,217 +951,86 @@
           description: "Discover how TruthWeb integrates with Pi's Open Network launch."
         },
         {
-         id: "MsOaC61cR3U",
+          id: "MsOaC61cR3U",
           title: "The Story Of Pi",
           description: "Learn about the first digital currency you can mine on your phone."
         }
-          
       ];
       let currentVideoIndex = 0;
+      const iframe = document.getElementById('main-video');
+      const videoTitle = document.getElementById('video-title');
+      const videoDescription = document.getElementById('video-description');
+      const playPauseBtn = document.getElementById('play-pause-btn');
+      let isPlaying = false;
 
-      // Video Player Functions
-      function playVideo(index) {
-        currentVideoIndex = index;
+      function updateVideo() {
         const video = videos[currentVideoIndex];
-        document.getElementById("main-video").src = `https://www.youtube.com/embed/${video.id}?si=example`;
-        document.getElementById("video-title").textContent = video.title;
-        document.getElementById("video-description").textContent = video.description;
-        resetInteractions();
-        document.getElementById("play-pause-btn").innerHTML = "⏸ Pause";
+        iframe.src = `https://www.youtube.com/embed/${video.id}?si=TM_tVWd25-1I1JMK`;
+        videoTitle.textContent = video.title;
+        videoDescription.textContent = video.description;
+        isPlaying = false;
+        playPauseBtn.innerHTML = '▶ Play';
+      }
+
+      function togglePlayPause() {
+        isPlaying = !isPlaying;
+        playPauseBtn.innerHTML = isPlaying ? '❚❚ Pause' : '▶ Play';
+        iframe.contentWindow.postMessage(
+          JSON.stringify({ event: 'command', func: isPlaying ? 'playVideo' : 'pauseVideo' }),
+          '*'
+        );
       }
 
       function nextVideo() {
         currentVideoIndex = (currentVideoIndex + 1) % videos.length;
-        playVideo(currentVideoIndex);
+        updateVideo();
       }
 
       function prevVideo() {
         currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
-        playVideo(currentVideoIndex);
+        updateVideo();
       }
 
-      function togglePlayPause() {
-        const iframe = document.getElementById("main-video");
-        const btn = document.getElementById("play-pause-btn");
-        if (btn.innerHTML.includes("Play")) {
-          btn.innerHTML = "⏸ Pause";
-          // Simulate play (YouTube API would be needed for real control)
-        } else {
-          btn.innerHTML = "▶ Play";
-          // Simulate pause
-        }
-      }
-
-      function toggleLike(button) {
-        button.classList.toggle("active");
-        const likeCount = document.getElementById("like-count");
+      function toggleLike(btn) {
+        btn.classList.toggle('active');
+        const likeCount = document.getElementById('like-count');
         let count = parseInt(likeCount.textContent);
-        likeCount.textContent = button.classList.contains("active") ? count + 1 : count - 1;
+        likeCount.textContent = btn.classList.contains('active') ? count + 1 : count - 1;
       }
 
       function shareVideo(platform) {
-        const video = videos[currentVideoIndex];
-        const url = `https://www.youtube.com/watch?v=${video.id}`;
-        const text = `Check out "${video.title}" on TruthWeb!`;
-        if (platform === 'twitter') {
-          window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
-        } else if (platform === 'telegram') {
-          window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
-        }
+        const url = `https://www.youtube.com/watch?v=${videos[currentVideoIndex].id}`;
+        const shareUrls = {
+          twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=Check out this video on TruthWeb!`,
+          telegram: `https://t.me/share/url?url=${encodeURIComponent(url)}&text=Check out this video on TruthWeb!`
+        };
+        window.open(shareUrls[platform], '_blank');
       }
 
       function postComment() {
-        const input = document.getElementById("comment-input");
-        const commentText = input.value.trim();
-        if (commentText) {
-          const commentList = document.getElementById("comments-list");
-          const newComment = document.createElement("div");
-          newComment.className = "comment";
-          newComment.textContent = `You: ${commentText}`;
-          commentList.appendChild(newComment);
-          input.value = "";
+        const input = document.getElementById('comment-input');
+        const comment = input.value.trim();
+        if (comment) {
+          const commentList = document.getElementById('comments-list');
+          const div = document.createElement('div');
+          div.className = 'comment';
+          div.textContent = `User: ${comment}`;
+          commentList.appendChild(div);
+          input.value = '';
           commentList.scrollTop = commentList.scrollHeight;
         }
       }
 
-      function resetInteractions() {
-        document.getElementById("like-count").textContent = "0";
-        document.querySelector(".interaction-btn").classList.remove("active");
-        document.getElementById("comments-list").innerHTML = `
-          <div class="comment">PioneerA: Great showcase of TruthWeb!</div>
-          <div class="comment">UserB: Loving the app features!</div>
-        `;
-        document.getElementById("play-pause-btn").innerHTML = "▶ Play";
-      }
+      const carousel = document.querySelector('.carousel');
+      const prevBtn = document.querySelector('.carousel-prev');
+      const nextBtn = document.querySelector('.carousel-next');
 
-      // Layout and Scroll Functions
-      function adjustLayout() {
-        const width = window.innerWidth;
-        const isMobile = width <= 640;
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const footerMenu = document.querySelector('.footer-menu');
-        if (!isMobile && mobileMenu.classList.contains('open')) {
-          mobileMenu.classList.remove('open');
-          document.querySelector('.burger-btn').classList.remove('open');
-        }
-        footerMenu.classList.toggle('hidden', !isMobile);
-        document.querySelectorAll('img[data-src]').forEach(img => {
-          img.src = img.dataset.src;
-        });
-      }
-
-      window.addEventListener('load', adjustLayout);
-      window.addEventListener('resize', adjustLayout);
-
-      let lastScroll = 0;
-      window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const header = document.querySelector('.sticky-header');
-        const goToTop = document.querySelector('.go-to-top');
-        const footerMenu = document.querySelector('.footer-menu');
-        const scrollProgress = (scrollTop / (document.body.scrollHeight - window.innerHeight)) * 100;
-
-        document.querySelector('.progress-bar').style.width = `${scrollProgress}%`;
-        header.classList.toggle('scrolled', scrollTop > 50);
-        header.classList.toggle('hidden', scrollTop > lastScroll && scrollTop > 100);
-        goToTop.classList.toggle('visible', scrollTop > 300);
-        if (window.innerWidth <= 640) {
-          footerMenu.classList.toggle('hidden', scrollTop > lastScroll && scrollTop > 100);
-        }
-        lastScroll = scrollTop;
-
-        document.querySelectorAll('[data-count]').forEach(el => {
-          if (isElementInViewport(el) && !el.classList.contains('counted')) {
-            el.classList.add('counted');
-            const target = parseInt(el.getAttribute('data-count'));
-            let count = 0;
-            const speed = target > 1000000 ? 50 : 100;
-            const increment = target / speed;
-            const updateCount = () => {
-              count += increment;
-              if (count >= target) {
-                el.textContent = target.toLocaleString();
-              } else {
-                el.textContent = Math.floor(count).toLocaleString();
-                requestAnimationFrame(updateCount);
-              }
-            };
-            updateCount();
-          }
-        });
+      prevBtn.addEventListener('click', () => {
+        carousel.scrollBy({ left: -300, behavior: 'smooth' });
       });
 
-      document.querySelector('.burger-btn').addEventListener('click', () => {
-        const burger = document.querySelector('.burger-btn');
-        const menu = document.querySelector('.mobile-menu');
-        burger.classList.toggle('open');
-        menu.classList.toggle('open');
-      });
-
-      document.querySelector('.go-to-top').addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-
-      function isElementInViewport(el) {
-        const rect = el.getBoundingClientRect();
-        return (
-          rect.top >= 0 &&
-          rect.left >= 0 &&
-          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-      }
-
-      const searchInput = document.querySelector('.search-input');
-      const searchResults = document.querySelector('.search-results');
-      const pages = [
-        { title: 'Home', url: 'index.html' },
-        { title: 'Marketplace', url: 'marketplace.html' },
-        { title: 'Profile', url: 'profile.html' },
-        { title: 'Wallet', url: 'wallet.html' },
-        { title: 'Ledger Testnet', url: 'ledger-testnet.html' },
-        { title: 'Community', url: 'community.html' },
-        { title: 'Developers', url: 'developers.html' },
-        { title: 'About', url: 'about.html' }
-      ];
-
-      searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase().trim();
-        searchResults.innerHTML = '';
-        searchResults.classList.remove('active');
-        if (query) {
-          const filteredPages = pages.filter(page => page.title.toLowerCase().includes(query));
-          filteredPages.forEach(page => {
-            const div = document.createElement('div');
-            div.className = 'search-result-item';
-            div.innerHTML = `<a href="${page.url}">${page.title}</a>`;
-            searchResults.appendChild(div);
-          });
-          if (filteredPages.length > 0) {
-            searchResults.classList.add('active');
-          }
-        }
-      });
-
-      searchInput.addEventListener('blur', () => {
-        setTimeout(() => searchResults.classList.remove('active'), 200);
-      });
-    </script>
-
-    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-    <script>
-      Pi.init({ version: "2.0", sandbox: true });
-      document.addEventListener('DOMContentLoaded', () => {
-        const authButton = document.createElement('button');
-        authButton.textContent = 'Authenticate with Pi';
-        authButton.className = 'btn accent';
-        authButton.onclick = () => {
-          Pi.authenticate(['username'], (authResult) => {
-            console.log('Authenticated:', authResult);
-            alert(`Welcome, ${authResult.user.username}!`);
-          }).catch(err => console.error('Authentication failed:', err));
-        };
-        document.querySelector('.hero').appendChild(authButton);
+      nextBtn.addEventListener('click', () => {
+        carousel.scrollBy({ left: 300, behavior: 'smooth' });
       });
     </script>
 </body>
