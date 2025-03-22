@@ -339,18 +339,11 @@
         padding: 1.5rem;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         animation: slideInCard 0.5s ease-out forwards;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
       }
       .card:hover { transform: translateY(-10px) rotate(2deg); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); }
       @keyframes slideInCard { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
       .card i { font-size: 2.5rem; margin-bottom: 1rem; color: var(--primary-color); transition: transform 0.3s ease; }
       .card:hover i { transform: scale(1.1); }
-      .card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; }
-      .card p { margin-bottom: 1rem; }
-      .card a.btn { margin-top: auto; }
       .feed-container { max-width: 600px; margin: 0 auto; }
       .feed-item { padding: 1rem; border-bottom: 1px solid var(--highlight-color); transition: background 0.2s ease, transform 0.3s ease; }
       .feed-item:hover { background: rgba(204, 204, 204, 0.1); transform: scale(1.01); }
@@ -361,7 +354,7 @@
       .feed-user { font-weight: 600; font-size: 1rem; }
       .feed-time { font-size: 0.85rem; color: var(--highlight-color); margin-left: 0.5rem; }
       .feed-content { font-size: 1rem; margin-bottom: 0.75rem; line-height: 1.4; }
-      .feed-actions { display: flex; justify-content: space-between; max-width: 300px; margin: 0 auto; }
+      .feed-actions { display: flex; justify-content: space-between; max-width: 300px; }
       .feed-actions button {
         background: none;
         border: none;
@@ -445,37 +438,6 @@
         .go-to-top { width: 40px; height: 40px; font-size: 1.2rem; bottom: 80px; }
         .main-video-card iframe { height: 200px; }
         .video-controls { flex-direction: column; gap: 0.5rem; }
-        main {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          padding-left: 0.5rem;
-          padding-right: 0.5rem;
-        }
-        section {
-          width: 100%;
-          max-width: 600px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-        .hero {
-          padding: 1rem;
-          width: 100%;
-        }
-        .feed-container {
-          padding: 0;
-          width: 100%;
-        }
-        .grid {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          width: 100%;
-        }
-        .card {
-          width: 100%;
-          max-width: 400px;
-        }
       }
       @media (min-width: 641px) and (max-width: 1024px) {
         .burger-btn { display: none; }
@@ -614,37 +576,36 @@
         <section id="business-partners" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)] relative overflow-hidden">
             <h2 class="text-3xl font-bold text-center mb-8">Our Business Partners</h2>
             <p class="text-center text-lg mb-12 max-w-2xl mx-auto">We collaborate with leading organizations to drive innovation in blockchain and AI. <em>This is a sample Business Partners page, not official.</em></p>
-            <p class="text-center text-lg mb-12 max-w-2xl mx-auto">Sample Business Partners Below. <em>.</em></p>
             <div class="relative max-w-6xl mx-auto">
                 <div class="carousel">
-                    <div class="card bg-gradient-to-br from-[var(--secondary-color)] to-gray-100 text-[var(--primary-color)] min-w-[280px] snap-center">
+                    <div class="card bg-gradient-to-br from-[var(--secondary-color)] to-gray-100 text-[var(--primary-color)] min-w-[280px] snap-center rounded-xl p-6 flex flex-col items-center justify-between transform transition-all duration-500 hover:scale-105 hover:shadow-2xl">
                         <img loading="lazy" src="https://i.ibb.co/RGWhLsQr/pi-network-pi-icons-pi-logo-design-illustration-trendy-and-modern-crypto-currency-pi-symbol-for-logo.jpg" alt="Pi Network Logo" class="h-24 w-24 object-contain mb-4 transition-transform duration-300 hover:scale-110" onerror="this.src='https://via.placeholder.com/96x96?text=Pi+Network';">
                         <h3 class="text-xl font-semibold mb-2">Pi Network</h3>
-                        <p class="text-sm text-gray-700">Pioneering mobile-first blockchain technology and decentralized ecosystems.</p>
+                        <p class="text-sm text-center text-gray-700">Pioneering mobile-first blockchain technology and decentralized ecosystems.</p>
                         <a href="https://minepi.com" target="_blank" class="btn mt-4 bg-[var(--accent-color)] text-[var(--primary-color)] hover:bg-[#FFA500] border-none">Learn More</a>
                     </div>
-                    <div class="card bg-gradient-to-br from-[var(--secondary-color)] to-gray-100 text-[var(--primary-color)] min-w-[280px] snap-center">
+                    <div class="card bg-gradient-to-br from-[var(--secondary-color)] to-gray-100 text-[var(--primary-color)] min-w-[280px] snap-center rounded-xl p-6 flex flex-col items-center justify-between transform transition-all duration-500 hover:scale-105 hover:shadow-2xl">
                         <img loading="lazy" src="https://i.ibb.co/152gNjb/openai-chatgpt-logo-icon-free-png.webp" alt="OpenAI Logo" class="h-24 w-24 object-contain mb-4 transition-transform duration-300 hover:scale-110" onerror="this.src='https://via.placeholder.com/96x96?text=OpenAI';">
                         <h3 class="text-xl font-semibold mb-2">OpenAI</h3>
-                        <p class="text-sm text-gray-700">Advancing AI integration and ethical implementation in blockchain systems.</p>
+                        <p class="text-sm text-center text-gray-700">Advancing AI integration and ethical implementation in blockchain systems.</p>
                         <a href="https://openai.com" target="_blank" class="btn mt-4 bg-[var(--accent-color)] text-[var(--primary-color)] hover:bg-[#FFA500] border-none">Learn More</a>
                     </div>
-                    <div class="card bg-gradient-to-br from-[var(--secondary-color)] to-gray-100 text-[var(--primary-color)] min-w-[280px] snap-center">
+                    <div class="card bg-gradient-to-br from-[var(--secondary-color)] to-gray-100 text-[var(--primary-color)] min-w-[280px] snap-center rounded-xl p-6 flex flex-col items-center justify-between transform transition-all duration-500 hover:scale-105 hover:shadow-2xl">
                         <img loading="lazy" src="https://i.ibb.co/0RbTWGxz/OKX-Logo-svg.png" alt="OKX Logo" class="h-24 w-24 object-contain mb-4 transition-transform duration-300 hover:scale-110" onerror="this.src='https://via.placeholder.com/96x96?text=OKX';">
                         <h3 class="text-xl font-semibold mb-2">OKX</h3>
-                        <p class="text-sm text-gray-700">Providing secure crypto trading infrastructure and liquidity solutions.</p>
+                        <p class="text-sm text-center text-gray-700">Providing secure crypto trading infrastructure and liquidity solutions.</p>
                         <a href="https://www.okx.com" target="_blank" class="btn mt-4 bg-[var(--accent-color)] text-[var(--primary-color)] hover:bg-[#FFA500] border-none">Learn More</a>
                     </div>
-                    <div class="card bg-gradient-to-br from-[var(--secondary-color)] to-gray-100 text-[var(--primary-color)] min-w-[280px] snap-center">
+                    <div class="card bg-gradient-to-br from-[var(--secondary-color)] to-gray-100 text-[var(--primary-color)] min-w-[280px] snap-center rounded-xl p-6 flex flex-col items-center justify-between transform transition-all duration-500 hover:scale-105 hover:shadow-2xl">
                         <img loading="lazy" src="https://i.ibb.co/DHLPvq43/block-s-right.webp" alt="Stanford University Logo" class="h-24 w-24 object-contain mb-4 transition-transform duration-300 hover:scale-110" onerror="this.src='https://via.placeholder.com/96x96?text=Stanford';">
                         <h3 class="text-xl font-semibold mb-2">Stanford University</h3>
-                        <p class="text-sm text-gray-700">Collaborating on blockchain research and AI ethics frameworks.</p>
+                        <p class="text-sm text-center text-gray-700">Collaborating on blockchain research and AI ethics frameworks.</p>
                         <a href="https://www.stanford.edu" target="_blank" class="btn mt-4 bg-[var(--accent-color)] text-[var(--primary-color)] hover:bg-[#FFA500] border-none">Learn More</a>
                     </div>
-                    <div class="card bg-gradient-to-br from-[var(--secondary-color)] to-gray-100 text-[var(--primary-color)] min-w-[280px] snap-center">
+                    <div class="card bg-gradient-to-br from-[var(--secondary-color)] to-gray-100 text-[var(--primary-color)] min-w-[280px] snap-center rounded-xl p-6 flex flex-col items-center justify-between transform transition-all duration-500 hover:scale-105 hover:shadow-2xl">
                         <img loading="lazy" src="https://i.ibb.co/Pvv2fdWM/nvidia-logo-brandlogos-net.png" alt="NVIDIA Logo" class="h-24 w-24 object-contain mb-4 transition-transform duration-300 hover:scale-110" onerror="this.src='https://via.placeholder.com/96x96?text=NVIDIA';">
                         <h3 class="text-xl font-semibold mb-2">NVIDIA</h3>
-                        <p class="text-sm text-gray-700">Powering AI computing and GPU acceleration for blockchain networks.</p>
+                        <p class="text-sm text-center text-gray-700">Powering AI computing and GPU acceleration for blockchain networks.</p>
                         <a href="https://www.nvidia.com" target="_blank" class="btn mt-4 bg-[var(--accent-color)] text-[var(--primary-color)] hover:bg-[#FFA500] border-none">Learn More</a>
                     </div>
                 </div>
@@ -658,9 +619,9 @@
         <section id="new-features" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">New Features</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <div class="card"><i class="fas fa-globe"></i><h3 class="text-xl font-semibold mb-2">Global Marketplace Expansion</h3><p>Access international markets with localized currency support.</p><a href="global-expansion.html" class="btn">Explore</a></div>
-                <div class="card"><i class="fas fa-robot"></i><h3 class="text-xl font-semibold mb-2">AI-Powered Insights</h3><p>Get personalized trading and investment recommendations.</p><a href="pi-insights-project/pi-insights-backend/public/ai-powered-pi-insights.html" class="btn">Try Now</a></div>
-                <div class="card"><i class="fas fa-mobile-alt"></i><h3 class="text-xl font-semibold mb-2">Mobile App Enhancements</h3><p>Enjoy a revamped UI, push notifications, and offline mode.</p><a href="mobile-enhancements.html" class="btn">Learn More</a></div>
+                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-globe"></i><h3 class="text-xl font-semibold mb-2">Global Marketplace Expansion</h3><p>Access international markets with localized currency support.</p><a href="global-expansion.html" class="btn">Explore</a></div>
+                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-robot"></i><h3 class="text-xl font-semibold mb-2">AI-Powered Insights</h3><p>Get personalized trading and investment recommendations.</p><a href="pi-insights-project/pi-insights-backend/public/ai-powered-pi-insights.html" class="btn">Try Now</a></div>
+                <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-mobile-alt"></i><h3 class="text-xl font-semibold mb-2">Mobile App Enhancements</h3><p>Enjoy a revamped UI, push notifications, and offline mode.</p><a href="mobile-enhancements.html" class="btn">Learn More</a></div>
             </div>
         </section>
         <section id="ai-bot" class="py-16 px-4">
@@ -801,7 +762,7 @@
                 <div class="card"><i class="fas fa-users"></i><h3 class="text-xl font-semibold mb-2">Community Update</h3><p>New forum features.</p><a href="community.html#update" class="btn">Read</a></div>
             </div>
         </section>
-        <section id="pitrack" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
+ <section id="pitrack" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
             <h2 class="section-title text-3xl font-bold text-center mb-8">PiTrack</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                 <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-chart-bar"></i><h3 class="text-xl font-semibold mb-2">Track Your Pi</h3><p>Monitor wallet activity.</p><a href="pitrack.html#wallet" class="btn">View</a></div>
@@ -809,6 +770,7 @@
                 <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-tachometer-alt"></i><h3 class="text-xl font-semibold mb-2">Ecosystem Metrics</h3><p>Pi usage trends.</p><a href="pitrack.html#metrics" class="btn">Stats</a></div>
             </div>
         </section>
+
         <section id="pitrade" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Pi Trade</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -817,6 +779,7 @@
                 <div class="card"><i class="fas fa-exchange-alt"></i><h3 class="text-xl font-semibold mb-2">Trade Dashboard</h3><p>Manage trades.</p><a href="pitrade.html#dashboard" class="btn">Open</a></div>
             </div>
         </section>
+
         <section id="referral-program" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Referral Program</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -825,6 +788,7 @@
                 <div class="card"><i class="fas fa-share-alt"></i><h3 class="text-xl font-semibold mb-2">Share Easily</h3><p>Use your unique link to invite.</p><a href="referral-program.html#share" class="btn">Get Link</a></div>
             </div>
         </section>
+
         <section id="content" class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Content</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-6xl mx-auto">
@@ -832,6 +796,7 @@
                 <div class="card bg-[var(--secondary-color)] text-[var(--primary-color)]"><i class="fas fa-newspaper"></i><h3 class="text-xl font-semibold mb-2">Latest News</h3><p>Fresh Pi updates.</p><a href="truthweb-news.html" class="btn">Read</a></div>
             </div>
         </section>
+
         <section id="coming-soon" class="py-16 px-4">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Coming Soon</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
@@ -840,18 +805,22 @@
                 <div class="card"><i class="fas fa-gavel"></i><h3 class="text-xl font-semibold mb-2">Dispute Resolution</h3><p>Community-driven.</p><a href="future.html#disputes" class="btn">Update</a></div>
                 <div class="card"><i class="fas fa-coins"></i><h3 class="text-xl font-semibold mb-2">Pi Staking</h3><p>Earn rewards.</p><a href="future.html#staking" class="btn">Update</a></div>
             </div>
-        </section>
+             </section>
+   
+        
         <section class="py-16 px-4 bg-[var(--primary-color)] text-[var(--text-color)]">
             <h2 class="section-title text-3xl font-bold text-center mb-8">Join the TruthWeb Movement</h2>
             <div class="max-w-4xl mx-auto text-center">
                 <p class="text-lg mb-6 md:text-xl">Be part of a global revolution in decentralized finance and community-driven innovation. Sign up today and start exploring TruthWeb!</p>
                 <a href="signup.html" class="btn accent">Get Started</a>
-                <div class="flex justify-center space-x-4 mt-4">
+   <div class="flex justify-center space-x-4">
                     <a href="https://www.youtube.com/@TruthWebYoutube?sub_confirmation=1" target="_blank" class="btn">Subscribe</a>
                     <a href="donate.html" target="_blank" class="btn">Donate</a>
                     <a href="https://www.okx.com/join/96663535" target="_blank" class="btn">Join OKX</a>
                 </div>
             </div>
+        </section>
+        
     </main>
     <footer>
         <div class="social-icons">
