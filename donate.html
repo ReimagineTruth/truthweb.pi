@@ -26,12 +26,8 @@
         --button-hover-text-color: #000000;
         --background-color: #FFFFFF;
         --accent-color: #FFD700;
-        --progress-bar-color: var(--accent-color);
       }
-      html { 
-        scroll-behavior: smooth; 
-        -webkit-overflow-scrolling: touch; 
-      }
+      html { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
       body {
         background: var(--background-color);
         color: var(--primary-color);
@@ -43,7 +39,7 @@
         -webkit-font-smoothing: antialiased;
       }
 
-      /* Header Styles */
+      /* Header Styles (unchanged) */
       .sticky-header {
         position: fixed;
         top: 0;
@@ -293,7 +289,8 @@
         margin-bottom: 0.5rem;
         color: var(--primary-color);
       }
-      .form-group input {
+      .form-group input,
+      .form-group textarea {
         width: 100%;
         padding: 0.75rem;
         border: 1px solid var(--highlight-color);
@@ -304,7 +301,12 @@
         outline: none;
         transition: all 0.3s ease;
       }
-      .form-group input:focus {
+      .form-group textarea {
+        height: 100px;
+        resize: vertical;
+      }
+      .form-group input:focus,
+      .form-group textarea:focus {
         border-color: var(--accent-color);
         box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
         transform: scale(1.02);
@@ -438,20 +440,10 @@
         .icon { font-size: 1.1rem; margin-left: 0.5rem; }
         .desktop-nav { display: none; }
         .burger-btn { display: flex; }
-        .donate-card {
-          padding: 1.5rem;
-          max-width: 100%;
-        }
-        .donate-card h1 {
-          font-size: 1.75rem;
-        }
-        .btn, .amount-btn {
-          padding: 0.6rem 1.2rem;
-          font-size: 0.85rem;
-        }
-        .amount-buttons {
-          gap: 0.5rem;
-        }
+        .donate-card { padding: 1.5rem; max-width: 100%; }
+        .donate-card h1 { font-size: 1.75rem; }
+        .btn, .amount-btn { padding: 0.6rem 1.2rem; font-size: 0.85rem; }
+        .amount-buttons { gap: 0.5rem; }
       }
       @media (min-width: 641px) {
         .burger-btn { display: none; }
@@ -504,7 +496,7 @@
         <section class="donate-container">
             <div class="donate-card">
                 <h1>Support TruthWeb</h1>
-                <p>Donate Pi to help us grow the decentralized future!</p>
+                <p>Donate any amount of Pi to help us grow the decentralized future!</p>
                 <div class="form-group">
                     <label for="amount">Donation Amount (Pi)</label>
                     <input type="number" id="amount" name="amount" placeholder="Enter amount" min="0.01" step="0.01" required>
@@ -516,13 +508,17 @@
                     <button class="amount-btn" data-amount="10">10 Pi</button>
                     <button class="amount-btn" data-amount="25">25 Pi</button>
                 </div>
+                <div class="form-group">
+                    <label for="message">Your Message (Optional)</label>
+                    <textarea id="message" name="message" placeholder="Leave a message with your donation..."></textarea>
+                </div>
                 <button id="donate-btn" class="btn accent">
                     <i class="fas fa-donate mr-2"></i> Donate with Pi
                 </button>
                 <div class="donation-history">
                     <h2>Your Donations</h2>
                     <div class="donation-list" id="donation-list">
-                        <!-- Donation history will be populated here -->
+                        <div class="donation-item">No donations yet.</div>
                     </div>
                 </div>
             </div>
@@ -546,7 +542,12 @@
         mobileMenu: document.querySelector('.mobile-menu'),
         header: document.querySelector('.sticky-header'),
         searchInput: document.querySelector('.search-input'),
-        searchResults: document.querySelector('.search-results')
+        searchResults: document.querySelector('.search-results'),
+        amountInput: document.getElementById('amount'),
+        messageInput: document.getElementById('message'),
+        donateBtn: document.getElementById('donate-btn'),
+        donationList: document.getElementById('donation-list'),
+        amountError: document.getElementById('amount-error')
       };
 
       elements.burgerBtn.addEventListener('click', () => {
@@ -580,7 +581,8 @@
         { title: 'Community', url: 'community.html' },
         { title: 'Developers', url: 'developers.html' },
         { title: 'About', url: 'about.html' },
-        { title: 'Donate', url: 'donate.html' }
+        { title: 'Donate', url: 'donate.html' },
+        { title: 'Donation Tracker', url: 'donation-tracker.html' }
       ];
 
       elements.searchInput.addEventListener('input', debounce(() => {
@@ -613,6 +615,18 @@
         };
       }
 
+      // Predefined amount buttons
+      const amountButtons = document.querySelectorAll('.amount-btn');
+      amountButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          amountButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          elements.amountInput.value = btn.getAttribute('data-amount');
+          elements.amountError.style.display = 'none';
+          elements.amountInput.classList.remove('invalid');
+        });
+      });
+
       // Handle incomplete payments
       function onIncompletePaymentFound(payment) {
         console.log('Incomplete payment found:', payment);
@@ -631,45 +645,34 @@
         });
       }
 
-      // Predefined amount buttons
-      const amountButtons = document.querySelectorAll('.amount-btn');
-      const amountInput = document.getElementById('amount');
-      amountButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          amountButtons.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          amountInput.value = btn.getAttribute('data-amount');
-          document.getElementById('amount-error').style.display = 'none';
-          amountInput.classList.remove('invalid');
-        });
-      });
-
       // Donate with Pi
-      const donateBtn = document.getElementById('donate-btn');
-      donateBtn.addEventListener('click', () => {
-        const amount = parseFloat(amountInput.value);
-        const errorMessage = document.getElementById('amount-error');
+      elements.donateBtn.addEventListener('click', () => {
+        const amount = parseFloat(elements.amountInput.value);
+        const message = elements.messageInput.value.trim();
 
         // Validate amount
         if (isNaN(amount) || amount < 0.01) {
-          amountInput.classList.add('invalid');
-          errorMessage.style.display = 'block';
+          elements.amountInput.classList.add('invalid');
+          elements.amountError.style.display = 'block';
           return;
         }
 
-        donateBtn.disabled = true;
-        donateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+        elements.donateBtn.disabled = true;
+        elements.donateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
 
-        // Authenticate user first
         Pi.authenticate(scopes, onIncompletePaymentFound)
           .then(auth => {
             console.log('Authenticated:', auth.user.username);
 
-            // Create payment
             const paymentData = {
               amount: amount,
-              memo: `Donation to TruthWeb from ${auth.user.username}`,
-              metadata: { type: 'donation', date: new Date().toISOString() }
+              memo: message ? `${auth.user.username}: ${message}` : `Donation from ${auth.user.username}`,
+              metadata: {
+                type: 'donation',
+                date: new Date().toISOString(),
+                username: auth.user.username,
+                message: message || null
+              }
             };
 
             return Pi.createPayment(paymentData, {
@@ -680,7 +683,7 @@
                   .catch(error => console.error('Approval failed:', error));
               },
               onReadyForServerCompletion: (paymentId, txid) => {
-                console.log('Payment ready for completion:', paymentId, txid);
+                console.log('Payment completed:', paymentId, txid);
                 $.post('/payment/complete', { paymentId: paymentId, txid: txid })
                   .then(response => console.log('Completion response:', response))
                   .catch(error => console.error('Completion failed:', error));
@@ -698,35 +701,34 @@
           .then(payment => {
             console.log('Payment successful:', payment);
             alert(`Thank you for donating ${amount} Pi!`);
-            addDonationToHistory(amount, payment.identifier);
+            addDonationToHistory(amount, payment.identifier, message);
+            // Redirect to donation-tracker.html with query parameters
+            window.location.href = `donation-tracker.html?username=${encodeURIComponent(payment.metadata.username)}&amount=${amount}&message=${encodeURIComponent(message || '')}&paymentId=${payment.identifier}`;
           })
           .catch(error => {
             console.error('Donation process failed:', error);
             alert(`Donation failed: ${error.message || 'Unknown error'}`);
           })
           .finally(() => {
-            donateBtn.disabled = false;
-            donateBtn.innerHTML = '<i class="fas fa-donate mr-2"></i> Donate with Pi';
-            amountInput.value = '';
+            elements.donateBtn.disabled = false;
+            elements.donateBtn.innerHTML = '<i class="fas fa-donate mr-2"></i> Donate with Pi';
+            elements.amountInput.value = '';
+            elements.messageInput.value = '';
             amountButtons.forEach(btn => btn.classList.remove('active'));
           });
       });
 
       // Add donation to history
-      function addDonationToHistory(amount, paymentId) {
-        const donationList = document.getElementById('donation-list');
+      function addDonationToHistory(amount, paymentId, message) {
+        const donationList = elements.donationList;
+        if (donationHistory.length === 0) donationList.innerHTML = '';
         const donationItem = document.createElement('div');
         const date = new Date().toLocaleString();
         donationItem.className = 'donation-item';
-        donationItem.textContent = `${date}: ${amount} Pi (ID: ${paymentId.slice(0, 8)}...)`;
+        donationItem.textContent = `${date}: ${amount} Pi${message ? ` - "${message}"` : ''} (ID: ${paymentId.slice(0, 8)}...)`;
         donationList.appendChild(donationItem);
-        donationHistory.push({ amount, paymentId, date });
+        donationHistory.push({ amount, paymentId, date, message });
         donationList.scrollTop = donationList.scrollHeight;
-      }
-
-      // Initial history (for demo purposes)
-      if (donationHistory.length === 0) {
-        document.getElementById('donation-list').innerHTML = '<div class="donation-item">No donations yet.</div>';
       }
     </script>
 </body>
