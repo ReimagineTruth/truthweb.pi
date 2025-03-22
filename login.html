@@ -26,7 +26,6 @@
         --button-hover-text-color: #000000;
         --background-color: #FFFFFF;
         --accent-color: #FFD700;
-        --progress-bar-color: var(--accent-color);
       }
       html { 
         scroll-behavior: smooth; 
@@ -85,39 +84,16 @@
         font-size: 2rem;
         font-weight: 700;
         text-align: center;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
         color: var(--primary-color);
         text-shadow: 0 0 5px var(--highlight-color);
       }
-      .form-group {
-        margin-bottom: 1.5rem;
-      }
-      .form-group label {
-        display: block;
+      .login-card p {
+        text-align: center;
         font-size: 0.9rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
         color: var(--primary-color);
-      }
-      .form-group input {
-        width: 100%;
-        padding: 0.75rem;
-        border: 1px solid var(--highlight-color);
-        border-radius: 8px;
-        font-size: 1rem;
-        background: #f5f5f5;
-        color: var(--primary-color);
-        outline: none;
-        transition: all 0.3s ease;
-      }
-      .form-group input:focus {
-        border-color: var(--accent-color);
-        box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
-        transform: scale(1.02);
-      }
-      .form-group input.invalid {
-        border-color: #ff4444;
-        box-shadow: 0 0 8px rgba(255, 68, 68, 0.3);
+        margin-bottom: 1.5rem;
+        opacity: 0.8;
       }
       .btn {
         display: inline-flex;
@@ -177,6 +153,36 @@
         padding: 0 1rem;
         font-size: 0.9rem;
       }
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      .form-group label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--primary-color);
+      }
+      .form-group input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--highlight-color);
+        border-radius: 8px;
+        font-size: 1rem;
+        background: #f5f5f5;
+        color: var(--primary-color);
+        outline: none;
+        transition: all 0.3s ease;
+      }
+      .form-group input:focus {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+        transform: scale(1.02);
+      }
+      .form-group input.invalid {
+        border-color: #ff4444;
+        box-shadow: 0 0 8px rgba(255, 68, 68, 0.3);
+      }
       .error-message {
         color: #ff4444;
         font-size: 0.85rem;
@@ -229,6 +235,11 @@
     <section class="login-container">
         <div class="login-card">
             <h1>Welcome Back</h1>
+            <p>Log in quickly and securely with Pi Network</p>
+            <button id="pi-auth-btn" class="btn accent">
+                <i class="fas fa-sign-in-alt mr-2"></i> Log In with Pi
+            </button>
+            <div class="or-divider"><span>OR</span></div>
             <form id="login-form" onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -242,8 +253,6 @@
                 </div>
                 <button type="submit" class="btn">Log In</button>
             </form>
-            <div class="or-divider"><span>OR</span></div>
-            <button id="pi-auth-btn" class="btn accent">Log In with Pi</button>
             <div class="signup-link">
                 Don't have an account? <a href="signup.html">Sign Up</a>
             </div>
@@ -258,36 +267,66 @@
       Pi.init({ version: "2.0", sandbox: true });
       const scopes = ['username', 'payments'];
 
-      // Handle incomplete payments (placeholder for server-side integration)
+      // Handle incomplete payments
       function onIncompletePaymentFound(payment) {
         console.log('Incomplete payment found:', payment);
         const paymentId = payment.identifier;
-        const txid = payment.transaction.txid;
-        $.post('/payment/complete', {
+        const txid = payment.transaction?.txid || null;
+        return $.post('/payment/complete', {
           paymentId: paymentId,
           txid: txid,
           debug: 'cancel'
-        }, (response) => {
+        }).then(response => {
           console.log('Payment completion response:', response);
-        }).fail((error) => {
+          return response; // Return response for Pi SDK to handle
+        }).catch(error => {
           console.error('Payment completion failed:', error);
+          throw error; // Propagate error to Pi SDK
         });
       }
 
-      // Pi Authentication
-      document.getElementById('pi-auth-btn').addEventListener('click', () => {
-        Pi.authenticate(scopes, onIncompletePaymentFound).then((auth) => {
-          console.log(`Authenticated: ${auth.user.username}`, auth);
-          alert(`Welcome back, ${auth.user.username}! You're now logged in with Pi.`);
-          // Redirect or update UI after successful login
-          window.location.href = 'index.html';
-        }).catch((error) => {
-          console.error('Pi Authentication failed:', error);
-          alert('Login with Pi failed. Please try again.');
-        });
+      // Pi Authentication Logic
+      const piAuthBtn = document.getElementById('pi-auth-btn');
+      piAuthBtn.addEventListener('click', () => {
+        piAuthBtn.disabled = true; // Prevent multiple clicks
+        piAuthBtn.textContent = 'Authenticating...';
+
+        Pi.authenticate(scopes, onIncompletePaymentFound)
+          .then((auth) => {
+            console.log('Pi Authentication successful:', {
+              username: auth.user.username,
+              accessToken: auth.accessToken,
+              uid: auth.user.uid
+            });
+            alert(`Welcome back, ${auth.user.username}! You're now logged in with Pi.`);
+
+            // Simulate storing auth data (replace with actual backend call)
+            const userData = {
+              username: auth.user.username,
+              accessToken: auth.accessToken,
+              uid: auth.user.uid
+            };
+            $.post('/api/login/pi', userData)
+              .then(response => {
+                console.log('Server response:', response);
+                window.location.href = 'index.html'; // Redirect to homepage
+              })
+              .catch(error => {
+                console.error('Server login failed:', error);
+                alert('Login failed on server. Please try again.');
+              });
+          })
+          .catch((error) => {
+            console.error('Pi Authentication failed:', error);
+            alert(`Login with Pi failed: ${error.message || 'Unknown error'}. Please try again.`);
+          })
+          .finally(() => {
+            piAuthBtn.disabled = false;
+            piAuthBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i> Log In with Pi';
+          });
       });
 
-      // Form Validation and Submission
+      // Traditional Form Login
       function handleLogin(event) {
         event.preventDefault();
         const form = document.getElementById('login-form');
@@ -317,13 +356,23 @@
         }
 
         if (isValid) {
-          // Simulate login API call (replace with actual backend integration)
-          console.log('Login successful:', {
+          // Simulate traditional login API call
+          const loginData = {
             email: email.value,
             password: password.value
-          });
-          alert('Login successful! Redirecting to homepage...');
-          window.location.href = 'index.html';
+          };
+          console.log('Traditional login attempt:', loginData);
+
+          $.post('/api/login', loginData)
+            .then(response => {
+              console.log('Login successful:', response);
+              alert('Login successful! Redirecting to homepage...');
+              window.location.href = 'index.html';
+            })
+            .catch(error => {
+              console.error('Login failed:', error);
+              alert('Login failed. Please check your credentials.');
+            });
         }
       }
     </script>
